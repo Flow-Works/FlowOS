@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/index.css"/>
+        <style>
+            body, html { background: none; padding: 5px; overflow: scroll; }
+            input, textarea, button {
+                padding: 5px;
+                border: none;
+                background: var(--surface-bg);
+                border-radius: 5px;
+                width: 100%;
+                margin-top: 5px;
+            }
+    
+            input:focus, textarea:focus {
+                outline: none;
+            }
+    
+            sub {
+                opacity: 0.5;
+            }
+        </style>
+    </head>
+    <script>    
+        loadCSS(window.localStorage.getItem('theme'))
+    
+        function loadCSS(FILE_URL) {
+            var fileref = document.createElement("link");
+            fileref.rel = "stylesheet";
+            fileref.type = "text/css";
+            fileref.href = FILE_URL;
+            document.getElementsByTagName("head")[0].appendChild(fileref);
+        }
+    </script>
+    
+    <script>
+        function saveUrlsToLocalStorage(urls) {
+      const urlsString = JSON.stringify(urls);
+      localStorage.setItem('urls', urlsString);
+    }
+    
+    function getUrlsFromLocalStorage() {
+      const urlsString = localStorage.getItem('modules');
+      const urls = JSON.parse(urlsString);
+      return urls;
+    }
+    
+    const retrievedUrls = getUrlsFromLocalStorage().join('\n');
+    
+    window.onload = () => {
+        document.querySelectorAll('input')[0].value = window.localStorage.getItem('theme');
+        document.querySelectorAll('input')[1].value = window.localStorage.getItem('search');
+        document.querySelector('textarea').value = retrievedUrls;
+    
+        document.querySelector('button').onclick = () => {
+            window.localStorage.setItem('theme', document.querySelectorAll('input')[0].value);
+            window.localStorage.setItem('search', document.querySelectorAll('input')[1].value);
+            window.localStorage.setItem('modules', JSON.stringify(document.querySelector('textarea').value.split('\n')));
+            parent.window.location.href = parent.window.location.href;
+        }
+    }
+    </script>
+    
+    <body style="overflow: scroll;">
+        <h2>Theme</h2>
+        <label>Theme URL</label>
+        <input type="url" placeholder="https://mylink.to/theme.css"/>
+        <sub>/builtin/themes/catppuccin.css</sub>
+        <h2>Modules/Scripts</h2>
+        <label>Module/Script URLs (one per line)</label>
+        <textarea style="resize: none;height: 100px;" placeholder="https://mylink.to/script1.js
+    https://mylink.to/script2.js
+    https://mylink.to/script3.js"></textarea>
+        <sub>/builtin/modules/clock.js</sub>
+        <h2>Search</h2>
+        <label>Search Engine</label>
+        <input type="url" placeholder="https://mylink.to/theme.css"/>
+        <sub>https://duckduckgo.com</sub>
+        <br/><br/>
+        <button>Update!</button>
+    </body>
+</html>

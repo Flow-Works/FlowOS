@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+:root {
+    --primary: #8aadf4;
+    --bar-bg: #1e2030;
+    --boot-bg: #181926;
+    --desktop-bg: url('/assets/catppuccin-v3.png');
+    --window-bg: #24273a;
+    --text-color: #cad3f5;
+    --font-family: 'JetBrains Mono', monospace;
+    --surface-bg: #363a4f;
+}

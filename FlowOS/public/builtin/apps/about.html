@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/index.css"/>
+        <style>
+            body, html { background: none; padding: 5px; overflow: scroll; }
+            input, textarea, button {
+                padding: 5px;
+                border: none;
+                background: var(--surface-bg);
+                border-radius: 5px;
+                width: 100%;
+                margin-top: 5px;
+            }
+    
+            input:focus, textarea:focus {
+                outline: none;
+            }
+    
+            sub {
+                opacity: 0.5;
+            }
+        </style>
+    </head>
+    <script>    
+        loadCSS(window.localStorage.getItem('theme'))
+    
+        function loadCSS(FILE_URL) {
+            var fileref = document.createElement("link");
+            fileref.rel = "stylesheet";
+            fileref.type = "text/css";
+            fileref.href = FILE_URL;
+            document.getElementsByTagName("head")[0].appendChild(fileref);
+        }
+    </script>
+    
+    <body style="overflow: scroll;text-align:center;">
+        <img src="/assets/logo.png" width="100px" style="margin: 50px 0;"/>
+        <h2>About FlowOS</h2>
+        <p>Version: v1.0.0 (Thames)</p>
+        <p>Designed By: thinliquid</p>
+        <p>Developed By: thinliquid & 1nspird#9131</p>
+        <br/><br/>
+        <sub>Copyright &copy; ThinLiquid & 1nspird</sub>
+    </body>
+</html>
