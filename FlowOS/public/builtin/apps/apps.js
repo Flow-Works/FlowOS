@@ -16,7 +16,11 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
         a.href = "#";
 
         const span = document.createElement('span');
-        span.innerText = data.title;
+        if (config.apps.get()[data.APP_ID]) {
+            span.innerText = data.title + ' (Installed)';
+        } else {
+            span.innerText = data.title;
+        }
         a.appendChild(span);
     
         const img = document.createElement('img');
@@ -32,6 +36,14 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
             const obj = { ...config.apps.get() };
             obj[data.APP_ID] = data;
             config.apps.set(obj);
+            new parent.WinBox({
+                title: 'Information',
+                html: '<div class="err">' + `Successfully installed ${data.title}! Restart FlowOS to apply changes.` + '<style>.err { padding: 5px; }</style></div>',
+                x: 'center',
+                y: 'center',
+                width: '300px',
+                height: '200px'
+            })
         }
     
         document.querySelector('.apps').appendChild(a)
