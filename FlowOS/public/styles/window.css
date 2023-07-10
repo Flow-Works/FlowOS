@@ -1,0 +1,43 @@
+body, html { 
+    background: none;
+    padding: 5px;
+    overflow: scroll;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+input, textarea, form button, select, button.long {
+    padding: 5px;
+    border: none;
+    background: var(--surface-bg);
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+textarea {
+    resize:none;
+    height: 100px;
+}
+
+input:focus, textarea:focus, form button:focus, button.long:focus, select:focus {
+    outline: none;
+}
+
+form button:hover, button.long:hover, select:hover {
+    color: var(--primary);
+}
+
+sub {
+    opacity: 0.5;
+}
+
+table, th, td {
+    border: 1px solid;
+}
+
+th, td {
+    padding: 5px;
+}

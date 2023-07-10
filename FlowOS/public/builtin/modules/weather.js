@@ -1,4 +1,8 @@
 const weather = new BarItem('weather');
+new SettingsCategory('weather', 'Weather', 
+    new SettingsInput('city', 'City Name', 'London', 'London'),
+    new SettingsDropdown('measurement', 'Measurement System', 'Celsius', ['Celsius', 'Fahrenheit']),
+);
 
 const weatherMap = {
     1000: "☀️",
@@ -52,10 +56,13 @@ const weatherMap = {
 }
 
 function startWeather() {
-    fetch('https://api.weatherapi.com/v1/current.json?key=0470cf1ea60241eeae4172153230907&q=' + 'London' + '&aqi=no')
+    fetch('https://api.weatherapi.com/v1/current.json?key=0470cf1ea60241eeae4172153230907&q=' + config.settings.get('weather').city + '&aqi=no')
         .then(res => res.json())
         .then(data => {
-            weather.setText(weatherMap[data.current.condition.code] + ' ' + data.current.temp_c + '°C')
+            let type;
+            if (config.settings.get('weather').measurement == "Celsius") type = "c";
+            else type = "f";
+            weather.setText(weatherMap[data.current.condition.code] + ' ' + data.current['temp_' + type] + '°' + type.toUpperCase())
         });
     setTimeout(startWeather, 60000);
 }

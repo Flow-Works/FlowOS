@@ -1,19 +1,40 @@
-const searchEngine = window.localStorage.getItem('search');
-
-const apps = {
-    ...JSON.parse(window.localStorage.getItem('apps')),
-    'info': new AppData('info', 'About', '/builtin/apps/about.html', false, { width: '300px', height: '500px' }),
-    'applications-apps': new AppData('applications-apps', 'App Store', '/builtin/apps/settings.html', false),
-    'settings': new AppData('settings', 'Settings', '/builtin/apps/settings.html', false, { width: '300px', height: '500px' }),
-    'search': new AppData('search', 'Search', searchEngine, true),
-}
-
-const Flow = new FlowInstance();
+window.Flow = new FlowInstance();
+window.logger = new Logger();
 
 window.onload = () => {
+    window.apps = {
+        'help': new AppData('help', 'Help', '/builtin/apps/help.html', false),
+        'info': new AppData('info', 'About', '/builtin/apps/about.html', false, { width: '300px', height: '500px', class: ['no-resize', 'no-max', 'no-full'] }),
+        'settings': new AppData('settings', 'Settings', '/builtin/apps/settings.html', false),
+        'applications-apps': new AppData('applications-apps', 'App Store', '/builtin/apps/apps.html', false),
+        'search': new AppData('search', 'Search', config.settings.get('search').url || 'https://duckduckgo.com/', true),
+        //'gamehub': new AppData('gamehub', 'Games', '/builtin/apps/games.html', false),
+        ...config.apps.get(),
+    }
+
     Flow.boot();
 }
 
-const spotlight = new BarItem('spotlight', Flow.spotlight.toggle);
+const style = document.createElement('style');
+style.setAttribute('flow-style', 'true');
+style.innerHTML = config.css.get();
+document.head.append(style);
+
+const spotlight = new BarItem('spotlight');
 
 spotlight.setText('🔎')
+spotlight.element.onclick = () => {
+    Flow.spotlight.toggle();
+}
+
+new SettingsCategory('search', 'Search', 
+    new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
+);
+
+new SettingsCategory('theme', 'Theme', 
+    new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin.css'),
+);
+
+new SettingsCategory('modules', 'Modules/Scripts', 
+    new SettingsTextarea('urls', 'Module URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', '/builtin/modules/battery.js\n/builtin/modules/clock.js\n/builtin/modules/weather.js'),
+);

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="/scripts/utils.js" defer></script>
+        <script src="/scripts/classes.js" defer></script>
+        <script src="/builtin/apps/apps.js" defer></script>
+
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/window.css" />
+    </head>
+
+    <style>
+        .apps {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tooltip {
+    text-decoration:none;
+    position:relative;
+}
+.tooltip span {
+    display:none;
+}
+.tooltip:hover span {
+    display:block;
+    position:fixed;
+    overflow:hidden;
+    z-index: 5000;
+    background: var(--surface-bg);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+    </style>
+
+    <body>
+        <h2>Apps</h2>
+        <div class="apps"></div>
+
+        <script src="/scripts/window.js" defer></script>
+    </body>
+</html>

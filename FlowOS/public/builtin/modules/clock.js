@@ -108,7 +108,6 @@ var minutes = parseInt(mins);
 return clockfaces.find((element) => {
     return element.time.find((time) => {
         var minute = parseInt(time.split(':')[1]);
-        // 🤔🤔🤔 possible to improve?
         if (((minute == 30 && (minutes >= 15 && minutes <= 45)) || (minute == 0 && (minutes < 15 || minutes > 45))) && hours == time.split(':')[0])
             return true;
         else return false;

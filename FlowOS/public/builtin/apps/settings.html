@@ -1,82 +1,152 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/index.css"/>
-        <style>
-            body, html { background: none; padding: 5px; overflow: scroll; }
-            input, textarea, button {
-                padding: 5px;
-                border: none;
-                background: var(--surface-bg);
-                border-radius: 5px;
-                width: 100%;
-                margin-top: 5px;
-            }
-    
-            input:focus, textarea:focus {
-                outline: none;
-            }
-    
-            sub {
-                opacity: 0.5;
-            }
-        </style>
+        <meta charset="UTF-8" />
+        <script src="/scripts/utils.js" defer></script>
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/window.css" />
     </head>
-    <script>    
-        loadCSS(window.localStorage.getItem('theme'))
+
+    <style>
+.sidenav {
+  width: 230px;
+  position: fixed;
+  z-index: 1;
+  top: 20px;
+  left: 10px;
+  background: var(--surface-bg);
+  overflow-x: hidden;
+  padding: 8px 0;
+  border-radius: 10px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  color: var(--text-color);
+  text-decoration: none;
+  display: block;
+}
+
+.sidenav a:hover {
+    color: var(--primary);
+}
+
+main {
+  margin-left: 240px; /* Same width as the sidebar + left position in px */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+    </style>
+
+    <body>
+        <div class="sidenav">
+            <a href="#look">Look and Feel</a>
+            <a href="#scripts">Scripts</a>
+            <a href="#modules">Modules/Apps</a>
+        </div>
+
+        <main>
+            <div id="look">
+                <h1>Look and Feel</h1>
+                <button class="long" onclick="openCSS()">Open CSS Editor</button>
+            </div>
+            <div id="scripts">
+                <h1>Scripts</h1>
+            </div>
+            <div id="modules">
+                <h1>Modules/Apps</h1>
+            </div>
+        </main>
+
+        <script src="/scripts/window.js" defer></script>
+        <script>
+            window.onload = () => {
+                Object.values(parent.Flow.settings.items).forEach((setting) => {
+                    const section = document.createElement('form');
+                    section.classList.add('settings-' + setting.SETTING_ID);
     
-        function loadCSS(FILE_URL) {
-            var fileref = document.createElement("link");
-            fileref.rel = "stylesheet";
-            fileref.type = "text/css";
-            fileref.href = FILE_URL;
-            document.getElementsByTagName("head")[0].appendChild(fileref);
-        }
-    </script>
+                    const button = document.createElement('button');
+                    button.innerText = 'Update';
+                
+                    const heading = document.createElement('h2');
+                    heading.innerText = setting.title;
     
-    <script>
-        function saveUrlsToLocalStorage(urls) {
-      const urlsString = JSON.stringify(urls);
-      localStorage.setItem('urls', urlsString);
-    }
+                    section.appendChild(heading);
     
-    function getUrlsFromLocalStorage() {
-      const urlsString = localStorage.getItem('modules');
-      const urls = JSON.parse(urlsString);
-      return urls;
-    }
+                    setting.inputs.forEach(input => {
+                        const inputEl = document.createElement(input.type);
+                        const label = document.createElement('label');
+                        const sub = document.createElement('sub');
+                        
+                        label.innerText = input.label;
+                        sub.innerText = 'Default: ' + input.defaultValue + '\n\n';
     
-    const retrievedUrls = getUrlsFromLocalStorage().join('\n');
+                        inputEl.classList.add('settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID);
+                        inputEl.placeholder = input.placeholder;
     
-    window.onload = () => {
-        document.querySelectorAll('input')[0].value = window.localStorage.getItem('theme');
-        document.querySelectorAll('input')[1].value = window.localStorage.getItem('search');
-        document.querySelector('textarea').value = retrievedUrls;
+                        if (input.type == "select") {
+                            input.options.forEach((option) => {
+                                const optionEl = document.createElement('option');
+                                optionEl.value = option;
+                                optionEl.innerText = option;
+                                
+                                inputEl.append(optionEl);
+                            })
+                        }
+                        
+                        if (input.type == "textarea") {
+                            inputEl.value = config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID].join('\n');
+                        } else {
+                            inputEl.value = config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID];
+                        }
     
-        document.querySelector('button').onclick = () => {
-            window.localStorage.setItem('theme', document.querySelectorAll('input')[0].value);
-            window.localStorage.setItem('search', document.querySelectorAll('input')[1].value);
-            window.localStorage.setItem('modules', JSON.stringify(document.querySelector('textarea').value.split('\n')));
-            parent.window.location.href = parent.window.location.href;
-        }
-    }
-    </script>
+                        section.appendChild(label);
+                        section.appendChild(inputEl);
+                        section.appendChild(sub);
     
-    <body style="overflow: scroll;">
-        <h2>Theme</h2>
-        <label>Theme URL</label>
-        <input type="url" placeholder="https://mylink.to/theme.css"/>
-        <sub>/builtin/themes/catppuccin.css</sub>
-        <h2>Modules/Scripts</h2>
-        <label>Module/Script URLs (one per line)</label>
-        <textarea style="resize: none;height: 100px;" placeholder="https://mylink.to/script1.js
-    https://mylink.to/script2.js
-    https://mylink.to/script3.js"></textarea>
-        <sub>/builtin/modules/clock.js</sub>
-        <h2>Search</h2>
-        <label>Search Engine</label>
-        <input type="url" placeholder="https://mylink.to/theme.css"/>
-        <sub>https://duckduckgo.com</sub>
-        <br/><br/>
-        <button>Update!</button>
+                        section.appendChild(button);
+    
+                        section.onsubmit = (e) => {
+                            e.preventDefault();
+    
+                            const obj = {};
+    
+                            setting.inputs.forEach((input) => {
+                                if (input.type == "textarea") {
+                                    obj[input.SETTING_INPUT_ID] = document.querySelector('.settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID).value.split('\n')
+                                } else {
+                                    obj[input.SETTING_INPUT_ID] = document.querySelector('.settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID).value;
+                                }
+                            });
+    
+                            config.settings.set(setting.SETTING_ID, obj);
+                            parent.window.location.href = parent.window.location.href;
+                        }
+                    });
+    
+                    if (setting.SETTING_ID == "theme") {
+                        document.querySelector('#look').appendChild(section);
+                    } else if (setting.SETTING_ID == "modules") {
+                        document.querySelector('#scripts').appendChild(section);
+                    } else {
+                        document.querySelector('#modules').appendChild(section);
+                    }
+                });
+            }
+
+            const openCSS = () => {
+                new parent.WinBox({
+                    title: 'CSS Editor',
+                    icon: `assets/icons/text-editor.svg`,
+                    html: `<iframe src="/builtin/apps/css.html" scrolling="yes"></iframe>`,
+                    x: 'center', y: 'center',
+                    width: '400px', height: '500px',
+                })
+            }
+        </script>
     </body>
 </html>

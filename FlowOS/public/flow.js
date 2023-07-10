@@ -1,116 +1,77 @@
-class AppData {
-    constructor(APP_ID, title, url, proxy, config = {}) {
-        this.APP_ID = APP_ID;
-        this.title = title;
-        this.url = url;
-        this.proxy = proxy;
-        this.config = config;
-    }
-}
-
-class BarItem {
-    constructor(MODULE_ID, CLICK = () => {}) {
-        this.MODULE_ID = MODULE_ID;
-        this.element = document.createElement('div');
-        this.element.classList.add('bar-item');
-        this.element.classList.add('bar-' + MODULE_ID);
-        Flow.bar.add(this);
-        this.element.onclick = CLICK;
-    }
-
-    setText(text) {
-        this.element.innerText = text;
-    }
+function playSound(soundfile) {
+    logger.debug(soundfile);
+    new Audio(soundfile).play();
 }
 
 class FlowInstance {
+    version = "v1.0.0";
     constructor() {
+        utils.registerSW();
         eruda.init();
     }
 
     boot() {
         this.apps.register();
         this.registerHotkeys();
+
+        if (!config.css.get()) config.css.set('');
+
         document.querySelector('.boot').style.opacity = 0;
 
-        if (!window.localStorage.getItem('modules')) {
-            window.localStorage.setItem('modules', JSON.stringify([
-                '/builtin/modules/clock.js',
-                '/builtin/modules/battery.js',
-                '/builtin/modules/weather.js',
-            ]));
-        }
-
-        if (!window.localStorage.getItem('apps')) {
-            window.localStorage.setItem('apps', JSON.stringify([]));
-        }
-
-        if (!window.localStorage.getItem('theme')) {
-            window.localStorage.setItem('theme', '/builtin/themes/catppuccin.css');
-        }
-
-        if (!window.localStorage.getItem('search')) {
-            window.localStorage.setItem('search', 'https://duckduckgo.com');
-        }
-
-        JSON.parse(window.localStorage.getItem('modules')).forEach((item) => {
-            this.loadJS(item);
+        if (!config.apps.get()) config.apps.set([]);
+        config.settings.get('modules').urls.forEach(async (item) => {
+            utils.loadJS(item);
         })
 
-        this.loadCSS(window.localStorage.getItem('theme'))
+        utils.loadCSS(config.settings.get('theme').url)
     }
-
-    loadCSS(FILE_URL) {
-        var fileref = document.createElement("link");
-        fileref.rel = "stylesheet";
-        fileref.type = "text/css";
-        fileref.href = FILE_URL;
-        document.getElementsByTagName("head")[0].appendChild(fileref)
-    }
-
-    loadJS(FILE_URL, async = true) {
-        let scriptEle = document.createElement("script");
-      
-        scriptEle.setAttribute("src", FILE_URL);
-        scriptEle.setAttribute("type", "text/javascript");
-        scriptEle.setAttribute("async", async);
-      
-        document.body.appendChild(scriptEle);
-      
-        // success event 
-        scriptEle.addEventListener("load", () => {
-          console.log("File loaded")
-        });
-         // error event
-        scriptEle.addEventListener("error", (ev) => {
-          console.log("Error on loading file", ev);
-        });
-      }
 
     spotlight = {
         add(app) {
             document.querySelector('.app-switcher .apps').append(app);
         },
 
-        toggle() {
+        async toggle() {
             switch (this.state) {
                 case true:
+                    document.querySelector('.app-switcher').style.opacity = 1;
                     Flow.bar.items['spotlight'].setText('🔎');
                     document.querySelector('.app-switcher').style.opacity = 0;
-                    setTimeout(() => { document.querySelector('.app-switcher').style.display = "none"; }, 200)
+                    await sleep(200);
+                    document.querySelector('.app-switcher').style.display = "none";
+                    this.state = false;
                     break;
                 case false:
                     Flow.bar.items['spotlight'].setText('❌');
                     document.querySelector('.app-switcher').style.opacity = 0;
                     document.querySelector('.app-switcher').style.display = "block";
-                    setTimeout(() => { document.querySelector('.app-switcher').style.opacity = 1;  }, 100)
+                    await sleep(200);
+                    document.querySelector('.app-switcher').style.opacity = 1;
+                    this.state = true;
                     break;
             }
-    
-            this.state = !this.state;
         },
 
         state: false,
+    }
+
+    settings = {
+        items: {},
+
+        add(ITEM) {
+            if (!config.settings.get(ITEM.SETTING_ID)) {
+                const obj = {};
+                ITEM.inputs.forEach(({ type, SETTING_INPUT_ID, defaultValue }) => {
+                    if (type == "textarea") {
+                        obj[SETTING_INPUT_ID] = defaultValue.split('\n');
+                    } else {
+                        obj[SETTING_INPUT_ID] = defaultValue;
+                    }
+                });
+                config.settings.set(ITEM.SETTING_ID, obj);
+            }
+            this.items[ITEM.SETTING_ID] = ITEM;
+        }
     }
 
     bar = {
@@ -118,7 +79,7 @@ class FlowInstance {
 
         add(ITEM) {
             this.items[ITEM.MODULE_ID] = ITEM;
-            document.querySelector('.bar').append(this.items[ITEM.MODULE_ID].element)
+            document.querySelector('.bar').append(this.items[ITEM.MODULE_ID].element);
         }
     }
 
@@ -131,6 +92,11 @@ class FlowInstance {
         hotkeys('esc', (e) => {
             e.preventDefault();
             if (this.spotlight.state == true) this.spotlight.toggle();
+        });
+
+        hotkeys('alt+/', (e) => {
+            e.preventDefault();
+            this.apps.open('settings')
         });
     }
 
@@ -150,11 +116,13 @@ class FlowInstance {
 
         open(APP_ID) {
             let url;
+            logger.debug(JSON.stringify(apps[APP_ID]))
             if (apps[APP_ID].proxy == false) {
                 url = apps[APP_ID].url
             } else {
                 url = 'https://' + window.location.hostname + '/' + __uv$config.prefix + __uv$config.encodeUrl(apps[APP_ID].url)
             }
+            logger.debug(url);
             new WinBox({
                 title: apps[APP_ID].title,
                 icon: `assets/icons/${APP_ID}.svg`,
@@ -167,3 +135,7 @@ class FlowInstance {
 }
 
 eruda.init();
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
