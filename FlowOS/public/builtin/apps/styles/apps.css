@@ -1,0 +1,24 @@
+.apps {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.tooltip {
+	text-decoration:none;
+	position:relative;
+}
+
+.tooltip span {
+	display:none;
+}
+
+.tooltip:hover span {
+	display:block;
+	position:fixed;
+	overflow:hidden;
+	z-index: 5000;
+	background: var(--surface-bg);
+	padding: 5px;
+	border-radius: 5px;
+}
