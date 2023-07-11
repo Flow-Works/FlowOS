@@ -2,7 +2,7 @@ import { createBareServer } from "@tomphttp/bare-server-node";
 import express from "express";
 import { createServer } from "node:http";
 import { publicPath } from "../FlowOS/lib/index.js";
-import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import { uvPath } from "@proudparrot2/uv";
 import { join } from "node:path";
 import { hostname } from "node:os";
 import crypto from "crypto";
@@ -11,8 +11,8 @@ import 'dotenv/config';
 const bare = createBareServer("/bare/");
 const app = express();
 
-const key = Buffer.from(process.env.KEY, 'hex');
-const iv = Buffer.from(process.env.IV, 'hex');
+const key = Buffer.from(String(process.env.KEY), 'hex');
+const iv = Buffer.from(String(process.env.IV), 'hex');
 
 function encrypt(plainText, outputEncoding = "base64") {
   var mykey = crypto.createCipheriv('aes-128-cbc', key, iv);
