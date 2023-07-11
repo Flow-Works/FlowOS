@@ -1,8 +1,3 @@
-function playSound(soundfile) {
-    logger.debug(soundfile);
-    new Audio(soundfile).play();
-}
-
 class FlowInstance {
     version = "v1.0.0";
     constructor() {

@@ -16,11 +16,6 @@ window.onload = () => {
     Flow.boot();
 }
 
-const style = document.createElement('style');
-style.setAttribute('flow-style', 'true');
-style.innerHTML = config.css.get();
-document.head.append(style);
-
 new SettingsCategory('search', 'Search', 
     new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
 );
