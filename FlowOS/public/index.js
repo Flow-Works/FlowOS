@@ -21,7 +21,7 @@ new SettingsCategory('search', 'Search',
 );
 
 new SettingsCategory('theme', 'Theme', 
-    new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin.css'),
+    new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin-dark.css'),
 );
 
 new SettingsCategory('modules', 'Modules/Scripts', 
