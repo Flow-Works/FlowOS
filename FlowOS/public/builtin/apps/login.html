@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="/scripts/utils.js" defer></script>
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/window.css" />
+    </head>
+
+    <script>
+        window.onload = () => {
+            document.querySelector('form').onsubmit = (e) => {
+                e.preventDefault();
+                fetch('/verify?aes=' + config.password.get() + '&input=' + document.querySelector('input[type="password"]').value).then(res => res.text())
+                    .then(data => {
+                        if (data == "true") {
+                            parent.loginWindow.close();
+                        } else if (data == "false") {
+                            document.querySelector('sub').innerText = 'incorrect.'
+                        }
+                    })
+            }
+        }
+    </script>
+
+    <body>
+        <div class="outer">
+            <div class="middle">
+              <div class="inner">
+                <div class="login">
+                    <h1>Login to FlowOS.</h1>
+                    <form>
+                        <label>Enter Password</label>
+                        <input type="password" />
+                        <sub></sub>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <script src="/scripts/window.js" defer></script>
+    </body>
+</html>
+
+<style>
+    .outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  /* Whatever width you want */
+}
+</style>

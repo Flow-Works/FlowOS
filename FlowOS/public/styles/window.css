@@ -6,14 +6,24 @@ body, html {
     color: var(--text-color);
     overflow-x: hidden;
     scroll-behavior: smooth;
+    position:relative;
+    height: calc(100% - 10px);
 }
 
 input, textarea, form button, select, button.long {
-    padding: 5px;
+    padding: 5px 10px;
     border: none;
     background: var(--surface-bg);
     border-radius: 5px;
     width: 100%;
+    margin-top: 5px;
+}
+
+button {
+    padding: 5px;
+    border: none;
+    background: var(--surface-bg);
+    border-radius: 5px;
     margin-top: 5px;
 }
 
@@ -22,11 +32,11 @@ textarea {
     height: 100px;
 }
 
-input:focus, textarea:focus, form button:focus, button.long:focus, select:focus {
+input:focus, textarea:focus, button:focus, button.long:focus, select:focus {
     outline: none;
 }
 
-form button:hover, button.long:hover, select:hover {
+button:hover, select:hover {
     color: var(--primary);
 }
 
@@ -39,5 +49,12 @@ table, th, td {
 }
 
 th, td {
+    padding: 5px;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     padding: 5px;
 }

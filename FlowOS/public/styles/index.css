@@ -65,6 +65,8 @@ html, body {
   overflow: hidden;
   transition-delay: opacity 1s;
   transition: opacity 3s, background 1s;
+  z-index: 10000;
+  position:relative;
 }
 
 .boot main {
@@ -108,7 +110,7 @@ html, body {
   top: 0; left: 0;
   display: flex;
   gap: 5px;
-  opacity: 0.3;
+  opacity: 0.75;
   flex-direction: row-reverse;
   justify-content: center;
   transition: opacity 0.2s;

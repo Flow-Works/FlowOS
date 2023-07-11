@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="/scripts/utils.js" defer></script>
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/window.css" />
+    </head>
+
+    <script>
+        let page = 1;
+        window.onload = () => {
+            document.querySelector('#next').onclick = () => {
+                page += 1;
+
+                if (page == 3) document.querySelector('#next').innerText = "Finish"
+
+                if (page == 4) {
+                    fetch('/gen?password=' + document.querySelector('input[type="password"]').value).then(res => res.text())
+                        .then(data => {
+                            config.setup.set(true);
+                            config.password.set(data);
+                            parent.window.location.href = parent.window.location.href;
+                        })
+                } else {
+                    document.querySelector('.page' + (page - 1)).style.display = "none";
+                    document.querySelector('.page' + page).style.display = "block";
+                }
+            }
+
+            document.querySelector('form').onsubmit = (e) => {
+                e.preventDefault();
+                page += 1;
+
+                if (page == 3) document.querySelector('#next').innerText = "Finish"
+
+                if (page == 4) {
+                    //config.setup.set(true);
+                    alert(document.querySelector('input[type="password"]').value)
+                } else {
+                    document.querySelector('.page' + (page - 1)).style.display = "none";
+                    document.querySelector('.page' + page).style.display = "block";
+                }
+            }
+        }
+    </script>
+
+    <body>
+        <div class="outer">
+            <div class="middle">
+              <div class="inner">
+                <div class="setup">
+                    <div class="page1">
+                        <h1>Welcome to FlowOS.</h1>
+                        <p>Unlock the excellent functions of <i>your</i> flow.</p>
+                    </div>
+                    <div class="page2">
+                        <h1>Create an account.</h1>
+                        <form>
+                            <label>Enter Password</label>
+                            <input type="password" />
+                        </form>
+                    </div>
+                    <div class="page3">
+                        <h1>Setup Finished!</h1>
+                    </div>
+                    <div class="bottom">
+                        <button id="next">Continue</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <script src="/scripts/window.js" defer></script>
+    </body>
+</html>
+
+<style>
+    .outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  /* Whatever width you want */
+}
+
+.page2, .page3 {
+    display: none;
+}
+</style>

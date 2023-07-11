@@ -5,9 +5,39 @@ import { publicPath } from "../FlowOS/lib/index.js";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { join } from "node:path";
 import { hostname } from "node:os";
+import crypto from "crypto";
+import 'dotenv/config';
 
 const bare = createBareServer("/bare/");
 const app = express();
+
+const key = Buffer.from(process.env.KEY, 'hex');
+const iv = Buffer.from(process.env.IV, 'hex');
+
+function encrypt(plainText, outputEncoding = "base64") {
+  var mykey = crypto.createCipheriv('aes-128-cbc', key, iv);
+  var mystr = mykey.update(plainText, 'utf8', 'hex')
+  mystr += mykey.final('hex');
+  return mystr;
+}
+
+function decrypt(cipherText, outputEncoding = "utf8") {
+  var mykey = crypto.createDecipheriv('aes-128-cbc', key, iv);
+  var mystr = mykey.update(cipherText, 'hex', 'utf8')
+  mystr += mykey.final('utf8');
+  return mystr;
+}
+
+app.get('/verify', async (req, res) => {
+  const dec = decrypt(req.query.aes);
+  res.send(dec == req.query.input);
+});
+
+
+app.get('/gen', async (req, res) => {
+  const enc = encrypt(req.query.password);
+  res.send(enc);
+});
 
 // Load our publicPath first and prioritize it over UV.
 app.use(express.static(publicPath));

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="/scripts/utils.js" defer></script>
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="/styles/window.css" />
+        <script src="/uv/uv.bundle.js" defer></script>
+        <script src="/uv/uv.config.js" defer></script>
+        <script src="/scripts/serviceWorker.js" defer></script>
+    </head>
+
+    <style>
+.topnav div {
+    padding: 5px;
+    border-radius:5px;
+  color: var(--text-color);
+  
+  display: block;
+  height:100%;
+  background: var(--surface-bg);
+}
+
+.topnav a {
+    text-decoration: none;
+}
+
+.topnav div a:hover {
+    color: var(--primary);
+}
+
+.topnav, .tabs {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    gap: 5px;
+    margin-bottom: 5px;
+    height: max-content;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+}
+
+ main {
+    width: 100%;
+    height: calc(100% - 40px);
+ }
+    </style>
+
+    <script>
+        let id = 0;
+
+        var targetObj = { active: { iframe: null, permID: null }, };
+        let history = [];
+        var targetProxy = new Proxy(targetObj, {
+            set: function (target, key, value) {
+                history = [value.permID].concat(history);
+
+                if (history.length > 1) {
+                    if (history[0] !== history[1]) {
+                        value.iframe.style.display = "block";
+                        try { document.querySelector(`iframe[id="${history[1]}"]`).style.display = "none"; }
+                        catch(e) {};
+                        target[key] = value;
+                    }
+                }
+                return true;
+            }
+        });
+
+        class Tab {
+            constructor() {
+                id += 1;
+                const permID = id;
+
+                const div = document.createElement('div');
+
+                const a = document.createElement('a');
+                a.id = permID;
+                a.innerText = "Loading... ";
+                a.href = '#';
+
+                const a2 = document.createElement('a');
+                a2.innerText = "[x]";
+                a2.href = '#';
+
+                div.appendChild(a);
+                div.appendChild(a2);
+                
+                const iframe = document.createElement('iframe');
+                iframe.src = __uv$config.prefix + __uv$config.encodeUrl('https://google.com');
+                iframe.id = permID;
+                iframe.onload = () => {
+                    a.innerText = iframe.contentDocument.title + ' ';
+                }
+
+                a.onclick = () => {
+                    targetProxy.active = { iframe, permID };
+                }
+
+                a2.onclick = () => {
+                    iframe.remove();
+                    div.remove();
+                    targetProxy.active = { iframe: document.querySelector(`iframe[id="${history[1]}"]`), permID: history[1] };
+                }
+
+                targetProxy.active = { iframe, permID };
+
+                document.querySelector('.tabs').append(div);
+                document.querySelector('main').append(iframe);
+            }
+        }
+
+        window.onload = () => {
+            new Tab();
+        }
+    </script>
+
+    <body>
+        <div class="topnav">
+            <span class="tabs"></span>
+            <div><a style="padding: 5px 10px;" onclick="new Tab();">+</a></div>
+        </div>
+
+        <main>
+            
+        </main>
+
+        <script src="/scripts/window.js" defer></script>
+    </body>
+</html>

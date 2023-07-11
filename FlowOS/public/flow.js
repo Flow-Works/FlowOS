@@ -11,18 +11,39 @@ class FlowInstance {
     }
 
     boot() {
-        this.apps.register();
-        this.registerHotkeys();
+        document.querySelector('.boot').style.opacity = 0;
+        setTimeout(() => { document.querySelector('.boot').style.pointerEvents = "none"; }, 700)
 
         if (!config.css.get()) config.css.set('');
+        if (!config.setup.get()) {
+            new WinBox({
+                title: 'Setup Wizard',
+                class: ['no-close'],
+                modal: true,
+                html: `<iframe src="/builtin/apps/setup.html" scrolling="yes"></iframe>`,
+            })
+        } else {
+            window.loginWindow = new WinBox({
+                title: 'Login',
+                class: ['no-close'],
+                modal: true,
+                html: `<iframe src="/builtin/apps/login.html" scrolling="yes"></iframe>`,
+                onclose: () => {
+                    this.apps.register();
+                    this.registerHotkeys();
+                    config.settings.get('modules').urls.forEach(async (item) => {
+                        utils.loadJS(item);
+                    });
+                    const spotlight = new BarItem('spotlight');
 
-        document.querySelector('.boot').style.opacity = 0;
-
-        if (!config.apps.get()) config.apps.set([]);
-        config.settings.get('modules').urls.forEach(async (item) => {
-            utils.loadJS(item);
-        })
-
+                    spotlight.setText('🔎')
+                    spotlight.element.onclick = () => {
+                        Flow.spotlight.toggle();
+                    }
+                }
+            })
+        }
+        
         utils.loadCSS(config.settings.get('theme').url)
     }
 

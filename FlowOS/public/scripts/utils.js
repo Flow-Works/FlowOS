@@ -10,6 +10,22 @@ window.config = {
             return window.localStorage.setItem('css', value);
         },
     },
+    setup: {
+        get: function() {
+            return window.localStorage.getItem('setup');
+        },
+        set: function(value) {
+            return window.localStorage.setItem('setup', value);
+        },
+    },
+    password: {
+        get: function() {
+            return window.localStorage.getItem('password');
+        },
+        set: function(value) {
+            return window.localStorage.setItem('password', value);
+        },
+    },
     apps: {
         get: function() {
             return JSON.parse(window.localStorage.getItem('apps'));
