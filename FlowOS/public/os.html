@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes"> 
+	  <meta name="apple-touch-fullscreen" content="yes">
+	  <meta name="apple-mobile-web-app-title" content="FlowOS">
+	  <link rel="apple-touch-icon" href="/assets/logo.png">
+	  <meta name="apple-touch-startup-image" content="/assets/logo.png">
+
+    <link rel="icon" href="/assets/logo.svg"/>
+    <link rel="favicon" href="/assets/logo.svg"/>
+
+    <title>FlowOS</title>
+   
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    <script src="/scripts/classes.js" defer></script>
+    <script src="/scripts/utils.js" defer></script>
+    <script src="/scripts/logger.js" defer></script>
+    <script src="/uv/uv.bundle.js" defer></script>
+    <script src="/uv/uv.config.js" defer></script>
+    <script src="/scripts/serviceWorker.js" defer></script>
+  </head>
+
+  <body>
+    <div class="boot">
+      <audio src="/assets/boot.mp3" id="my_audio" autoplay="autoplay"></audio>
+
+      <main>
+        <img src="/assets/logo.svg" width="100px" class="logo"/>
+
+        <div class="progress-bar" style="margin-top: 20px;">
+          <div class="progress-bar-value"></div>
+        </div>
+      </main>
+    </div>
+
+    <div class="bar"></div>
+
+    <div class="app-switcher">
+      <ul class="apps"></ul>
+    </div>
+
+    <script src="https://rawcdn.githack.com/nextapps-de/winbox/0.2.73/dist/winbox.bundle.min.js"></script>
+    <script>
+      window.onerror = (e) => {
+        new WinBox({
+          title: 'Error',
+          html: '<div class="err">' + e + '<style>.err { padding: 5px; }</style></div>',
+          x: 'center',
+          y: 'center',
+          width: '300px',
+          height: '200px'
+        })
+    }
+    </script>
+    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    
+    <script src="/flow.js" defer></script>
+    <script src="/index.js" defer></script>
+  </body>
+</html>

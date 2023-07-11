@@ -15,52 +15,36 @@
 
     <title>FlowOS</title>
    
+	<link rel="stylesheet" href="/styles/window.css" />
     <link rel="stylesheet" href="/styles/index.css" />
-
-    <script src="/scripts/classes.js" defer></script>
-    <script src="/scripts/utils.js" defer></script>
-    <script src="/scripts/logger.js" defer></script>
-    <script src="/uv/uv.bundle.js" defer></script>
-    <script src="/uv/uv.config.js" defer></script>
-    <script src="/scripts/serviceWorker.js" defer></script>
   </head>
 
   <body>
-    <div class="boot">
-      <audio src="/assets/boot.mp3" id="my_audio" autoplay="autoplay"></audio>
+    <div style="text-align: center;">
+		<h1>FlowOS</h1>
+		<button onclick="window.location.href = '/os.html'">Regular Boot</button>
+		<br/>
+		<button onclick="const win = window.open('', 'owo', 'owo');win.document.body.innerHTML = `<iframe src='${window.location.href + '/os.html'}'></iframe><style>body, html {margin:0;}iframe{width:100%;height:100%;border:none;}</style>`;">Hidden Boot</button>
+	</div>
 
-      <main>
-        <img src="/assets/logo.svg" width="100px" class="logo"/>
+	<style>
+		body, html {
+			background: var(--boot-bg);
+		}
+	</style>
 
-        <div class="progress-bar" style="margin-top: 20px;">
-          <div class="progress-bar-value"></div>
-        </div>
-      </main>
-    </div>
+	<script>
+		function loadCSS(FILE_URL) {
+        	const styleEle = document.createElement("link");
 
-    <div class="bar"></div>
+        	styleEle.setAttribute('rel', 'stylesheet');
+        	styleEle.setAttribute('type', 'text/css');
+        	styleEle.setAttribute('href', FILE_URL);
+        
+        	document.head.appendChild(styleEle);
+    	};
 
-    <div class="app-switcher">
-      <ul class="apps"></ul>
-    </div>
-
-    <script src="https://rawcdn.githack.com/nextapps-de/winbox/0.2.73/dist/winbox.bundle.min.js"></script>
-    <script>
-      window.onerror = (e) => {
-        new WinBox({
-          title: 'Error',
-          html: '<div class="err">' + e + '<style>.err { padding: 5px; }</style></div>',
-          x: 'center',
-          y: 'center',
-          width: '300px',
-          height: '200px'
-        })
-    }
-    </script>
-    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    
-    <script src="/flow.js" defer></script>
-    <script src="/index.js" defer></script>
+		loadCSS(JSON.parse(window.localStorage.getItem('theme')).url)
+	</script>
   </body>
 </html>
