@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+:root {
+    --primary: #88C0D0;
+    --boot-bg: #D8DEE9;
+    --bar-bg: #E5E9F0;
+    --window-bg: #E5E9F0;
+    --surface-bg: #ECEFF4;
+    --text-color: #4C566A;
+    --desktop-bg: url('/builtin/wallpapers/nord-light.png'); /* or darkest color */
+    --font-family: 'JetBrains Mono', monospace;
+}
+
+.winbox .wb-control, .logo{filter:invert(1)}
