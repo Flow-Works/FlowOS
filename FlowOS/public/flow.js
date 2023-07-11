@@ -6,10 +6,12 @@ class FlowInstance {
     }
 
     boot() {
+		utils.registerSW();
         document.querySelector('.boot').style.opacity = 0;
         setTimeout(() => { document.querySelector('.boot').style.pointerEvents = "none"; }, 700)
 
         if (!config.css.get()) config.css.set('');
+		if (!config.apps.get()) config.apps.set([]);
         if (!config.setup.get()) {
             new WinBox({
                 title: 'Setup Wizard',
@@ -118,7 +120,7 @@ class FlowInstance {
 
     apps = {
         register() {
-            for (const [APP_ID, value] of Object.entries(apps)) {
+            for (const [APP_ID, value] of Object.entries(window.apps())) {
                 const appListItem = document.createElement('li');
                 appListItem.innerHTML = `<img src="/assets/icons/${APP_ID}.svg" width="25px"/>${value.title}`;
                 appListItem.onclick = () => {
@@ -132,19 +134,19 @@ class FlowInstance {
 
         open(APP_ID) {
             let url;
-            logger.debug(JSON.stringify(apps[APP_ID]))
-            if (apps[APP_ID].proxy == false) {
-                url = apps[APP_ID].url
+            logger.debug(JSON.stringify(window.apps()[APP_ID]))
+            if (window.apps()[APP_ID].proxy == false) {
+                url = window.apps()[APP_ID].url
             } else {
-                url = 'https://' + window.location.hostname + '/' + __uv$config.prefix + __uv$config.encodeUrl(apps[APP_ID].url)
+                url = 'https://' + window.location.hostname + '/' + __uv$config.prefix + __uv$config.encodeUrl(window.apps()[APP_ID].url)
             }
             logger.debug(url);
             new WinBox({
-                title: apps[APP_ID].title,
+                title: window.apps()[APP_ID].title,
                 icon: `assets/icons/${APP_ID}.svg`,
                 html: `<iframe src="${url}" scrolling="yes"></iframe>`,
                 x: 'center', y: 'center',
-                ...apps[APP_ID].config
+                ...window.apps()[APP_ID].config
             })
         }
     }

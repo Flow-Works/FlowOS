@@ -20,11 +20,12 @@
   </head>
 
   <body>
-    <div style="text-align: center;">
-		<h1>FlowOS</h1>
+    <div style="text-align: center;position:absolute;top:50%;left:50%;transform: translate(-50%, -50%);">
+		<img src="/assets/logo.svg" class="logo" width="100px"/>
+		<br/>
 		<button onclick="window.location.href = '/os.html'">Regular Boot</button>
 		<br/>
-		<button onclick="const win = window.open('', 'owo', 'owo');win.document.body.innerHTML = `<iframe src='${window.location.href + '/os.html'}'></iframe><style>body, html {margin:0;}iframe{width:100%;height:100%;border:none;}</style>`;">Hidden Boot</button>
+		<button onclick="const win = window.open('', 'owo', 'owo');win.document.body.innerHTML = `<iframe src='${window.location.href + '/os.html'}'></iframe><style>body, html {margin:0;}iframe{width:100%;height:100%;border:none;}</style>`;">Cloaked Boot</button>
 	</div>
 
 	<style>
@@ -44,7 +45,11 @@
         	document.head.appendChild(styleEle);
     	};
 
-		loadCSS(JSON.parse(window.localStorage.getItem('theme')).url)
+		if (window.localStorage.getItem('theme')) {
+			loadCSS(JSON.parse(window.localStorage.getItem('theme')).url)
+		} else {
+			loadCSS('/builtin/themes/catppuccin-dark.css');
+		}
 	</script>
   </body>
 </html>

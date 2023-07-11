@@ -46,7 +46,7 @@ class Tab {
         div.appendChild(a2);
 
         const iframe = document.createElement('iframe');
-        iframe.src = __uv$config.prefix + __uv$config.encodeUrl('https://google.com');
+        iframe.src = __uv$config.prefix + __uv$config.encodeUrl(config.settings.get('search').url);
         iframe.id = permID;
         iframe.onload = () => {
             a.innerText = iframe.contentDocument.title + ' ';

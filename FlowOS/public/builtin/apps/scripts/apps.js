@@ -13,42 +13,54 @@ function loadScript(sources, callBack) {
 
 loadScript('https://flow-works.github.io/appstore/apps.js', () => {
     Object.values(appStore).forEach((data) => {
-        const a = document.createElement('a');
-        a.classList.add('tooltip')
+        const a = document.createElement('div');
+        a.classList.add('tooltip');
         a.href = "#";
+
+		const h3 = document.createElement('h3');
+		const p = document.createElement('p');
+		const button = document.createElement('button');
+		p.innerText = data.url;
+		h3.innerText = data.title;
 
         const span = document.createElement('span');
         if (config.apps.get()[data.APP_ID]) {
+			button.innerText = 'Uninstall'
+			h3.innerText = data.title + ' (Installed)';
             span.innerText = data.title + ' (Installed)';
         } else {
+			button.innerText = 'Install'
+			h3.innerText = data.title;
             span.innerText = data.title;
-        } a.appendChild(span);
+        };
+		a.appendChild(span);
 
         const img = document.createElement('img');
         img.setAttribute('width', '100px');
         img.src = '/assets/icons/' + data.APP_ID + '.svg';
         a.appendChild(img);
+		a.appendChild(h3);
+		h3.appendChild(p);
+		button.style.background = "var(--window-bg)";
+		h3.appendChild(button);
 
         function isInArray(value, array) {
             return array.indexOf(value) > -1;
         }
 
-        a.onclick = () => {
+        button.onclick = () => {
             const obj = {
                 ...config.apps.get()
             };
-            obj[data.APP_ID] = data;
+			if (config.apps.get()[data.APP_ID]) {
+				delete obj[data.APP_ID];
+			} else {
+				obj[data.APP_ID] = data;
+			}
             config.apps.set(obj);
-            new parent.WinBox({
-                title: 'Information',
-                html: '<div class="err">' + `Successfully installed ${
-                    data.title
-                }! Restart FlowOS to apply changes.` + '<style>.err { padding: 5px; }</style></div>',
-                x: 'center',
-                y: 'center',
-                width: '300px',
-                height: '200px'
-            })
+			window.location.reload();
+			parent.document.querySelector('.app-switcher .apps').innerHTML = '';
+			parent.Flow.apps.register();
         }
 
         document.querySelector('.apps').appendChild(a)

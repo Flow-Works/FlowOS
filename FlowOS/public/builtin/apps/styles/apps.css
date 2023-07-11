@@ -1,12 +1,21 @@
 .apps {
-	display: flex;
 	gap: 10px;
-	flex-wrap: wrap;
 }
 
 .tooltip {
 	text-decoration:none;
 	position:relative;
+	background: var(--surface-bg);
+	border-radius:10px;
+	margin: 10px 0;
+	padding: 10px;
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+
+h3 p {
+	font-size: 15px!important;
 }
 
 .tooltip span {
