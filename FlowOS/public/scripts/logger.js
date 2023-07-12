@@ -1,10 +1,10 @@
-const regex = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g
+const regex = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
 
 function getBox(width, height) {
 	return {
-		string: "+",
-		style: "font-size: 1px; padding: " + Math.floor(height / 10) + "px " + Math.floor(width / 2) + "px; line-height: " + height + "px;"
-	}
+		string: '+',
+		style: 'font-size: 1px; padding: ' + Math.floor(height / 10) + 'px ' + Math.floor(width / 2) + 'px; line-height: ' + height + 'px;'
+	};
 }
 
 class Logger {
@@ -14,9 +14,9 @@ class Logger {
 		const logLines = (new Error().stack).split('\n');
 		console.log(
 			`%cFlowOS%c${type.toUpperCase()}%c ${msg}`,
-			"padding:2.5px 10px;color:white;border-radius:10px;background:#363a4f;margin-right:5px;",
+			'padding:2.5px 10px;color:white;border-radius:10px;background:#363a4f;margin-right:5px;',
 			`padding:2.5px 10px;color:white;border-radius:10px;background:${color};`,
-			"padding:2.5px;"
+			'padding:2.5px;'
 		);
 	}
 
@@ -26,7 +26,7 @@ class Logger {
 
 		img.onload = function () {
 			var dim = getBox(this.width * scale, this.height * scale);
-			console.log("%c" + dim.string + "%c FlowOS\n " + Flow.version, dim.style + "background: url(" + url + "); background-repeat: no-repeat; background-size: " + (this.width * scale) + "px " + (this.height * scale) + "px; color: transparent;", '');
+			console.log('%c' + dim.string + '%c FlowOS\n ' + Flow.version, dim.style + 'background: url(' + url + '); background-repeat: no-repeat; background-size: ' + (this.width * scale) + 'px ' + (this.height * scale) + 'px; color: transparent;', '');
 		};
 
 		img.src = url;
@@ -46,7 +46,7 @@ class Logger {
 			y: 'center',
 			width: '300px',
 			height: '200px'
-		})
+		});
 	}
 
 	success(msg) {

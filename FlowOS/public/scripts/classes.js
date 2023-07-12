@@ -22,7 +22,7 @@ class SettingsCategory {
 }
 
 class SettingsFormItem {
-	constructor(SETTING_INPUT_ID, label, type, placeholder = "", defaultValue = "") {
+	constructor(SETTING_INPUT_ID, label, type, placeholder = '', defaultValue = '') {
 		this.SETTING_INPUT_ID = SETTING_INPUT_ID;
 		this.label = label;
 		this.type = type;
@@ -33,23 +33,23 @@ class SettingsFormItem {
 }
 
 class SettingsInput extends SettingsFormItem {
-	constructor(SETTING_INPUT_ID, label, placeholder = "", defaultValue = "") {
-		super(SETTING_INPUT_ID, label, "input", placeholder, defaultValue);
+	constructor(SETTING_INPUT_ID, label, placeholder = '', defaultValue = '') {
+		super(SETTING_INPUT_ID, label, 'input', placeholder, defaultValue);
 		return this;
 	}
 }
 
 class SettingsTextarea extends SettingsFormItem {
-	constructor(SETTING_INPUT_ID, label, placeholder = "", defaultValue = "") {
-		super(SETTING_INPUT_ID, label, "textarea", placeholder, defaultValue);
+	constructor(SETTING_INPUT_ID, label, placeholder = '', defaultValue = '') {
+		super(SETTING_INPUT_ID, label, 'textarea', placeholder, defaultValue);
 		return this;
 	}
 }
 
 
 class SettingsDropdown extends SettingsFormItem {
-	constructor(SETTING_INPUT_ID, label, defaultValue = "", options = []) {
-		super(SETTING_INPUT_ID, label, "select", "", defaultValue);
+	constructor(SETTING_INPUT_ID, label, defaultValue = '', options = []) {
+		super(SETTING_INPUT_ID, label, 'select', '', defaultValue);
 		this.options = options;
 		return this;
 	}

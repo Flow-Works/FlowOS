@@ -1,5 +1,6 @@
 class FlowInstance {
-	version = "v1.0.0";
+	version = 'v1.0.0';
+
 	constructor() {
 		utils.registerSW();
 		eruda.init();
@@ -8,8 +9,8 @@ class FlowInstance {
 	boot() {
 		document.querySelector('.boot').style.opacity = 0;
 		setTimeout(() => {
-			document.querySelector('.boot').style.pointerEvents = "none";
-		}, 700)
+			document.querySelector('.boot').style.pointerEvents = 'none';
+		}, 700);
 
 		if (!config.css.get()) config.css.set('');
 		if (!config.apps.get()) config.apps.set([]);
@@ -21,7 +22,7 @@ class FlowInstance {
 				y: 'center',
 				height: '500px',
 				html: `<iframe src="/builtin/apps/setup.html" scrolling="yes"></iframe>`,
-			})
+			});
 		} else {
 			window.loginWindow = new WinBox({
 				title: 'Login',
@@ -36,15 +37,15 @@ class FlowInstance {
 					});
 					const spotlight = new BarItem('spotlight');
 
-					spotlight.setText('🔎')
+					spotlight.setText('🔎');
 					spotlight.element.onclick = () => {
 						Flow.spotlight.toggle();
-					}
+					};
 				}
-			})
+			});
 		}
 
-		utils.loadCSS(config.settings.get('theme').url)
+		utils.loadCSS(config.settings.get('theme').url);
 	}
 
 	spotlight = {
@@ -59,13 +60,13 @@ class FlowInstance {
 					Flow.bar.items['spotlight'].setText('🔎');
 					document.querySelector('.app-switcher').style.opacity = 0;
 					await sleep(200);
-					document.querySelector('.app-switcher').style.display = "none";
+					document.querySelector('.app-switcher').style.display = 'none';
 					this.state = false;
 					break;
 				case false:
 					Flow.bar.items['spotlight'].setText('❌');
 					document.querySelector('.app-switcher').style.opacity = 0;
-					document.querySelector('.app-switcher').style.display = "block";
+					document.querySelector('.app-switcher').style.display = 'block';
 					await sleep(200);
 					document.querySelector('.app-switcher').style.opacity = 1;
 					this.state = true;
@@ -74,7 +75,7 @@ class FlowInstance {
 		},
 
 		state: false,
-	}
+	};
 
 	settings = {
 		items: {},
@@ -87,7 +88,7 @@ class FlowInstance {
 					SETTING_INPUT_ID,
 					defaultValue
 				}) => {
-					if (type == "textarea") {
+					if (type == 'textarea') {
 						obj[SETTING_INPUT_ID] = defaultValue.split('\n');
 					} else {
 						obj[SETTING_INPUT_ID] = defaultValue;
@@ -97,7 +98,7 @@ class FlowInstance {
 			}
 			this.items[ITEM.SETTING_ID] = ITEM;
 		}
-	}
+	};
 
 	bar = {
 		items: {},
@@ -106,7 +107,7 @@ class FlowInstance {
 			this.items[ITEM.MODULE_ID] = ITEM;
 			document.querySelector('.bar').append(this.items[ITEM.MODULE_ID].element);
 		}
-	}
+	};
 
 	registerHotkeys() {
 		hotkeys('alt+space', (e) => {
@@ -121,7 +122,7 @@ class FlowInstance {
 
 		hotkeys('alt+/', (e) => {
 			e.preventDefault();
-			this.apps.open('settings')
+			this.apps.open('settings');
 		});
 	}
 
@@ -141,11 +142,11 @@ class FlowInstance {
 
 		open(APP_ID) {
 			let url;
-			logger.debug(JSON.stringify(window.apps()[APP_ID]))
+			logger.debug(JSON.stringify(window.apps()[APP_ID]));
 			if (window.apps()[APP_ID].proxy == false) {
-				url = window.apps()[APP_ID].url
+				url = window.apps()[APP_ID].url;
 			} else {
-				url = 'https://' + window.location.hostname + '/' + __uv$config.prefix + __uv$config.encodeUrl(window.apps()[APP_ID].url)
+				url = 'https://' + window.location.hostname + '/' + __uv$config.prefix + __uv$config.encodeUrl(window.apps()[APP_ID].url);
 			}
 			logger.debug(url);
 			new WinBox({
@@ -155,9 +156,9 @@ class FlowInstance {
 				x: 'center',
 				y: 'center',
 				...window.apps()[APP_ID].config
-			})
+			});
 		}
-	}
+	};
 }
 
 eruda.init();

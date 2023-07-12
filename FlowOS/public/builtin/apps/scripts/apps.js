@@ -5,7 +5,7 @@ function loadScript(sources, callBack) {
 	document.body.appendChild(script);
 
 	script.addEventListener('load', () => {
-		if (typeof callBack == "function")
+		if (typeof callBack == 'function')
 			callBack(sources);
 
 	});
@@ -15,7 +15,7 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 	Object.values(appStore).forEach((data) => {
 		const a = document.createElement('div');
 		a.classList.add('tooltip');
-		a.href = "#";
+		a.href = '#';
 
 		const h3 = document.createElement('h3');
 		const p = document.createElement('p');
@@ -25,11 +25,11 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 
 		const span = document.createElement('span');
 		if (config.apps.get()[data.APP_ID]) {
-			button.innerText = 'Uninstall'
+			button.innerText = 'Uninstall';
 			h3.innerText = data.title + ' (Installed)';
 			span.innerText = data.title + ' (Installed)';
 		} else {
-			button.innerText = 'Install'
+			button.innerText = 'Install';
 			h3.innerText = data.title;
 			span.innerText = data.title;
 		};
@@ -41,7 +41,7 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 		a.appendChild(img);
 		a.appendChild(h3);
 		h3.appendChild(p);
-		button.style.background = "var(--window-bg)";
+		button.style.background = 'var(--window-bg)';
 		h3.appendChild(button);
 
 		function isInArray(value, array) {
@@ -61,9 +61,9 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 			window.location.reload();
 			parent.document.querySelector('.app-switcher .apps').innerHTML = '';
 			parent.Flow.apps.register();
-		}
+		};
 
-		document.querySelector('.apps').appendChild(a)
+		document.querySelector('.apps').appendChild(a);
 	});
 
 	var tooltips = document.querySelectorAll('.tooltip span');

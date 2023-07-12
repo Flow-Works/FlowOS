@@ -1,7 +1,11 @@
 {
 	"root": true,
   	"parserOptions": {
-    	"ecmaVersion": "latest",
-    	"sourceType": "module"
-  	}
+    	"ecmaVersion": "latest"
+  	},
+	"rules": {
+        "semi": [2, "always"],
+		"quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
+		"no-var": 0
+    }
 }
