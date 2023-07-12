@@ -14,7 +14,9 @@ var targetProxy = new Proxy(targetObj, {
 
 		if (history.length > 1) {
 			if (history[0] !== history[1]) {
-				value.iframe.style.display = "block";
+				try {
+					value.iframe.style.display = "block";
+				} catch (e) {};
 				try {
 					document.querySelector(`iframe[id="${
                         history[1]
@@ -63,12 +65,15 @@ class Tab {
 		a2.onclick = () => {
 			iframe.remove();
 			div.remove();
-			targetProxy.active = {
-				iframe: document.querySelector(`iframe[id="${
-                    history[1]
-                }"]`),
-				permID: history[1]
-			};
+			let it = history[1]
+			if (permID !== it) {
+				targetProxy.active = {
+					iframe: document.querySelector(`iframe[id="${
+						it
+					}"]`),
+					permID: it
+				};
+			}
 		};
 
 		targetProxy.active = {
