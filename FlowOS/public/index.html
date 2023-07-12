@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="FlowOS" />
-    <link rel="apple-touch-icon" href="/assets/logo.png" />
-    <meta name="apple-touch-startup-image" content="/assets/logo.png" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="FlowOS" />
+		<link rel="apple-touch-icon" href="/assets/logo.png" />
+		<meta name="apple-touch-startup-image" content="/assets/logo.png" />
 
-    <link rel="icon" href="/assets/logo.svg" />
-    <link rel="favicon" href="/assets/logo.svg" />
+		<link rel="icon" href="/assets/logo.svg" />
+		<link rel="favicon" href="/assets/logo.svg" />
 
-    <title>FlowOS</title>
+		<title>FlowOS</title>
 
-    <link rel="stylesheet" href="/styles/window.css" />
-    <link rel="stylesheet" href="/styles/index.css" />
-  </head>
+		<link rel="stylesheet" href="/styles/window.css" />
+		<link rel="stylesheet" href="/styles/index.css" />
+	</head>
 
-  <body>
-    <div
-      style="
-        text-align: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      "
-    >
-      <img src="/assets/logo.svg" class="logo" width="100px" />
-      <br />
-      <button onclick="window.location.href = '/os.html'">Regular Boot</button>
-      <br />
-      <button
-        onclick="const win = window.open('', 'owo', 'owo');win.document.body.innerHTML = `<iframe src='${window.location.href + '/os.html'}'></iframe><style>body, html {margin:0;}iframe{width:100%;height:100%;border:none;}</style>`;"
-      >
-        Cloaked Boot
-      </button>
-    </div>
+	<body>
+		<div
+			style="
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			"
+		>
+			<img src="/assets/logo.svg" class="logo" width="100px" />
+			<br />
+			<button onclick="window.location.href = '/os.html'">Regular Boot</button>
+			<br />
+			<button
+				onclick="const win = window.open('', 'owo', 'owo');win.document.body.innerHTML = `<iframe src='${window.location.href + '/os.html'}'></iframe><style>body, html {margin:0;}iframe{width:100%;height:100%;border:none;}</style>`;"
+			>
+				Cloaked Boot
+			</button>
+		</div>
 
-    <style>
-      body,
-      html {
-        background: var(--boot-bg);
-      }
-    </style>
+		<style>
+			body,
+			html {
+				background: var(--boot-bg);
+			}
+		</style>
 
-    <script>
-      function loadCSS(FILE_URL) {
-        const styleEle = document.createElement("link");
+		<script>
+			function loadCSS(FILE_URL) {
+				const styleEle = document.createElement("link");
 
-        styleEle.setAttribute("rel", "stylesheet");
-        styleEle.setAttribute("type", "text/css");
-        styleEle.setAttribute("href", FILE_URL);
+				styleEle.setAttribute("rel", "stylesheet");
+				styleEle.setAttribute("type", "text/css");
+				styleEle.setAttribute("href", FILE_URL);
 
-        document.head.appendChild(styleEle);
-      }
+				document.head.appendChild(styleEle);
+			}
 
-      if (window.localStorage.getItem("theme")) {
-        loadCSS(JSON.parse(window.localStorage.getItem("theme")).url);
-      } else {
-        loadCSS("/builtin/themes/catppuccin-dark.css");
-      }
-    </script>
-  </body>
+			if (window.localStorage.getItem("theme")) {
+				loadCSS(JSON.parse(window.localStorage.getItem("theme")).url);
+			} else {
+				loadCSS("/builtin/themes/catppuccin-dark.css");
+			}
+		</script>
+	</body>
 </html>
