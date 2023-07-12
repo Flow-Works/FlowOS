@@ -21,8 +21,8 @@ import 'dotenv/config';
 
 import {
 	publicPath
-} from '../FlowOS/lib/index.js';
-import passwordManager from './password.js';
+} from './FlowOS/lib/index.js';
+import passwordManager from './src/password.js';
 
 const bare = createBareServer('/bare/');
 const app = express();
