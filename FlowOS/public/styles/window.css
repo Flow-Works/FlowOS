@@ -1,60 +1,94 @@
-body, html { 
-    background: none;
-    padding: 5px;
-    overflow: scroll;
-    font-family: var(--font-family);
-    color: var(--text-color);
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    position:relative;
-    height: calc(100% - 10px);
+body,
+html {
+	background: none;
+	padding: 5px;
+	overflow: scroll;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+	position: relative;
+	height: calc(100% - 10px);
 }
 
-input, textarea, form button, select, button.long {
-    padding: 5px 10px;
-    border: none;
-    background: var(--surface-bg);
-    border-radius: 5px;
-    width: 100%;
-    margin-top: 5px;
+input,
+textarea,
+form button,
+select,
+button.long {
+	padding: 5px 10px;
+	border: none;
+	background: var(--surface-bg);
+	border-radius: 5px;
+	width: 100%;
+	margin-top: 5px;
 }
 
 button {
-    padding: 5px;
-    border: none;
-    background: var(--surface-bg);
-    border-radius: 5px;
-    margin-top: 5px;
+	padding: 5px;
+	border: none;
+	background: var(--surface-bg);
+	border-radius: 5px;
+	margin-top: 5px;
 }
 
 textarea {
-    resize:none;
-    height: 100px;
+	resize: none;
+	height: 100px;
 }
 
-input:focus, textarea:focus, button:focus, button.long:focus, select:focus {
-    outline: none;
+input:focus,
+textarea:focus,
+button:focus,
+button.long:focus,
+select:focus {
+	outline: none;
 }
 
-button:hover, select:hover {
-    color: var(--primary);
+button:hover,
+select:hover {
+	color: var(--primary);
 }
 
 sub {
-    opacity: 0.5;
+	opacity: 0.5;
 }
 
-table, th, td {
-    border: 1px solid;
+table,
+th,
+td {
+	border: 1px solid;
 }
 
-th, td {
-    padding: 5px;
+th,
+td {
+	padding: 5px;
 }
 
 .bottom {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 5px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 5px;
+}
+
+.outer {
+	display: table;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.middle {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.inner {
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+	/* Whatever width you want */
 }

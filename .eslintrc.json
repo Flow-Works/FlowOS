@@ -1,7 +1,7 @@
 {
-  "root": true,
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  }
+	"root": true,
+  	"parserOptions": {
+    	"ecmaVersion": "latest",
+    	"sourceType": "module"
+  	}
 }

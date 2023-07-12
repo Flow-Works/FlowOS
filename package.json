@@ -1,32 +1,32 @@
 {
-  "name": "flowos",
-  "version": "1.0.0",
-  "description": "Ultraviolet instance",
-  "type": "module",
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=16.0.0"
-  },
-  "scripts": {
-    "start": "node src/index.js"
-  },
-  "keywords": [
-    "proxy"
-  ],
-  "author": "",
-  "license": "GPL-3.0-or-later",
-  "dependencies": {
-    "@proudparrot2/uv": "^2.0.0",
-    "@tomphttp/bare-server-node": "^2.0.1",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "highlight.js": "^11.8.0",
-    "marked": "^5.1.1",
-    "marked-highlight": "^2.0.1"
-  },
-  "devDependencies": {
-    "eslint": "^8.36.0",
-    "nodemon": "^3.0.1",
-    "prettier": "^2.8.4"
-  }
+	"name": "flowos",
+	"version": "1.0.0",
+	"description": "Ultraviolet instance",
+	"type": "module",
+	"engines": {
+		"npm": ">=7.0.0",
+		"node": ">=16.0.0"
+	},
+	"scripts": {
+		"start": "node src/index.js"
+	},
+	"keywords": [
+		"proxy"
+	],
+	"author": "",
+	"license": "GPL-3.0-or-later",
+	"dependencies": {
+		"@proudparrot2/uv": "^2.0.0",
+		"@tomphttp/bare-server-node": "^2.0.1",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"highlight.js": "^11.8.0",
+		"marked": "^5.1.1",
+		"marked-highlight": "^2.0.1"
+	},
+	"devDependencies": {
+		"eslint": "^8.36.0",
+		"nodemon": "^3.0.1",
+		"prettier": "^2.8.4"
+	}
 }

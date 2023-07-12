@@ -3,10 +3,10 @@
 }
 
 .tooltip {
-	text-decoration:none;
-	position:relative;
+	text-decoration: none;
+	position: relative;
 	background: var(--surface-bg);
-	border-radius:10px;
+	border-radius: 10px;
 	margin: 10px 0;
 	padding: 10px;
 	display: flex;
@@ -15,17 +15,17 @@
 }
 
 h3 p {
-	font-size: 15px!important;
+	font-size: 15px !important;
 }
 
 .tooltip span {
-	display:none;
+	display: none;
 }
 
 .tooltip:hover span {
-	display:block;
-	position:fixed;
-	overflow:hidden;
+	display: block;
+	position: fixed;
+	overflow: hidden;
 	z-index: 5000;
 	background: var(--surface-bg);
 	padding: 5px;

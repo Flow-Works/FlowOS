@@ -1,37 +1,38 @@
 .topnav div {
-    padding: 5px;
-    border-radius:5px;
-  	color: var(--text-color);
-  	display: block;
-  	height:100%;
-  	background: var(--surface-bg);
+	padding: 5px;
+	border-radius: 5px;
+	color: var(--text-color);
+	display: block;
+	height: 100%;
+	background: var(--surface-bg);
 }
 
 .topnav a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .topnav div a:hover {
-    color: var(--primary);
+	color: var(--primary);
 }
 
-.topnav, .tabs {
-    display: flex;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    gap: 5px;
-    margin-bottom: 5px;
-    height: max-content;
+.topnav,
+.tabs {
+	display: flex;
+	overflow-y: hidden;
+	overflow-x: scroll;
+	gap: 5px;
+	margin-bottom: 5px;
+	height: max-content;
 }
 
 iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 10px;
+	width: 100%;
+	height: 100%;
+	border: none;
+	border-radius: 10px;
 }
 
 main {
-    width: 100%;
-    height: calc(100% - 40px);
+	width: 100%;
+	height: calc(100% - 40px);
 }
