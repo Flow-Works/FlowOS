@@ -17,12 +17,16 @@ import {
 import {
 	hostname
 } from 'node:os';
-import 'dotenv/config';
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV !== 'production') {
+	dotenv.config();
+}
 
 import {
 	publicPath
 } from './FlowOS/lib/index.js';
-import passwordManager from './src/password.js';
+import passwordManager from './password.js';
 
 const bare = createBareServer('/bare/');
 const app = express();
