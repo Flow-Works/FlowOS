@@ -1,34 +1,40 @@
 let page = 1;
+
+const toBase64 = file => new Promise((resolve, reject) => {
+	const reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = () => resolve(reader.result);
+	reader.onerror = reject;
+});
+
+function nextPage() {
+	document.querySelector('.page' + page).style.display = "none";
+	document.querySelector('.page' + (page + 1)).style.display = "block";
+	page += 1;
+}
+
+function reboot() {
+	fetch('/gen?password=' + document.querySelector('input[type="password"]').value).then(res => res.text())
+		.then(async (data) => {
+			config.setup.set(true);
+			config.password.set(data);
+			var file = document.querySelector('input[type="file"]').files[0];
+			config.settings.set('profile', {
+				url: await toBase64(file),
+				username: document.querySelector('input[type="username"]').value
+			});
+			parent.window.location.reload();
+		})
+}
+
 window.onload = () => {
-	document.querySelector('#next').onclick = () => {
-		page += 1;
-
-		if (page == 3) document.querySelector('#next').innerText = "Finish"
-
-		if (page == 4) {
-			fetch('/gen?password=' + document.querySelector('input[type="password"]').value).then(res => res.text())
-				.then(data => {
-					config.setup.set(true);
-					config.password.set(data);
-					parent.window.location.href = parent.window.location.href;
-				})
-		} else {
-			document.querySelector('.page' + (page - 1)).style.display = "none";
-			document.querySelector('.page' + page).style.display = "block";
-		}
+	document.querySelectorAll('form')[0].onsubmit = (e) => {
+		e.preventDefault();
+		nextPage();
 	}
 
-	document.querySelector('form').onsubmit = (e) => {
+	document.querySelectorAll('form')[1].onsubmit = (e) => {
 		e.preventDefault();
-		page += 1;
-
-		if (page == 3) document.querySelector('#next').innerText = "Finish"
-
-		if (page == 4) {
-			alert(document.querySelector('input[type="password"]').value);
-		} else {
-			document.querySelector('.page' + (page - 1)).style.display = "none";
-			document.querySelector('.page' + page).style.display = "block";
-		}
+		nextPage();
 	}
 }

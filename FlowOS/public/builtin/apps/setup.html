@@ -1,44 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
+	<head>
+		<meta charset="UTF-8" />
 
-        <script src="/scripts/utils.js" defer></script>
+		<script src="/scripts/utils.js" defer></script>
 		<script src="/scripts/classes.js" defer></script>
 
-        <link rel="stylesheet" href="/styles/index.css" />
-        <link rel="stylesheet" href="/styles/window.css" />
+		<link rel="stylesheet" href="/styles/index.css" />
+		<link rel="stylesheet" href="/styles/window.css" />
 
 		<script src="/builtin/apps/scripts/setup.js" defer></script>
-    </head>
 
-    <body>
-        <div class="outer">
-            <div class="middle">
-              <div class="inner">
-                <div class="setup">
-                    <div class="page1">
-                        <h1>Welcome to FlowOS.</h1>
-                        <p>Unlock the excellent functions of <i>your</i> flow.</p>
-                    </div>
-                    <div class="page2">
-                        <h1>Create an account.</h1>
-                        <form>
-                            <label>Enter Password</label>
-                            <input type="password" />
-                        </form>
-                    </div>
-                    <div class="page3">
-                        <h1>Setup Finished!</h1>
-                    </div>
-                    <div class="bottom">
-                        <button id="next">Continue</button>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
+		<link rel="stylesheet" href="/builtin/apps/styles/setup.css" />
+	</head>
+	<body>
+		<div class="setup center">
+			<div class="page1">
+				<h1>Welcome to FlowOS.</h1>
+				<p>Unlock the excellent functions of <i>your</i> flow.</p>
+				<button type="submit" onclick="nextPage()">Continue</button>
+			</div>
+			<div class="page2">
+				<h1>Create an account.</h1>
+				<form>
+					<label>Enter Username</label>
+					<input type="username" name="username" required />
+					<p></p>
+					<label>Enter Password</label>
+					<input type="password" name="password" required />
+					<p></p>
+					<button type="submit" style="width: calc(100% + 20px)">
+						Continue
+					</button>
+				</form>
+			</div>
+			<div class="page3">
+				<h1>Personalize your account.</h1>
+				<form>
+					<label>Profile Picture</label>
+					<input
+						type="file"
+						name="file"
+						required
+						style="width: calc(100% - 20px)"
+					/>
+					<p></p>
+					<button type="submit">Continue</button>
+				</form>
+			</div>
+			<div class="page4">
+				<h1>Setup Finished!</h1>
+				<button type="submit" onclick="reboot()">Reboot</button>
+			</div>
+		</div>
 
-        <script src="/scripts/window.js" defer></script>
-    </body>
+		<script src="/scripts/window.js" defer></script>
+	</body>
 </html>

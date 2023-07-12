@@ -16,8 +16,10 @@ class FlowInstance {
 		if (!config.setup.get()) {
 			new WinBox({
 				title: 'Setup Wizard',
-				class: ['no-close'],
-				modal: true,
+				class: ['no-close', 'no-move', 'no-close', 'no-min', 'no-full', 'no-resize'],
+				x: 'center',
+				y: 'center',
+				height: '500px',
 				html: `<iframe src="/builtin/apps/setup.html" scrolling="yes"></iframe>`,
 			})
 		} else {

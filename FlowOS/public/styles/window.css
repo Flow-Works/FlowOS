@@ -14,22 +14,21 @@ html {
 input,
 textarea,
 form button,
-select,
-button.long {
+select {
 	padding: 5px 10px;
 	border: none;
 	background: var(--surface-bg);
 	border-radius: 5px;
 	width: 100%;
-	margin-top: 5px;
+	margin: 5px 0;
 }
 
-button {
+button,
+input::file-selector-button {
 	padding: 5px;
 	border: none;
 	background: var(--surface-bg);
 	border-radius: 5px;
-	margin-top: 5px;
 }
 
 textarea {
@@ -40,13 +39,25 @@ textarea {
 input:focus,
 textarea:focus,
 button:focus,
-button.long:focus,
 select:focus {
 	outline: none;
 }
 
 button:hover,
-select:hover {
+select:hover,
+a:hover {
+	color: var(--primary);
+}
+
+input::file-selector-button {
+	margin: 5px 0;
+	margin-right: 10px;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background: var(--window-bg);
+}
+
+input::file-selector-button:hover {
 	color: var(--primary);
 }
 
@@ -65,30 +76,13 @@ td {
 	padding: 5px;
 }
 
-.bottom {
+.profile {
+	border-radius: 100%;
+}
+
+.center {
 	position: absolute;
-	bottom: 0;
-	right: 0;
-	padding: 5px;
-}
-
-.outer {
-	display: table;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-}
-
-.middle {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.inner {
-	margin-left: auto;
-	margin-right: auto;
-	width: 400px;
-	/* Whatever width you want */
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }

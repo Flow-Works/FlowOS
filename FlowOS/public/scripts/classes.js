@@ -13,7 +13,11 @@ class SettingsCategory {
 		this.SETTING_ID = SETTING_ID;
 		this.title = title;
 		this.inputs = inputs;
-		Flow.settings.add(this);
+		try {
+			Flow.settings.add(this);
+		} catch (e) {
+			parent.Flow.settings.add(this);
+		}
 	}
 }
 

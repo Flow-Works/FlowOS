@@ -23,7 +23,12 @@ window.onload = () => {
 	document.head.append(style);
 
 	Flow.boot();
-}
+};
+
+new SettingsCategory('profile', 'Profile',
+	new SettingsInput('username', 'Username', '', ''),
+	new SettingsInput('url', 'Image URL', 'https://mysite.to/image.png', ''),
+);
 
 new SettingsCategory('search', 'Search',
 	new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
