@@ -119,6 +119,7 @@ function startTime() {
     const today = new Date();
     let h = today.getHours();
     let m = today.getMinutes();
+	h = checkTime(h);
     m = checkTime(m);
     clock.setText(time2emoji(h, m) + ' ' + h + ":" + m);
     setTimeout(startTime, 1000);
