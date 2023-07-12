@@ -6,7 +6,6 @@ class FlowInstance {
     }
 
     boot() {
-		utils.registerSW();
         document.querySelector('.boot').style.opacity = 0;
         setTimeout(() => { document.querySelector('.boot').style.pointerEvents = "none"; }, 700)
 

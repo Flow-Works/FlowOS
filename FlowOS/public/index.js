@@ -13,6 +13,11 @@ window.onload = () => {
 		}
     };
 
+	const style = document.createElement('style');
+	style.setAttribute('flow-style', 'true');
+	style.innerHTML = config.css.get();
+	document.head.append(style);
+
     Flow.boot();
 }
 
