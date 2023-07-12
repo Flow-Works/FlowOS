@@ -3,7 +3,7 @@ window.onload = () => {
 	document.querySelector('h2').innerText = config.settings.get('profile').username;
 	document.querySelector('form').onsubmit = (e) => {
 		e.preventDefault();
-		fetch('/verify?aes=' + config.password.get() + '&input=' + document.querySelector('input[type="password"]').value).then(res => res.text())
+		fetch('/pwd/verify?aes=' + config.password.get() + '&input=' + document.querySelector('input[type="password"]').value).then(res => res.text())
 			.then(data => {
 				if (data == 'true') {
 					parent.loginWindow.close();

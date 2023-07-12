@@ -3,12 +3,11 @@ import {
 } from '@tomphttp/bare-server-node';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
+import session from 'express-session';
+import csurf from 'csurf';
 import {
 	createServer
 } from 'node:http';
-import {
-	publicPath
-} from '../FlowOS/lib/index.js';
 import {
 	uvPath
 } from '@proudparrot2/uv';
@@ -18,8 +17,12 @@ import {
 import {
 	hostname
 } from 'node:os';
-import crypto from 'crypto';
 import 'dotenv/config';
+
+import {
+	publicPath
+} from '../FlowOS/lib/index.js';
+import passwordManager from './password.js';
 
 const bare = createBareServer('/bare/');
 const app = express();
@@ -37,7 +40,20 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.use('/pwd', passwordManager, limiter);
+
+app.set('host', process.env.IP || '127.0.0.1');
+app.set('port', process.env.PORT || 36000);
 app.disable('x-powered-by');
+
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: process.env.SECRET,
+    cookie: {httpOnly: true}
+}));
+
+app.use(csurf());
 
 // Load our publicPath first and prioritize it over UV.
 app.use(express.static(publicPath));
@@ -52,35 +68,6 @@ app.use((req, res) => {
 });
 
 const server = createServer();
-
-const key = Buffer.from(String(process.env.KEY), 'hex');
-const iv = Buffer.from(String(process.env.IV), 'hex');
-
-function encrypt(plainText, outputEncoding = 'base64') {
-	var mykey = crypto.createCipheriv('aes-128-gcm', key, iv);
-	var mystr = mykey.update(plainText, 'utf8', 'hex');
-	mystr += mykey.final('hex');
-	return mystr;
-}
-
-function decrypt(cipherText, outputEncoding = 'utf8') {
-	var mykey = crypto.createDecipheriv('aes-128-gcm', key, iv);
-	var mystr = mykey.update(cipherText, 'hex', 'utf8');
-	mystr += mykey.final('utf8');
-	return mystr;
-}
-
-app.get('/verify', limiter, async (req, res) => {
-	const dec = decrypt(req.query.aes);
-	res.send(dec == req.query.input);
-});
-
-
-app.get('/gen', limiter, async (req, res) => {
-	const enc = encrypt(req.query.password);
-	res.setHeader('Content-Type', 'application/json');
-	res.send(enc);
-});
 
 server.on('request', (req, res) => {
 	if (bare.shouldRoute(req)) {

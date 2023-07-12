@@ -52,27 +52,27 @@ class Tab {
 		iframe.src = __uv$config.prefix + __uv$config.encodeUrl(config.settings.get('search').url);
 		iframe.id = permID;
 		iframe.onload = () => {
-			injectJS(frames[0], 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
-				frames[0].window.eruda.init({
-					tool: ['code', 'elements', 'console', 'info', 'test']
+			let open = false;
+			injectJS(frames[permID - 1], 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
+				frames[permID - 1].window.eruda.init({
+					tool: ['console', 'elements', 'code', 'block']
 				});
-			});
-			injectJS(frames[0], 'https://cdn.jsdelivr.net/npm/eruda-code@2.1.0/eruda-code.min.js', false, () => {
-				frames[0].window.eruda.add(frames[0].window.erudaCode);
-				frames[0].window.eruda.add({
-					name: 'test',
-					init($el) {
-						$el.html('Hello, this is my first eruda plugin!');
-						this._$el = $el;
-					},
-					show() {
-						this._$el.show();
-					},
-					hide() {
-						this._$el.hide();
-					},
-					destroy() {}
+				frames[permID - 1].window.eruda._entryBtn.hide();
+				injectJS(frames[permID - 1], 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
+					frames[permID - 1].window.eruda.add(frames[permID - 1].window.erudaCode);
 				});
+				document.querySelector('.owo').onclick = () => {
+					if (open == false) {
+						frames[permID - 1].window.eruda.show();
+					} else {
+						frames[permID - 1].window.eruda.hide();
+					}
+	
+					open = !open;
+				};
+				document.querySelector('.delete').onclick = () => {
+					deleter(frames[permID - 1]);
+				};
 			});
 			a.innerText = iframe.contentDocument.title + ' ';
 		};
@@ -125,4 +125,27 @@ function injectJS(iframe, FILE_URL, async = true, callback) {
 	scriptEle.addEventListener('load', () => {
 		callback();
 	});
+};
+
+function deleter(iframe) {
+	for(var i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
+		(iframe.document.getElementsByTagName('a')[i]).style.pointerEvents = 'none';
+	}
+	
+	function handler(e) {
+		e = e || window.event;
+		var target = e.target || e.srcElement;
+		target.style.display = 'none';
+		
+		iframe.document.removeEventListener('click', handler, false);
+		cursor('default');
+		
+		for(var i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
+			(iframe.document.getElementsByTagName('a')[i]).style.pointerEvents = 'initial';
+		}
+	}
+	
+	iframe.document.addEventListener('click', handler, false);
+	cursor('crosshair');
+	function cursor(cur) { iframe.document.body.style.cursor = cur; }
 }
