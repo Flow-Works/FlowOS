@@ -1,5 +1,5 @@
-const stockSW = "/uv/sw.js";
-const swAllowedHostnames = ["localhost", "127.0.0.1"];
+const stockSW = '/uv/sw.js';
+const swAllowedHostnames = ['localhost', '127.0.0.1'];
 
 window.config = {
 	css: {
@@ -42,7 +42,7 @@ window.config = {
 			return window.localStorage.setItem(item, JSON.stringify(value));
 		},
 	}
-}
+};
 
 const utils = {
 	registerSW: async function () {
@@ -57,7 +57,7 @@ const utils = {
 	},
 
 	loadCSS: function (FILE_URL) {
-		const styleEle = document.createElement("link");
+		const styleEle = document.createElement('link');
 
 		styleEle.setAttribute('rel', 'stylesheet');
 		styleEle.setAttribute('type', 'text/css');
@@ -66,31 +66,31 @@ const utils = {
 		document.head.appendChild(styleEle);
 
 		// success event 
-		styleEle.addEventListener("load", () => {
-			logger.info("Stylesheet loaded: " + FILE_URL)
+		styleEle.addEventListener('load', () => {
+			logger.info('Stylesheet loaded: ' + FILE_URL);
 		});
 		// error event
-		styleEle.addEventListener("error", (ev) => {
-			logger.info("Failed to load stylesheet: " + FILE_URL, ev);
+		styleEle.addEventListener('error', (ev) => {
+			logger.info('Failed to load stylesheet: ' + FILE_URL, ev);
 		});
 	},
 
 	loadJS: function (FILE_URL, async = true) {
-		let scriptEle = document.createElement("script");
+		let scriptEle = document.createElement('script');
 
-		scriptEle.setAttribute("src", FILE_URL);
-		scriptEle.setAttribute("type", "text/javascript");
-		scriptEle.setAttribute("async", async);
+		scriptEle.setAttribute('src', FILE_URL);
+		scriptEle.setAttribute('type', 'text/javascript');
+		scriptEle.setAttribute('async', async);
 
 		document.body.appendChild(scriptEle);
 
 		// success event 
-		scriptEle.addEventListener("load", () => {
-			logger.info("Script loaded: " + FILE_URL)
+		scriptEle.addEventListener('load', () => {
+			logger.info('Script loaded: ' + FILE_URL);
 		});
 		// error event
-		scriptEle.addEventListener("error", (ev) => {
-			logger.error("Failed to load script: " + FILE_URL, ev);
+		scriptEle.addEventListener('error', (ev) => {
+			logger.error('Failed to load script: ' + FILE_URL, ev);
 		});
 	}
-}
+};

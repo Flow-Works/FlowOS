@@ -22,17 +22,17 @@ window.onload = () => {
 			inputEl.classList.add('settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID);
 			inputEl.placeholder = input.placeholder;
 
-			if (input.type == "select") {
+			if (input.type == 'select') {
 				input.options.forEach((option) => {
 					const optionEl = document.createElement('option');
 					optionEl.value = option;
 					optionEl.innerText = option;
 
 					inputEl.append(optionEl);
-				})
+				});
 			}
 
-			if (input.type == "textarea") {
+			if (input.type == 'textarea') {
 				inputEl.value = config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID].join('\n');
 			} else {
 				inputEl.value = config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID];
@@ -50,8 +50,8 @@ window.onload = () => {
 				const obj = {};
 
 				setting.inputs.forEach((input) => {
-					if (input.type == "textarea") {
-						obj[input.SETTING_INPUT_ID] = document.querySelector('.settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID).value.split('\n')
+					if (input.type == 'textarea') {
+						obj[input.SETTING_INPUT_ID] = document.querySelector('.settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID).value.split('\n');
 					} else {
 						obj[input.SETTING_INPUT_ID] = document.querySelector('.settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID).value;
 					}
@@ -59,18 +59,18 @@ window.onload = () => {
 
 				config.settings.set(setting.SETTING_ID, obj);
 				parent.window.location.href = parent.window.location.href;
-			}
+			};
 		});
 
-		if (setting.SETTING_ID == "theme") {
+		if (setting.SETTING_ID == 'theme') {
 			document.querySelector('#look').appendChild(section);
-		} else if (setting.SETTING_ID == "modules") {
+		} else if (setting.SETTING_ID == 'modules') {
 			document.querySelector('#scripts').appendChild(section);
 		} else {
 			document.querySelector('#modules').appendChild(section);
 		}
 	});
-}
+};
 
 const openCSS = () => {
 	new parent.WinBox({
@@ -81,5 +81,5 @@ const openCSS = () => {
 		y: 'center',
 		width: '400px',
 		height: '500px',
-	})
-}
+	});
+};

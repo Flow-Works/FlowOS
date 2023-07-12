@@ -8,8 +8,8 @@ const toBase64 = file => new Promise((resolve, reject) => {
 });
 
 function nextPage() {
-	document.querySelector('.page' + page).style.display = "none";
-	document.querySelector('.page' + (page + 1)).style.display = "block";
+	document.querySelector('.page' + page).style.display = 'none';
+	document.querySelector('.page' + (page + 1)).style.display = 'block';
 	page += 1;
 }
 
@@ -24,17 +24,17 @@ function reboot() {
 				username: document.querySelector('input[type="username"]').value
 			});
 			parent.window.location.reload();
-		})
+		});
 }
 
 window.onload = () => {
 	document.querySelectorAll('form')[0].onsubmit = (e) => {
 		e.preventDefault();
 		nextPage();
-	}
+	};
 
 	document.querySelectorAll('form')[1].onsubmit = (e) => {
 		e.preventDefault();
 		nextPage();
-	}
-}
+	};
+};

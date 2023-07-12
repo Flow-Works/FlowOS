@@ -16,7 +16,7 @@ let proxy = URL.createObjectURL(new Blob([`
 	type: 'text/javascript'
 }));
 
-require(["vs/editor/editor.main"], function () {
+require(['vs/editor/editor.main'], function () {
 	let editor = monaco.editor.create(document.querySelector('.container'), {
 		value: config.css.get(),
 		language: 'css',
