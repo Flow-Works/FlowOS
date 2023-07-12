@@ -52,7 +52,7 @@ app.use(session({
     secret: process.env.SECRET,
     cookie: {
 		httpOnly: true,
-		secure: options.secure
+		secure: true
 	}
 }));
 
@@ -121,3 +121,5 @@ function shutdown() {
 server.listen({
 	port,
 });
+
+export default app;
