@@ -1,7 +1,8 @@
 {
 	"root": true,
   	"parserOptions": {
-    	"ecmaVersion": "latest"
+    	"ecmaVersion": "latest",
+		"sourceType": "module"
   	},
 	"rules": {
         "semi": [2, "always"],

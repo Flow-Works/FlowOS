@@ -58,10 +58,10 @@
 				document.head.appendChild(styleEle);
 			}
 
-			if (window.localStorage.getItem("theme")) {
-				loadCSS(JSON.parse(window.localStorage.getItem("theme")).url);
-			} else {
+			if (!window.localStorage.getItem("theme")) {
 				loadCSS("/builtin/themes/catppuccin-dark.css");
+			} else {
+				loadCSS(JSON.parse(window.localStorage.getItem("theme")).url);
 			}
 		</script>
 	</body>
