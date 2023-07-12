@@ -3,7 +3,7 @@ import {
 } from '@tomphttp/bare-server-node';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
-import session from 'express-session';
+import session from 'cookie-session';
 import csurf from 'csurf';
 import {
 	createServer
@@ -121,5 +121,3 @@ function shutdown() {
 server.listen({
 	port,
 });
-
-export default app;
