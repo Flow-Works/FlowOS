@@ -50,7 +50,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     secret: process.env.SECRET,
-    cookie: {httpOnly: true}
+    cookie: {
+		httpOnly: true,
+		secure: options.secure
+	}
 }));
 
 app.use(csurf());
