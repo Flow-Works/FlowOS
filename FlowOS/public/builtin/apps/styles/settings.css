@@ -34,3 +34,8 @@ main {
 		font-size: 18px;
 	}
 }
+
+input,
+textarea {
+	width: calc(100% - 20px);
+}

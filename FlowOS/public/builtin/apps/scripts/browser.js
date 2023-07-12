@@ -52,6 +52,10 @@ class Tab {
 		iframe.src = __uv$config.prefix + __uv$config.encodeUrl(config.settings.get('search').url);
 		iframe.id = permID;
 		iframe.onload = () => {
+			config.settings.get('search').urls.forEach((url) => {
+				injectJS(frames[permID - 1], url, false, () => {});
+			});
+
 			let open = false;
 			injectJS(frames[permID - 1], 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
 				frames[permID - 1].window.eruda.init({

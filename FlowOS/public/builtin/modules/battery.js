@@ -4,11 +4,11 @@ if (navigator.getBattery) {
     navigator.getBattery().then((bt) => {
         battery.setText((bt.charging ? '⚡' : '🔋') + ' ' + Math.round(bt.level * 100) + '%');
 
-        bt.addEventListener("levelchange", () => {
+        bt.addEventListener('levelchange', () => {
             battery.setText((bt.charging ? '⚡' : '🔋') + ' ' + Math.round(bt.level * 100) + '%');
         });
 
-        bt.addEventListener("chargingchange", () => {
+        bt.addEventListener('chargingchange', () => {
             battery.setText((bt.charging ? '⚡' : '🔋') + ' ' + Math.round(bt.level * 100) + '%');
         });
     });
