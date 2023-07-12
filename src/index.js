@@ -121,3 +121,5 @@ function shutdown() {
 server.listen({
 	port,
 });
+
+export default app;
