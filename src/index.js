@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 import {
 	publicPath
-} from './FlowOS/lib/index.js';
+} from '../FlowOS/lib/index.js';
 import passwordManager from './password.js';
 
 const bare = createBareServer('/bare/');
@@ -125,5 +125,3 @@ function shutdown() {
 server.listen({
 	port,
 });
-
-export default app;
