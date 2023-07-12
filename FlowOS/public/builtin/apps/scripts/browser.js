@@ -110,6 +110,10 @@ class Tab {
 
 window.onload = () => {
 	new Tab();
+	document.querySelector('.tabs').addEventListener('wheel', (evt) => {
+    	evt.preventDefault();
+    	document.querySelector('.tabs').scrollLeft += evt.deltaY;
+	});
 };
 
 function injectJS(iframe, FILE_URL, async = true, callback) {

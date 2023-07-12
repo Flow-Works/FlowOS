@@ -15,6 +15,11 @@
 	color: var(--primary);
 }
 
+.tabs-container {
+	flex: 1;
+	display: flex;
+}
+
 .topnav,
 .tabs {
 	display: flex;
@@ -23,6 +28,12 @@
 	gap: 5px;
 	margin-bottom: 5px;
 	height: max-content;
+	min-width: min-content;
+	overflow-x: hidden;
+}
+
+.tabs > div {
+	flex-shrink: 0;
 }
 
 iframe {
