@@ -148,7 +148,7 @@ class FlowInstance {
 			new WinBox({
 				title: window.apps()[APP_ID].title,
 				icon: `assets/icons/${APP_ID}.svg`,
-				html: `<iframe src="${url}" scrolling="yes"></iframe>`,
+				html: `<iframe src="${url}" scrolling="yes" title="${window.apps()[APP_ID].title}"></iframe>`,
 				x: 'center',
 				y: 'center',
 				...window.apps()[APP_ID].config
