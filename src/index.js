@@ -41,10 +41,12 @@ function shouldCompress (req, res) {
 	return compression.filter(req, res);
 }
 
-app.use((req, res, next) => {
-	res.setHeader('Cache-Control', 'maxage=2592000');
-	next();
-});
+if (process.env.NODE_ENV == 'production') {
+	app.use((req, res, next) => {
+		res.setHeader('Cache-Control', 'maxage=2592000');
+		next();
+	});	
+}
 
 app.use(acceptWebp(publicPath, ['jpg', 'jpeg', 'png']));
 
