@@ -41,7 +41,7 @@ function shouldCompress (req, res) {
 }
 
 app.use((req, res, next) => {
-	res.setHeader('Cache-Control', 'public, s-maxage=3600');
+	res.setHeader('Cache-Control', 'public, s-maxage=2592000');
 	next();
 });
 
