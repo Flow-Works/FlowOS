@@ -77,14 +77,14 @@ server.on('listening', () => {
 	console.log(`Listening on: http://localhost:${app.get('port')}`);
 });
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
-
 const shutdown = () => {
 	server.close();
 	bare.close();
 	process.exit(0);
 };
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
 
 server.listen({
 	port: app.get('port'),
