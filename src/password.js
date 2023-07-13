@@ -17,6 +17,7 @@ const cacheMiddleware = (req, res, next) => {
 	const cachedData = cache.get(cache_key);
   
 	if (cachedData) {
+		res.setHeader('Content-Type', 'text/plain');
 	  	res.send(cachedData);
 	  	return;
 	}
