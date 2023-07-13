@@ -23,7 +23,7 @@ function reboot() {
 				url: await toBase64(file),
 				username: document.querySelector('input[type="username"]').value
 			});
-			parent.window.location.reload();
+			parent.window.location.href = parent.window.location.href;
 		});
 }
 
