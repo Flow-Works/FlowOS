@@ -59,8 +59,15 @@
 			};
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/eruda" defer></script>
 		<script src="/scripts/handler.js" defer></script>
+		<script>
+			;(function () {
+    			var src = '//cdn.jsdelivr.net/npm/eruda';
+    			if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
+    			document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+    			document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+			})();
+		</script>
 
 		<script src="/flow.js" defer></script>
 		<script src="/index.js" defer></script>

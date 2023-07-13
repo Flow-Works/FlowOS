@@ -3,7 +3,6 @@ class FlowInstance {
 
 	constructor() {
 		utils.registerSW();
-		eruda.init();
 	}
 
 	boot() {
@@ -160,8 +159,6 @@ class FlowInstance {
 		}
 	};
 }
-
-eruda.init();
 
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
