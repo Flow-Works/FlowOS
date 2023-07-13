@@ -38,10 +38,10 @@ const shouldCompress = (req, res) => {
 	return compression.filter(req, res);
 };
 
-app.use(compression({ filter: shouldCompress }));
-app.use(minify());
-
 if (process.env.NODE_ENV == 'production') {
+	app.use(compression({ filter: shouldCompress }));
+	app.use(minify());
+	
 	app.use((req, res, next) => {
 		res.setHeader('Cache-Control', 'maxage=2592000');
 		next();
