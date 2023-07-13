@@ -1,9 +1,7 @@
 import dotenv from 'dotenv';
 
 import express from 'express';
-import session from 'cookie-session';
 import rateLimit from 'express-rate-limit';
-import csurf from 'csurf';
 import compression from 'compression';
 import minify from 'express-minify';
 
@@ -22,10 +20,10 @@ const app = express();
 const server = createServer();
 
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+	windowMs: 15 * 60 * 1000,
+	max: 100,
+	standardHeaders: true,
+	legacyHeaders: false,
 });
 
 app.set('host', process.env.IP || '127.0.0.1');
@@ -33,6 +31,7 @@ app.set('port', process.env.PORT || 3000);
 app.disable('x-powered-by');
 
 app.use(compression({ filter: shouldCompress }));
+app.use(minify());
 function shouldCompress (req, res) {
 	if (req.headers['x-no-compression']) {
 	  return false;
@@ -46,19 +45,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: process.env.SECRET,
-    cookie: {
-		httpOnly: true,
-		secure: true
-	}
-}));
-
-app.use(csurf());
-
-app.use(minify(), express.static(publicPath));
+app.use(express.static(publicPath));
 app.use('/pwd/', passwordRouter, limiter);
 app.use('/uv/', express.static(uvPath));
 
