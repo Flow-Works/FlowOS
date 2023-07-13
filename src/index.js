@@ -1,31 +1,21 @@
-import {
-	createBareServer
-} from '@tomphttp/bare-server-node';
-import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
+
 import express from 'express';
 import session from 'cookie-session';
+import rateLimit from 'express-rate-limit';
 import csurf from 'csurf';
 import compression from 'compression';
 import minify from 'express-minify';
-import {
-	createServer
-} from 'node:http';
-import {
-	uvPath
-} from '@proudparrot2/uv';
-import {
-	join
-} from 'node:path';
-import dotenv from 'dotenv';
 
-if (process.env.NODE_ENV !== 'production') {
-	dotenv.config();
-}
+import { createBareServer } from '@tomphttp/bare-server-node';
+import { createServer } from 'node:http';
+import { uvPath } from '@proudparrot2/uv';
+import { join } from 'node:path';
 
-import {
-	publicPath
-} from '../FlowOS/lib/index.js';
-import passwordManager from './password.js';
+import { publicPath } from '../FlowOS/lib/index.js';
+import passwordRouter from './password.js';
+
+if (process.env.NODE_ENV !== 'production') dotenv.config();
 
 const bare = createBareServer('/bare/');
 const app = express();
@@ -69,7 +59,7 @@ app.use(session({
 app.use(csurf());
 
 app.use(minify(), express.static(publicPath));
-app.use('/pwd/', passwordManager, limiter);
+app.use('/pwd/', passwordRouter, limiter);
 app.use('/uv/', express.static(uvPath));
 
 app.use((req, res) => {
@@ -94,8 +84,6 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 server.on('listening', () => {
-	const address = server.address();
-
 	console.log(`Listening on: http://localhost:${app.get('port')}`);
 });
 
