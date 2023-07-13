@@ -4,6 +4,7 @@ import express from 'express';
 import rateLimit from 'express-rate-limit';
 import compression from 'compression';
 import minify from 'express-minify';
+import acceptWebp from 'accept-webp';
 
 import { createBareServer } from '@tomphttp/bare-server-node';
 import { createServer } from 'node:http';
@@ -44,6 +45,8 @@ app.use((req, res, next) => {
 	res.setHeader('Cache-Control', 'maxage=2592000');
 	next();
 });
+
+app.use(acceptWebp(publicPath, ['jpg', 'jpeg', 'png']));
 
 app.use(express.static(publicPath));
 app.use('/pwd/', passwordRouter, limiter);
