@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@proudparrot2/uv": "^2.0.0",
 		"@tomphttp/bare-server-node": "^2.0.1",
+		"compression": "^1.7.4",
 		"cookie-session": "^2.0.0",
 		"csurf": "^1.11.0",
 		"dotenv": "^16.3.1",
