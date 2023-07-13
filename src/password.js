@@ -5,7 +5,7 @@ import cache from 'memory-cache';
 const router = express.Router();
 
 function encrypt(plainText) {
-	var mystr = crypto.createHash('sha256').update(plainText).update(makeHash(process.env.SALT)).digest('hex');
+	let mystr = crypto.createHash('sha256').update(plainText).update(makeHash(process.env.SALT)).digest('hex');
 	return mystr;
 }
 

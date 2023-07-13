@@ -1,6 +1,6 @@
 let id = 0;
 
-var targetObj = {
+let targetObj = {
 	active: {
 		iframe: null,
 		permID: null
@@ -8,7 +8,7 @@ var targetObj = {
 };
 
 let history = [];
-var targetProxy = new Proxy(targetObj, {
+let targetProxy = new Proxy(targetObj, {
 	set: function (target, key, value) {
 		history = [value.permID].concat(history);
 
@@ -128,27 +128,26 @@ function injectJS(iframe, FILE_URL, async = true, callback) {
 	scriptEle.setAttribute('async', async);
 
 	iframe.document.head.appendChild(scriptEle);
-
-	// success event 
+	
 	scriptEle.addEventListener('load', () => {
 		callback();
 	});
 };
 
 function deleter(iframe) {
-	for(var i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
+	for(let i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
 		(iframe.document.getElementsByTagName('a')[i]).style.pointerEvents = 'none';
 	}
 	
 	function handler(e) {
 		e = e || window.event;
-		var target = e.target || e.srcElement;
+		let target = e.target || e.srcElement;
 		target.style.display = 'none';
 		
 		iframe.document.removeEventListener('click', handler, false);
 		cursor('default');
 		
-		for(var i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
+		for(let i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
 			(iframe.document.getElementsByTagName('a')[i]).style.pointerEvents = 'initial';
 		}
 	}

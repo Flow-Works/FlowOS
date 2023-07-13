@@ -22,10 +22,10 @@ class Logger {
 
 	image(url, scale) {
 		scale = scale || 1;
-		var img = new Image();
+		let img = new Image();
 
 		img.onload = function () {
-			var dim = getBox(this.width * scale, this.height * scale);
+			let dim = getBox(this.width * scale, this.height * scale);
 			console.log('%c' + dim.string + '%c FlowOS\n ' + Flow.version, dim.style + 'background: url(' + url + '); background-repeat: no-repeat; background-size: ' + (this.width * scale) + 'px ' + (this.height * scale) + 'px; color: transparent;', '');
 		};
 

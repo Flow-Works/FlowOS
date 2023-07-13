@@ -1,5 +1,5 @@
 function loadScript(sources, callBack) {
-	var script = document.createElement('script');
+	let script = document.createElement('script');
 	script.src = sources;
 	script.async = false;
 	document.body.appendChild(script);
@@ -66,12 +66,12 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 		document.querySelector('.apps').appendChild(a);
 	});
 
-	var tooltips = document.querySelectorAll('.tooltip span');
+	let tooltips = document.querySelectorAll('.tooltip span');
 
 	window.onmousemove = function (e) {
-		var x = (e.clientX + 20) + 'px',
+		let x = (e.clientX + 20) + 'px',
 			y = (e.clientY + 20) + 'px';
-		for (var i = 0; i < tooltips.length; i++) {
+		for (let i = 0; i < tooltips.length; i++) {
 			tooltips[i].style.top = y;
 			tooltips[i].style.left = x;
 		}
