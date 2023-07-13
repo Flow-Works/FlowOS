@@ -74,10 +74,10 @@ class Tab {
 	
 					open = !open;
 				};
-				document.querySelector('.delete').onclick = () => {
-					deleter(frames[permID - 1]);
-				};
 			});
+			document.querySelector('.delete').onclick = () => {
+				deleter(frames[permID - 1]);
+			};
 			a.innerText = iframe.contentDocument.title + ' ';
 		};
 
