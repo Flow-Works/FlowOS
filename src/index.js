@@ -15,9 +15,6 @@ import {
 import {
 	join
 } from 'node:path';
-import {
-	hostname
-} from 'node:os';
 import dotenv from 'dotenv';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -95,14 +92,10 @@ server.on('upgrade', (req, socket, head) => {
 	}
 });
 
-let port = parseInt(process.env.PORT || '');
-
-if (isNaN(port)) port = 8080;
-
 server.on('listening', () => {
 	const address = server.address();
 
-	console.log(`Listening on: http://localhost:${address.port}`);
+	console.log(`Listening on: http://localhost:${app.get('port')}`);
 });
 
 process.on('SIGINT', shutdown);
@@ -115,5 +108,5 @@ function shutdown() {
 }
 
 server.listen({
-	port,
+	port: app.get('port'),
 });
