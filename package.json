@@ -12,7 +12,8 @@
 	"type": "module",
 	"scripts": {
 		"start": "NODE_ENV=production node src/index.js",
-		"dev": "nodemon src/index.js"
+		"dev": "nodemon src/index.js",
+		"lint": "eslint --ext .js --ignore-path .gitignore ."
 	},
 	"dependencies": {
 		"@proudparrot2/uv": "^2.0.0",
@@ -27,7 +28,7 @@
 		"memory-cache": "^0.2.0"
 	},
 	"devDependencies": {
-		"eslint": "^8.36.0",
+		"eslint": "^8.44.0",
 		"nodemon": "^3.0.1",
 		"prettier": "^2.8.4"
 	},
