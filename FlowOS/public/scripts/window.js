@@ -1,36 +1,22 @@
 window.addEventListener('load', () => {
-	loadCSS(config.settings.get('theme').url);
+	loadCSS(parent.config.settings.get('theme').url);
 });
 
 window.addEventListener('error', (e) => {
 	parent.logger.error(`${e.filename}\n${e.lineno}\n\n${e.message}`);
 });
 
-window.loadJS = (FILE_URL, defer = true, type = 'text/javascript') => {
-	return new Promise((resolve, reject) => {
-		try {
-			const scriptEle = document.createElement('script');
-			scriptEle.type = type;
-			scriptEle.defer = defer;
-			scriptEle.src = FILE_URL;
+window.loadJS = (FILE_URL, callback) => {
+	const script = document.createElement('script');
+	script.src = FILE_URL;
+	script.type = 'text/javascript';
 
-			scriptEle.addEventListener('load', (ev) => {
-				resolve({
-					status: true
-				});
-			});
+	document.body.appendChild(script);
 
-			scriptEle.addEventListener('error', (ev) => {
-				reject({
-					status: false,
-					message: `Failed to load the script ${FILE_URL}`
-				});
-			});
+	script.addEventListener('load', () => {
+		if (typeof callback == 'function')
+			callback();
 
-			document.body.appendChild(scriptEle);
-		} catch (error) {
-			reject(error);
-		}
 	});
 };
 

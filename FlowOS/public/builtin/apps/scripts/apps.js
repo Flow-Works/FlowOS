@@ -1,17 +1,4 @@
-function loadScript(sources, callBack) {
-	const script = document.createElement('script');
-	script.src = sources;
-	script.async = false;
-	document.body.appendChild(script);
-
-	script.addEventListener('load', () => {
-		if (typeof callBack == 'function')
-			callBack(sources);
-
-	});
-}
-
-loadScript('https://flow-works.github.io/appstore/apps.js', () => {
+loadJS('https://flow-works.github.io/appstore/apps.js', () => {
 	Object.values(appStore).forEach((data) => {
 		const a = document.createElement('div');
 		a.classList.add('tooltip');
@@ -24,7 +11,7 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 		h3.innerText = data.title;
 
 		const span = document.createElement('span');
-		if (config.apps.get()[data.APP_ID]) {
+		if (parent.config.apps.get()[data.APP_ID]) {
 			button.innerText = 'Uninstall';
 			h3.innerText = `${data.title} (Installed)`;
 			span.innerText = `${data.title} (Installed)`;
@@ -46,14 +33,14 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 
 		button.onclick = () => {
 			const obj = {
-				...config.apps.get()
+				...parent.config.apps.get()
 			};
-			if (config.apps.get()[data.APP_ID]) {
+			if (parent.config.apps.get()[data.APP_ID]) {
 				delete obj[data.APP_ID];
 			} else {
 				obj[data.APP_ID] = data;
 			}
-			config.apps.set(obj);
+			parent.config.apps.set(obj);
 			window.location.reload();
 			parent.document.querySelector('.app-switcher .apps').innerHTML = '';
 			parent.Flow.apps.register();

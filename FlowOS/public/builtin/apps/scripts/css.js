@@ -18,18 +18,18 @@ const proxy = URL.createObjectURL(new Blob([`
 
 require(['vs/editor/editor.main'], () => {
 	const editor = monaco.editor.create(document.querySelector('.container'), {
-		value: config.css.get(),
+		value: parent.config.css.get(),
 		language: 'css',
 		theme: 'vs-dark'
 	});
 
 	editor.addListener('didType', () => {
-		config.css.set(editor.getValue());
+		parent.config.css.set(editor.getValue());
 		parent.document.querySelector('[flow-style]').innerHTML = editor.getValue();
 	});
 
 	editor.addListener('didPaste', () => {
-		config.css.set(editor.getValue());
+		parent.config.css.set(editor.getValue());
 		parent.document.querySelector('[flow-style]').innerHTML = editor.getValue();
 	});
 });

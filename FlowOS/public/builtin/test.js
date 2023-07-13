@@ -1,1 +1,1 @@
-alert('Hello World: ' + window.location.href);
+alert(`Hello World: ${window.location.href}`);

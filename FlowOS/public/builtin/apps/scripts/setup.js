@@ -16,15 +16,15 @@ function nextPage() {
 function reboot() {
 	fetch(`/pwd/encrypt?password=${document.querySelector('input[type="password"]').value}`).then(res => res.text())
 		.then(async (data) => {
-			config.password.set(data);
+			parent.config.password.set(data);
 			const file = document.querySelector('input[type="file"]').files[0];
 			if (file) {
-				config.settings.set('profile', {
+				parent.config.settings.set('profile', {
 					url: await toBase64(file),
 					username: document.querySelector('input[type="username"]').value
 				});
 			} else {
-				config.settings.set('profile', {
+				parent.config.settings.set('profile', {
 					url: '/assets/profile.png',
 					username: document.querySelector('input[type="username"]').value
 				});

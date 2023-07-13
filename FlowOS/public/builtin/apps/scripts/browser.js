@@ -3,14 +3,14 @@ let id = 0;
 const targetObj = {
 	active: {
 		iframe: null,
-		permID: null
+		id: null
 	}
 };
 
 let history = [];
 const targetProxy = new Proxy(targetObj, {
 	set(target, key, value) {
-		history = [value.permID].concat(history);
+		history = [value.id].concat(history);
 
 		if (history.length > 1 && history[0] !== history[1]) {
 			try {
@@ -30,12 +30,11 @@ const targetProxy = new Proxy(targetObj, {
 class Tab {
 	constructor() {
 		id++;
-		const permID = id;
 
 		const div = document.createElement('div');
 
 		const a = document.createElement('a');
-		a.id = permID;
+		a.id = id;
 		a.innerText = 'Loading... ';
 		a.href = '#';
 
@@ -47,34 +46,34 @@ class Tab {
 		div.appendChild(a2);
 
 		const iframe = document.createElement('iframe');
-		iframe.src = __uv$config.prefix + __uv$config.encodeUrl(config.settings.get('search').url);
-		iframe.id = permID;
+		iframe.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(parent.config.settings.get('search').url);
+		iframe.id = id;
 		iframe.onload = () => {
-			config.settings.get('search').urls.forEach((url) => {
-				injectJS(frames[permID - 1], url, false, () => {});
+			parent.config.settings.get('search').urls.forEach((url) => {
+				injectJS(frames[id - 1], url, false, () => {});
 			});
 
 			let open = false;
-			injectJS(frames[permID - 1], 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
-				frames[permID - 1].window.eruda.init({
+			injectJS(frames[id - 1], 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
+				frames[id - 1].window.eruda.init({
 					tool: ['console', 'elements', 'code', 'block']
 				});
-				frames[permID - 1].window.eruda._entryBtn.hide();
-				injectJS(frames[permID - 1], 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
-					frames[permID - 1].window.eruda.add(frames[permID - 1].window.erudaCode);
+				frames[id - 1].window.eruda._entryBtn.hide();
+				injectJS(frames[id - 1], 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
+					frames[id - 1].window.eruda.add(frames[id - 1].window.erudaCode);
 				});
 				document.querySelector('.owo').onclick = () => {
 					if (open == false) {
-						frames[permID - 1].window.eruda.show();
+						frames[id - 1].window.eruda.show();
 					} else {
-						frames[permID - 1].window.eruda.hide();
+						frames[id - 1].window.eruda.hide();
 					}
 	
 					open = !open;
 				};
 			});
 			document.querySelector('.delete').onclick = () => {
-				deleter(frames[permID - 1]);
+				deleter(frames[id - 1]);
 			};
 			a.innerText = `${iframe.contentDocument.title} `;
 		};
@@ -82,7 +81,7 @@ class Tab {
 		a.onclick = () => {
 			targetProxy.active = {
 				iframe,
-				permID
+				id
 			};
 		};
 
@@ -90,19 +89,19 @@ class Tab {
 			iframe.remove();
 			div.remove();
 			const it = history[1];
-			if (permID !== it) {
+			if (id !== it) {
 				targetProxy.active = {
 					iframe: document.querySelector(`iframe[id="${
 						it
 					}"]`),
-					permID: it
+					id: it
 				};
 			}
 		};
 
 		targetProxy.active = {
 			iframe,
-			permID
+			id
 		};
 
 		document.querySelector('.tabs').append(div);
