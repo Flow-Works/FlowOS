@@ -73,9 +73,8 @@ To get a local copy up and running follow these simple example steps.
 4. Enter your `KEY`, `IV`, `SECRET` in `.env`
 
    ```ini
-   # AES KEY & IV
-   KEY=your-aes-key
-   IV=your-aes-iv
+   # SHA-256 SALT
+   SALT=anything-can-go-here
 
    # COOKIE SECRET
    SECRET=anything-can-go-here
