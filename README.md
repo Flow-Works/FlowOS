@@ -1,17 +1,120 @@
-<p align="center"><img src="https://raw.githubusercontent.com/titaniumnetwork-dev/Ultraviolet-Static/main/public/uv.png" height="200"></p>
+<div align="center">
+	<a href="https://github.com/Flow-Works/FlowOS">
+		<img src="https://raw.githubusercontent.com/Flow-Works/FlowOS/main/FlowOS/public/assets/logo.svg" width="100px">
+	</a>
+	<h3 align="center">Flow OS</h3>
+	<p align="center">
+		The customizable webOS.
+		<br />
+    	<a href="https://flowos-thinliquid.webapp-store.de/"><strong>Explore the wiki »</strong></a>
+    	<br />
+    	<br />
+    	<a href="https://flow-os-944d4a8f0b70.herokuapp.com/">Try it Out</a>
+    	·
+    	<a href="https://github.com/Flow-Works/FlowOS/issues">Report Bug</a>
+    	·
+    	<a href="https://github.com/Flow-Works/FlowOS/issues">Request Feature</a>
+	</p>
+</div>
 
-<h1 align="center">Ultraviolet-App</h1>
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#built-with">Built With</a>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-The deployable all-in-one bundle for Ultraviolet, a highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers and more!
+## Built With
 
-## Deployment
+Here are some libraries used to create FlowOS.
 
-[![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki/Deploy-to-Heroku)
-[![Run on Replit](https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg)](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki/Run-on-Replit)
-[![Deploy on Railway](https://binbashbanana.github.io/deploy-buttons/buttons/remade/railway.svg)](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki/Deploy-on-Railway)
-[![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki/Remix-on-Glitch)
-[![Deploy to Koyeb](https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg)](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki/Deploy-to-Koyeb)
+* [WinBox](https://github.com/nextapps-de/winbox)
+* [Ultraviolet](https://github.com/titaniumnetwork-dev/Ultraviolet)
+* [Eruda](https://github.com/liriliri/eruda)
 
-If you are deploying to an alternative service or to a server, refer to [Deploy via terminal](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki/Deploy-via-terminal).
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Additional information such as [customizing your frontend](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki/Customizing-your-frontend) can be found on the [wiki](https://github.com/titaniumnetwork-dev/Ultraviolet-App/wiki).
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+* yarn
+  ```sh
+  npm install yarn@latest -g
+  ```
+
+### Installation
+
+1. Get a free API Key at [https://example.com](https://example.com)
+2. Clone the repo
+   ```sh
+   git clone https://github.com/Flow-Works/FlowOS
+   ```
+3. Install NPM packages
+   ```sh
+   yarn install
+   ```
+4. Enter your `KEY`, `IV`, `SECRET` in `.env`
+   ```conf
+   # AES KEY & IV
+   KEY=your-aes-key
+   IV=your-aes-iv
+
+   # COOKIE SECRET
+   SECRET=anything-can-go-here
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Twitter: [@_heyflow](https://twitter.com/_heyflow)
+
+Email: flow.works-mail@proton.me
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
