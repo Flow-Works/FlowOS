@@ -38,12 +38,6 @@ const limiter = rateLimit({
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-app.set('etag', false);
-app.use((req, res, next) => {
-	res.set('Cache-Control', 'no-store');
-	next();
-});
-
 app.use('/pwd', passwordManager, limiter);
 
 app.set('host', process.env.IP || '127.0.0.1');
