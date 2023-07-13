@@ -32,13 +32,13 @@ app.disable('x-powered-by');
 
 app.use(compression({ filter: shouldCompress }));
 app.use(minify());
-function shouldCompress (req, res) {
+const shouldCompress = (req, res) => {
 	if (req.headers['x-no-compression']) {
 	  return false;
 	}
 
 	return compression.filter(req, res);
-}
+};
 
 if (process.env.NODE_ENV == 'production') {
 	app.use((req, res, next) => {
@@ -79,11 +79,11 @@ server.on('listening', () => {
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-function shutdown() {
+const shutdown = () => {
 	server.close();
 	bare.close();
 	process.exit(0);
-}
+};
 
 server.listen({
 	port: app.get('port'),

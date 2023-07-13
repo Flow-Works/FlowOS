@@ -9,7 +9,7 @@ const targetObj = {
 
 let history = [];
 const targetProxy = new Proxy(targetObj, {
-	set(target, key, value) {
+	set: (target, key, value) => {
 		history = [value.id].concat(history);
 
 		if (history.length > 1 && history[0] !== history[1]) {
@@ -73,7 +73,7 @@ class Tab {
 				};
 			});
 			document.querySelector('.delete').onclick = () => {
-				deleter(frames[id - 1]);
+				blockElement(frames[id - 1]);
 			};
 			a.innerText = `${iframe.contentDocument.title} `;
 		};
@@ -117,7 +117,7 @@ window.onload = () => {
 	});
 };
 
-function injectJS(iframe, FILE_URL, async = true, callback) {
+const injectJS = (iframe, FILE_URL, async = true, callback) => {
 	const scriptEle = document.createElement('script');
 
 	scriptEle.setAttribute('src', FILE_URL);
@@ -131,12 +131,12 @@ function injectJS(iframe, FILE_URL, async = true, callback) {
 	});
 };
 
-function deleter(iframe) {
+const blockElement = (iframe) => {
 	for (const element of iframe.document.getElementsByTagName('a')) {
 		(element).style.pointerEvents = 'none';
 	}
 	
-	function handler(e) {
+	const handler = (e) => {
 		e = e || window.event;
 		const target = e.target || e.srcElement;
 		target.style.display = 'none';
@@ -147,9 +147,9 @@ function deleter(iframe) {
 		for (const element of iframe.document.getElementsByTagName('a')) {
 			(element).style.pointerEvents = 'initial';
 		}
-	}
+	};
 	
 	iframe.document.addEventListener('click', handler, false);
 	cursor('crosshair');
-	function cursor(cur) { iframe.document.body.style.cursor = cur; }
-}
+	const cursor = (cur) => { iframe.document.body.style.cursor = cur; };
+};

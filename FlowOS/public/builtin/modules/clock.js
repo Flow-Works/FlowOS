@@ -103,7 +103,7 @@ Date.prototype.toEmoji = function () {
 	return time2emoji(this.getHours(), this.getMinutes());
 };
 
-function time2emoji(hours, mins) {
+const time2emoji = (hours, mins) => {
 	const minutes = parseInt(mins);
 	return clockfaces.find((element) => {
 		return element.time.find((time) => {
@@ -113,9 +113,9 @@ function time2emoji(hours, mins) {
 			hours == time.split(':')[0];
 		});
 	}).face;
-}
+};
 
-function startTime() {
+const startTime = () => {
 	const today = new Date();
 	let h = today.getHours();
 	let m = today.getMinutes();
@@ -123,13 +123,13 @@ function startTime() {
 	m = checkTime(m);
 	clock.setText(`${time2emoji(h, m)} ${h}:${m}`);
 	setTimeout(startTime, 1000);
-}
+};
 
-function checkTime(i) {
+const checkTime = (i) => {
 	if (i < 10) {
 		i = `0${i}`;
 	};
 	return i;
-}
+};
 
 startTime();

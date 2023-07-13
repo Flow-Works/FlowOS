@@ -7,13 +7,13 @@ const toBase64 = file => new Promise((resolve, reject) => {
 	reader.onerror = reject;
 });
 
-function nextPage() {
+const nextPage = () => {
 	document.querySelector(`.page${page}`).style.display = 'none';
 	document.querySelector(`.page${page + 1}`).style.display = 'block';
 	page++;
-}
+};
 
-function reboot() {
+const reboot = () => {
 	fetch(`/pwd/encrypt?password=${document.querySelector('input[type="password"]').value}`).then(res => res.text())
 		.then(async (data) => {
 			parent.config.password.set(data);
@@ -31,7 +31,7 @@ function reboot() {
 			}
 			parent.window.location.href = parent.window.location.href;
 		});
-}
+};
 
 window.onload = () => {
 	document.querySelectorAll('form')[0].onsubmit = (e) => {

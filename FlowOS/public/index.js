@@ -53,7 +53,7 @@ class FlowInstance {
 	}
 
 	spotlight = {
-		add(app) {
+		add: (app) => {
 			document.querySelector('.app-switcher .apps').append(app);
 		},
 
@@ -140,7 +140,7 @@ class FlowInstance {
 			}
 		},
 
-		open(APP_ID) {
+		open: (APP_ID) => {
 			let url;
 			logger.debug(JSON.stringify(window.apps()[APP_ID]));
 			url = window.apps()[APP_ID].proxy == false ? window.apps()[APP_ID].url : `${__uv$config.prefix}${__uv$config.encodeUrl(window.apps()[APP_ID].url)}`;

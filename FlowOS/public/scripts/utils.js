@@ -3,41 +3,41 @@ window.swAllowedHostnames = ['localhost', '127.0.0.1'];
 
 window.config = {
 	css: {
-		get() {
+		get: () => {
 			return window.localStorage.getItem('css');
 		},
-		set(value) {
+		set: (value) => {
 			return window.localStorage.setItem('css', value);
 		},
 	},
 	password: {
-		get() {
+		get: () => {
 			return window.localStorage.getItem('password');
 		},
-		set(value) {
+		set: (value) => {
 			return window.localStorage.setItem('password', value);
 		},
 	},
 	apps: {
-		get() {
+		get: () => {
 			return JSON.parse(window.localStorage.getItem('apps'));
 		},
-		set(value) {
+		set: (value) => {
 			return window.localStorage.setItem('apps', JSON.stringify(value));
 		},
 	},
 	settings: {
-		get(item) {
+		get: (item) => {
 			return JSON.parse(window.localStorage.getItem(item));
 		},
-		set(item, value) {
+		set: (item, value) => {
 			return window.localStorage.setItem(item, JSON.stringify(value));
 		},
 	}
 };
 
 window.utils = {
-	async registerSW() {
+	registerSW: async () => {
 		if ('serviceWorker' in navigator) {
 			await navigator.serviceWorker.register(stockSW, {
 					scope: __uv$config.prefix,
@@ -48,7 +48,7 @@ window.utils = {
 		}
 	},
 
-	loadCSS(FILE_URL) {
+	loadCSS: (FILE_URL) => {
 		const styleEle = document.createElement('link');
 
 		styleEle.setAttribute('rel', 'stylesheet');
@@ -66,7 +66,7 @@ window.utils = {
 		});
 	},
 
-	loadJS(FILE_URL, async = true) {
+	loadJS: (FILE_URL, async = true) => {
 		const scriptEle = document.createElement('script');
 
 		scriptEle.setAttribute('src', FILE_URL);
@@ -84,14 +84,14 @@ window.utils = {
 		});
 	},
 
-	getBox(width, height) {
+	getBox: (width, height) => {
 		return {
 			string: '+',
 			style: `font-size: 1px; padding: ${Math.floor(height / 10)}px ${Math.floor(width / 2)}px; line-height: ${height}px;`
 		};
 	},
 
-	sleep(ms) {
+	sleep: (ms) => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 };
