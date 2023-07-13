@@ -110,7 +110,7 @@ class FlowInstance {
 	};
 
 	registerHotkeys() {
-		hotkeys('alt+space', (e) => {
+		hotkeys('alt+space, ctrl+space', (e) => {
 			e.preventDefault();
 			this.spotlight.toggle();
 		});
