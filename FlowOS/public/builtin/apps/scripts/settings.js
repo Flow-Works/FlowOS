@@ -1,7 +1,7 @@
 window.onload = () => {
 	Object.values(parent.Flow.settings.items).forEach((setting) => {
 		const section = document.createElement('form');
-		section.classList.add('settings-' + setting.SETTING_ID);
+		section.classList.add(`settings-${setting.SETTING_ID}`);
 
 		const button = document.createElement('button');
 		button.innerText = 'Update';
@@ -17,9 +17,9 @@ window.onload = () => {
 			const sub = document.createElement('sub');
 
 			label.innerText = input.label;
-			sub.innerText = 'Default: ' + input.defaultValue + '\n\n';
+			sub.innerText = `Default: ${input.defaultValue}\n\n`;
 
-			inputEl.classList.add('settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID);
+			inputEl.classList.add(`settings-${setting.SETTING_ID}-${input.SETTING_INPUT_ID}`);
 			inputEl.placeholder = input.placeholder;
 
 			if (input.type == 'select') {
@@ -32,11 +32,7 @@ window.onload = () => {
 				});
 			}
 
-			if (input.type == 'textarea') {
-				inputEl.value = config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID].join('\n');
-			} else {
-				inputEl.value = config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID];
-			}
+			inputEl.value = input.type == 'textarea' ? config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID].join('\n') : config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID];
 
 			section.appendChild(label);
 			section.appendChild(inputEl);
@@ -50,11 +46,7 @@ window.onload = () => {
 				const obj = {};
 
 				setting.inputs.forEach((input) => {
-					if (input.type == 'textarea') {
-						obj[input.SETTING_INPUT_ID] = document.querySelector('.settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID).value.split('\n');
-					} else {
-						obj[input.SETTING_INPUT_ID] = document.querySelector('.settings-' + setting.SETTING_ID + '-' + input.SETTING_INPUT_ID).value;
-					}
+					obj[input.SETTING_INPUT_ID] = input.type == 'textarea' ? document.querySelector(`.settings-${setting.SETTING_ID}-${input.SETTING_INPUT_ID}`).value.split('\n') : document.querySelector(`.settings-${setting.SETTING_ID}-${input.SETTING_INPUT_ID}`).value;
 				});
 
 				config.settings.set(setting.SETTING_ID, obj);
@@ -72,7 +64,7 @@ window.onload = () => {
 	});
 };
 
-const openCSS = () => {
+window.openCSS = () => {
 	new parent.WinBox({
 		title: 'CSS Editor',
 		icon: `assets/icons/text-editor.svg`,

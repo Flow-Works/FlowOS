@@ -1,51 +1,51 @@
-const stockSW = '/uv/sw.js';
-const swAllowedHostnames = ['localhost', '127.0.0.1'];
+window.stockSW = '/uv/sw.js';
+window.swAllowedHostnames = ['localhost', '127.0.0.1'];
 
 window.config = {
 	css: {
-		get: function () {
+		get() {
 			return window.localStorage.getItem('css');
 		},
-		set: function (value) {
+		set(value) {
 			return window.localStorage.setItem('css', value);
 		},
 	},
 	setup: {
-		get: function () {
+		get() {
 			return window.localStorage.getItem('setup');
 		},
-		set: function (value) {
+		set(value) {
 			return window.localStorage.setItem('setup', value);
 		},
 	},
 	password: {
-		get: function () {
+		get() {
 			return window.localStorage.getItem('password');
 		},
-		set: function (value) {
+		set(value) {
 			return window.localStorage.setItem('password', value);
 		},
 	},
 	apps: {
-		get: function () {
+		get() {
 			return JSON.parse(window.localStorage.getItem('apps'));
 		},
-		set: function (value) {
+		set(value) {
 			return window.localStorage.setItem('apps', JSON.stringify(value));
 		},
 	},
 	settings: {
-		get: function (item) {
+		get(item) {
 			return JSON.parse(window.localStorage.getItem(item));
 		},
-		set: function (item, value) {
+		set(item, value) {
 			return window.localStorage.setItem(item, JSON.stringify(value));
 		},
 	}
 };
 
-const utils = {
-	registerSW: async function () {
+window.utils = {
+	async registerSW() {
 		if ('serviceWorker' in navigator) {
 			await navigator.serviceWorker.register(stockSW, {
 					scope: __uv$config.prefix,
@@ -56,7 +56,7 @@ const utils = {
 		}
 	},
 
-	loadCSS: function (FILE_URL) {
+	loadCSS(FILE_URL) {
 		const styleEle = document.createElement('link');
 
 		styleEle.setAttribute('rel', 'stylesheet');
@@ -65,18 +65,17 @@ const utils = {
 
 		document.head.appendChild(styleEle);
 
-		// success event 
 		styleEle.addEventListener('load', () => {
-			logger.info('Stylesheet loaded: ' + FILE_URL);
+			logger.info(`Stylesheet loaded: ${FILE_URL}`);
 		});
-		// error event
+
 		styleEle.addEventListener('error', (ev) => {
-			logger.info('Failed to load stylesheet: ' + FILE_URL, ev);
+			logger.info(`Failed to load stylesheet: ${FILE_URL}`, ev);
 		});
 	},
 
-	loadJS: function (FILE_URL, async = true) {
-		let scriptEle = document.createElement('script');
+	loadJS(FILE_URL, async = true) {
+		const scriptEle = document.createElement('script');
 
 		scriptEle.setAttribute('src', FILE_URL);
 		scriptEle.setAttribute('type', 'text/javascript');
@@ -84,13 +83,12 @@ const utils = {
 
 		document.body.appendChild(scriptEle);
 
-		// success event 
 		scriptEle.addEventListener('load', () => {
-			logger.info('Script loaded: ' + FILE_URL);
+			logger.info(`Script loaded: ${FILE_URL}`);
 		});
-		// error event
+
 		scriptEle.addEventListener('error', (ev) => {
-			logger.error('Failed to load script: ' + FILE_URL, ev);
+			logger.error(`Failed to load script: ${FILE_URL}`, ev);
 		});
 	}
 };

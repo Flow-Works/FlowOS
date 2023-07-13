@@ -1,5 +1,5 @@
 function loadScript(sources, callBack) {
-	let script = document.createElement('script');
+	const script = document.createElement('script');
 	script.src = sources;
 	script.async = false;
 	document.body.appendChild(script);
@@ -26,8 +26,8 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 		const span = document.createElement('span');
 		if (config.apps.get()[data.APP_ID]) {
 			button.innerText = 'Uninstall';
-			h3.innerText = data.title + ' (Installed)';
-			span.innerText = data.title + ' (Installed)';
+			h3.innerText = `${data.title} (Installed)`;
+			span.innerText = `${data.title} (Installed)`;
 		} else {
 			button.innerText = 'Install';
 			h3.innerText = data.title;
@@ -37,16 +37,12 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 
 		const img = document.createElement('img');
 		img.setAttribute('width', '100px');
-		img.src = '/assets/icons/' + data.APP_ID + '.svg';
+		img.src = `/assets/icons/${data.APP_ID}.svg`;
 		a.appendChild(img);
 		a.appendChild(h3);
 		h3.appendChild(p);
 		button.style.background = 'var(--window-bg)';
 		h3.appendChild(button);
-
-		function isInArray(value, array) {
-			return array.indexOf(value) > -1;
-		}
 
 		button.onclick = () => {
 			const obj = {
@@ -66,14 +62,14 @@ loadScript('https://flow-works.github.io/appstore/apps.js', () => {
 		document.querySelector('.apps').appendChild(a);
 	});
 
-	let tooltips = document.querySelectorAll('.tooltip span');
+	const tooltips = document.querySelectorAll('.tooltip span');
 
-	window.onmousemove = function (e) {
-		let x = (e.clientX + 20) + 'px',
-			y = (e.clientY + 20) + 'px';
-		for (let i = 0; i < tooltips.length; i++) {
-			tooltips[i].style.top = y;
-			tooltips[i].style.left = x;
+	window.onmousemove = (e) => {
+		const x = `${e.clientX + 20}px`;
+		const y = `${e.clientY + 20}px`;
+		for (const tooltip of tooltips) {
+			tooltip.style.top = y;
+			tooltip.style.left = x;
 		}
 	};
 });

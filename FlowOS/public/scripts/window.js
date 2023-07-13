@@ -3,10 +3,10 @@ window.addEventListener('load', () => {
 });
 
 window.addEventListener('error', (e) => {
-	parent.logger.error(e.filename + '\n' + e.lineno + '\n\n' + e.message);
+	parent.logger.error(`${e.filename}\n${e.lineno}\n\n${e.message}`);
 });
 
-const loadJS = (FILE_URL, defer = true, type = 'text/javascript') => {
+window.loadJS = (FILE_URL, defer = true, type = 'text/javascript') => {
 	return new Promise((resolve, reject) => {
 		try {
 			const scriptEle = document.createElement('script');
@@ -34,7 +34,7 @@ const loadJS = (FILE_URL, defer = true, type = 'text/javascript') => {
 	});
 };
 
-function loadCSS(FILE_URL) {
+window.loadCSS = (FILE_URL) => {
 	const styleEle = document.createElement('link');
 
 	styleEle.setAttribute('rel', 'stylesheet');
@@ -42,4 +42,4 @@ function loadCSS(FILE_URL) {
 	styleEle.setAttribute('href', FILE_URL);
 
 	document.head.appendChild(styleEle);
-}
+};

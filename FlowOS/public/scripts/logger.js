@@ -1,9 +1,7 @@
-const regex = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
-
 function getBox(width, height) {
 	return {
 		string: '+',
-		style: 'font-size: 1px; padding: ' + Math.floor(height / 10) + 'px ' + Math.floor(width / 2) + 'px; line-height: ' + height + 'px;'
+		style: `font-size: 1px; padding: ${Math.floor(height / 10)}px ${Math.floor(width / 2)}px; line-height: ${height}px;`
 	};
 }
 
@@ -11,7 +9,6 @@ class Logger {
 	constructor() {}
 
 	log(type, color, msg) {
-		const logLines = (new Error().stack).split('\n');
 		console.log(
 			`%cFlowOS%c${type.toUpperCase()}%c ${msg}`,
 			'padding:2.5px 10px;color:white;border-radius:10px;background:#363a4f;margin-right:5px;',
@@ -20,13 +17,12 @@ class Logger {
 		);
 	}
 
-	image(url, scale) {
-		scale = scale || 1;
-		let img = new Image();
+	image(url, scale = 1) {
+		const img = new Image();
 
 		img.onload = function () {
-			let dim = getBox(this.width * scale, this.height * scale);
-			console.log('%c' + dim.string + '%c FlowOS\n ' + Flow.version, dim.style + 'background: url(' + url + '); background-repeat: no-repeat; background-size: ' + (this.width * scale) + 'px ' + (this.height * scale) + 'px; color: transparent;', '');
+			const dim = getBox(this.width * scale, this.height * scale);
+			console.log(`%c${dim.string}%c FlowOS\n ${Flow.version}`, `${dim.style}background: url(${url}); background-repeat: no-repeat; background-size: ${this.width * scale}px ${this.height * scale}px; color: transparent;`, '');
 		};
 
 		img.src = url;
@@ -41,7 +37,7 @@ class Logger {
 
 		new WinBox({
 			title: 'Error',
-			html: '<div class="err">' + msg + '<style>.err { padding: 5px; }</style></div>',
+			html: `<div class="err">${msg}<style>.err { padding: 5px; }</style></div>`,
 			x: 'center',
 			y: 'center',
 			width: '300px',

@@ -13,16 +13,7 @@ class FlowInstance {
 
 		if (!config.css.get()) config.css.set('');
 		if (!config.apps.get()) config.apps.set([]);
-		if (!config.setup.get()) {
-			new WinBox({
-				title: 'Setup Wizard',
-				class: ['no-close', 'no-move', 'no-close', 'no-min', 'no-full', 'no-resize'],
-				x: 'center',
-				y: 'center',
-				height: '500px',
-				html: `<iframe src="/builtin/apps/setup.html" scrolling="yes"></iframe>`,
-			});
-		} else {
+		if (config.setup.get()) {
 			window.loginWindow = new WinBox({
 				title: 'Login',
 				class: ['no-close'],
@@ -42,6 +33,15 @@ class FlowInstance {
 					};
 				}
 			});
+		} else {
+			new WinBox({
+				title: 'Setup Wizard',
+				class: ['no-close', 'no-move', 'no-close', 'no-min', 'no-full', 'no-resize'],
+				x: 'center',
+				y: 'center',
+				height: '500px',
+				html: `<iframe src="/builtin/apps/setup.html" scrolling="yes"></iframe>`,
+			});
 		}
 
 		utils.loadCSS(config.settings.get('theme').url);
@@ -56,14 +56,14 @@ class FlowInstance {
 			switch (this.state) {
 				case true:
 					document.querySelector('.app-switcher').style.opacity = 1;
-					Flow.bar.items['spotlight'].setText('🔎');
+					Flow.bar.items.spotlight.setText('🔎');
 					document.querySelector('.app-switcher').style.opacity = 0;
 					await sleep(200);
 					document.querySelector('.app-switcher').style.display = 'none';
 					this.state = false;
 					break;
 				case false:
-					Flow.bar.items['spotlight'].setText('❌');
+					Flow.bar.items.spotlight.setText('❌');
 					document.querySelector('.app-switcher').style.opacity = 0;
 					document.querySelector('.app-switcher').style.display = 'block';
 					await sleep(200);
@@ -87,11 +87,7 @@ class FlowInstance {
 					SETTING_INPUT_ID,
 					defaultValue
 				}) => {
-					if (type == 'textarea') {
-						obj[SETTING_INPUT_ID] = defaultValue.split('\n');
-					} else {
-						obj[SETTING_INPUT_ID] = defaultValue;
-					}
+					obj[SETTING_INPUT_ID] = type == 'textarea' ? defaultValue.split('\n') : defaultValue;
 				});
 				config.settings.set(ITEM.SETTING_ID, obj);
 			}
@@ -142,11 +138,7 @@ class FlowInstance {
 		open(APP_ID) {
 			let url;
 			logger.debug(JSON.stringify(window.apps()[APP_ID]));
-			if (window.apps()[APP_ID].proxy == false) {
-				url = window.apps()[APP_ID].url;
-			} else {
-				url = 'https://' + window.location.hostname + '/' + __uv$config.prefix + __uv$config.encodeUrl(window.apps()[APP_ID].url);
-			}
+			url = window.apps()[APP_ID].proxy == false ? window.apps()[APP_ID].url : `https://${window.location.hostname}/${__uv$config.prefix}${__uv$config.encodeUrl(window.apps()[APP_ID].url)}`;
 			logger.debug(url);
 			new WinBox({
 				title: window.apps()[APP_ID].title,

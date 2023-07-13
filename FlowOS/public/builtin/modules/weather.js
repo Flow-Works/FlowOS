@@ -56,15 +56,13 @@ const weatherMap = {
 };
 
 function startWeather() {
-    fetch('https://api.weatherapi.com/v1/current.json?key=0470cf1ea60241eeae4172153230907&q=' + config.settings.get('weather').city + '&aqi=no')
+    fetch(`https://api.weatherapi.com/v1/current.json?key=0470cf1ea60241eeae4172153230907&q=${config.settings.get('weather').city}&aqi=no`)
         .then(res => res.json())
         .then(data => {
-            let type;
-            if (config.settings.get('weather').measurement == 'Celsius') type = 'c';
-            else type = 'f';
-            weather.setText(weatherMap[data.current.condition.code] + ' ' + data.current['temp_' + type] + '°' + type.toUpperCase());
+            const type = config.settings.get('weather').measurement == 'Celsius' ? 'c' : 'f';
+            weather.setText(`${weatherMap[data.current.condition.code]} ${data.current[`temp_${type}`]}°${type.toUpperCase()}`);
         });
-    setTimeout(startWeather, 60000);
+    setTimeout(startWeather, 60_000);
 }
 
 startWeather();

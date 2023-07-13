@@ -60,7 +60,7 @@ class BarItem {
 		this.MODULE_ID = MODULE_ID;
 		this.element = document.createElement('div');
 		this.element.classList.add('bar-item');
-		this.element.classList.add('bar-' + MODULE_ID);
+		this.element.classList.add(`bar-${MODULE_ID}`);
 		Flow.bar.add(this);
 	}
 

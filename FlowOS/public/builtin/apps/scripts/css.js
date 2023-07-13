@@ -7,7 +7,7 @@ window.MonacoEnvironment = {
 	getWorkerUrl: () => proxy
 };
 
-let proxy = URL.createObjectURL(new Blob([`
+const proxy = URL.createObjectURL(new Blob([`
 	self.MonacoEnvironment = {
 		baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.8.3/min/'
 	};
@@ -16,8 +16,8 @@ let proxy = URL.createObjectURL(new Blob([`
 	type: 'text/javascript'
 }));
 
-require(['vs/editor/editor.main'], function () {
-	let editor = monaco.editor.create(document.querySelector('.container'), {
+require(['vs/editor/editor.main'], () => {
+	const editor = monaco.editor.create(document.querySelector('.container'), {
 		value: config.css.get(),
 		language: 'css',
 		theme: 'vs-dark'

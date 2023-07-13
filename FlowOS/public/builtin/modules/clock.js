@@ -104,17 +104,13 @@ Date.prototype.toEmoji = function () {
 };
 
 function time2emoji(hours, mins) {
-	let minutes = parseInt(mins);
+	const minutes = parseInt(mins);
 	return clockfaces.find((element) => {
 		return element.time.find((time) => {
-			let minute = parseInt(time.split(':')[1]);
-			if (
-				((minute == 30 && minutes >= 15 && minutes <= 45) ||
-					(minute == 0 && (minutes < 15 || minutes > 45))) &&
-				hours == time.split(':')[0]
-			)
-				return true;
-			else return false;
+			const minute = parseInt(time.split(':')[1]);
+			return ((minute == 30 && minutes >= 15 && minutes <= 45) ||
+				(minute == 0 && (minutes < 15 || minutes > 45))) &&
+			hours == time.split(':')[0];
 		});
 	}).face;
 }
@@ -125,13 +121,13 @@ function startTime() {
 	let m = today.getMinutes();
 	h = checkTime(h);
 	m = checkTime(m);
-	clock.setText(time2emoji(h, m) + ' ' + h + ':' + m);
+	clock.setText(`${time2emoji(h, m)} ${h}:${m}`);
 	setTimeout(startTime, 1000);
 }
 
 function checkTime(i) {
 	if (i < 10) {
-		i = '0' + i;
+		i = `0${i}`;
 	};
 	return i;
 }

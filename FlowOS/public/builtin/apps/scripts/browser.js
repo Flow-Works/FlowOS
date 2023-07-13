@@ -1,6 +1,6 @@
 let id = 0;
 
-let targetObj = {
+const targetObj = {
 	active: {
 		iframe: null,
 		permID: null
@@ -8,22 +8,20 @@ let targetObj = {
 };
 
 let history = [];
-let targetProxy = new Proxy(targetObj, {
-	set: function (target, key, value) {
+const targetProxy = new Proxy(targetObj, {
+	set(target, key, value) {
 		history = [value.permID].concat(history);
 
-		if (history.length > 1) {
-			if (history[0] !== history[1]) {
-				try {
-					value.iframe.style.display = 'block';
-				} catch (e) {};
-				try {
-					document.querySelector(`iframe[id="${
+		if (history.length > 1 && history[0] !== history[1]) {
+			try {
+				value.iframe.style.display = 'block';
+			} catch (e) {};
+			try {
+				document.querySelector(`iframe[id="${
                         history[1]
                     }"]`).style.display = 'none';
-				} catch (e) {};
-				target[key] = value;
-			}
+			} catch (e) {};
+			target[key] = value;
 		}
 		return true;
 	}
@@ -31,7 +29,7 @@ let targetProxy = new Proxy(targetObj, {
 
 class Tab {
 	constructor() {
-		id += 1;
+		id++;
 		const permID = id;
 
 		const div = document.createElement('div');
@@ -78,7 +76,7 @@ class Tab {
 			document.querySelector('.delete').onclick = () => {
 				deleter(frames[permID - 1]);
 			};
-			a.innerText = iframe.contentDocument.title + ' ';
+			a.innerText = `${iframe.contentDocument.title} `;
 		};
 
 		a.onclick = () => {
@@ -91,7 +89,7 @@ class Tab {
 		a2.onclick = () => {
 			iframe.remove();
 			div.remove();
-			let it = history[1];
+			const it = history[1];
 			if (permID !== it) {
 				targetProxy.active = {
 					iframe: document.querySelector(`iframe[id="${
@@ -121,7 +119,7 @@ window.onload = () => {
 };
 
 function injectJS(iframe, FILE_URL, async = true, callback) {
-	let scriptEle = document.createElement('script');
+	const scriptEle = document.createElement('script');
 
 	scriptEle.setAttribute('src', FILE_URL);
 	scriptEle.setAttribute('type', 'text/javascript');
@@ -135,20 +133,20 @@ function injectJS(iframe, FILE_URL, async = true, callback) {
 };
 
 function deleter(iframe) {
-	for(let i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
-		(iframe.document.getElementsByTagName('a')[i]).style.pointerEvents = 'none';
+	for (const element of iframe.document.getElementsByTagName('a')) {
+		(element).style.pointerEvents = 'none';
 	}
 	
 	function handler(e) {
 		e = e || window.event;
-		let target = e.target || e.srcElement;
+		const target = e.target || e.srcElement;
 		target.style.display = 'none';
 		
 		iframe.document.removeEventListener('click', handler, false);
 		cursor('default');
 		
-		for(let i=0; i<(iframe.document.getElementsByTagName('a')).length; i++) {
-			(iframe.document.getElementsByTagName('a')[i]).style.pointerEvents = 'initial';
+		for (const element of iframe.document.getElementsByTagName('a')) {
+			(element).style.pointerEvents = 'initial';
 		}
 	}
 	

@@ -5,12 +5,11 @@ import cache from 'memory-cache';
 const router = express.Router();
 
 function encrypt(plainText) {
-	let mystr = crypto.createHash('sha256').update(plainText).update(makeHash(process.env.SALT)).digest('hex');
-	return mystr;
+	return crypto.createHash('sha256').update(plainText).update(makeHash(process.env.SALT)).digest('hex');
 }
 
 const cacheMiddleware = (req, res, next) => {
-	const cache_key = '__express__' + req.originalUrl || req.url;
+	const cache_key = `__express__${req.originalUrl}` || req.url;
 	const cachedData = cache.get(cache_key);
   
 	if (cachedData) {
