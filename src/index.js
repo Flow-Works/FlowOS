@@ -6,6 +6,7 @@ import express from 'express';
 import session from 'cookie-session';
 import csurf from 'csurf';
 import compression from 'compression';
+import minify from 'express-minify';
 import {
 	createServer
 } from 'node:http';
@@ -67,7 +68,7 @@ app.use(session({
 
 app.use(csurf());
 
-app.use(express.static(publicPath));
+app.use(express.static(publicPath), minify());
 app.use('/pwd/', passwordManager, limiter);
 app.use('/uv/', express.static(uvPath));
 
