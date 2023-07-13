@@ -4,9 +4,6 @@ import cache from 'memory-cache';
 
 const router = express.Router();
 
-const key = Buffer.from(String(process.env.KEY), 'hex');
-const iv = Buffer.from(String(process.env.IV), 'hex');
-
 function encrypt(plainText) {
 	var mystr = crypto.createHash('sha256').update(plainText).update(makeHash(process.env.SALT)).digest('hex');
 	return mystr;
