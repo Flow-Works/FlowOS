@@ -68,7 +68,7 @@ app.use(session({
 
 app.use(csurf());
 
-app.use(express.static(publicPath), minify());
+app.use(minify(), express.static(publicPath));
 app.use('/pwd/', passwordManager, limiter);
 app.use('/uv/', express.static(uvPath));
 
