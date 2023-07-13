@@ -10,14 +10,6 @@ window.config = {
 			return window.localStorage.setItem('css', value);
 		},
 	},
-	setup: {
-		get() {
-			return window.localStorage.getItem('setup');
-		},
-		set(value) {
-			return window.localStorage.setItem('setup', value);
-		},
-	},
 	password: {
 		get() {
 			return window.localStorage.getItem('password');

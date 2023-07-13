@@ -13,7 +13,7 @@ class FlowInstance {
 
 		if (!config.css.get()) config.css.set('');
 		if (!config.apps.get()) config.apps.set([]);
-		if (config.setup.get()) {
+		if (config.password.get()) {
 			window.loginWindow = new WinBox({
 				title: 'Login',
 				class: ['no-close'],
@@ -34,6 +34,11 @@ class FlowInstance {
 				}
 			});
 		} else {
+			window.localStorage.clear();
+		}
+
+		if (!config.password.get()) {
+			config.settings.set('theme', { url: '/builtin/themes/catppuccin-dark.css' });
 			new WinBox({
 				title: 'Setup Wizard',
 				class: ['no-close', 'no-move', 'no-close', 'no-min', 'no-full', 'no-resize'],

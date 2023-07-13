@@ -16,7 +16,6 @@ function nextPage() {
 function reboot() {
 	fetch(`/pwd/encrypt?password=${document.querySelector('input[type="password"]').value}`).then(res => res.text())
 		.then(async (data) => {
-			config.setup.set(true);
 			config.password.set(data);
 			const file = document.querySelector('input[type="file"]').files[0];
 			if (file) {
