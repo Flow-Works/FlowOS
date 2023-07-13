@@ -19,10 +19,17 @@ function reboot() {
 			config.setup.set(true);
 			config.password.set(data);
 			var file = document.querySelector('input[type="file"]').files[0];
-			config.settings.set('profile', {
-				url: await toBase64(file),
-				username: document.querySelector('input[type="username"]').value
-			});
+			if (!file) {
+				config.settings.set('profile', {
+					url: '/assets/profile.png',
+					username: document.querySelector('input[type="username"]').value
+				});
+			} else {
+				config.settings.set('profile', {
+					url: await toBase64(file),
+					username: document.querySelector('input[type="username"]').value
+				});
+			}
 			parent.window.location.href = parent.window.location.href;
 		});
 }
