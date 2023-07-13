@@ -4,6 +4,6 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        - NPM_BUILD=npm ci --omit=dev --frozen-lockfile
+        - YARN_BUILD=yarn install --frozen-lockfile
     ports:
-      - "8080:8080"
+      - "3000:3000"
