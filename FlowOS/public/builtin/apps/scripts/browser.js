@@ -150,6 +150,6 @@ const blockElement = (iframe) => {
 	};
 	
 	iframe.document.addEventListener('click', handler, false);
-	cursor('crosshair');
 	const cursor = (cur) => { iframe.document.body.style.cursor = cur; };
+	cursor('crosshair');
 };
