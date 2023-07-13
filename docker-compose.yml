@@ -1,9 +1,0 @@
-services:
-  ultraviolet:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-      args:
-        - YARN_BUILD=yarn install --frozen-lockfile
-    ports:
-      - "3000:3000"
