@@ -30,8 +30,6 @@ app.set('host', process.env.IP || '127.0.0.1');
 app.set('port', process.env.PORT || 3000);
 app.disable('x-powered-by');
 
-app.use(compression({ filter: shouldCompress }));
-app.use(minify());
 const shouldCompress = (req, res) => {
 	if (req.headers['x-no-compression']) {
 	  return false;
@@ -39,6 +37,9 @@ const shouldCompress = (req, res) => {
 
 	return compression.filter(req, res);
 };
+
+app.use(compression({ filter: shouldCompress }));
+app.use(minify());
 
 if (process.env.NODE_ENV == 'production') {
 	app.use((req, res, next) => {
