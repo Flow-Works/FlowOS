@@ -11,7 +11,7 @@
 	"author": "Flow Works",
 	"type": "module",
 	"scripts": {
-		"start": "node src/index.js"
+		"start": "NODE_ENV=production node src/index.js"
 	},
 	"dependencies": {
 		"@proudparrot2/uv": "^2.0.0",

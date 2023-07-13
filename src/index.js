@@ -14,7 +14,7 @@ import { join } from 'node:path';
 import { publicPath } from '../FlowOS/lib/index.js';
 import passwordRouter from './password.js';
 
-if (process.env.NODE_ENV !== 'production') dotenv.config();
+dotenv.config();
 
 const bare = createBareServer('/bare/');
 const app = express();
