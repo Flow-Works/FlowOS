@@ -1,20 +1,18 @@
 {
-	"name": "flowos",
+	"name": "flow-os",
 	"version": "1.0.0",
-	"description": "Ultraviolet instance",
+	"description": "The customizable webOS.",
+	"keywords": [
+		"tomp",
+		"ultraviolet",
+		"webos"
+	],
+	"license": "MIT",
+	"author": "Flow Works",
 	"type": "module",
-	"engines": {
-		"npm": ">=7.0.0",
-		"node": ">=16.0.0"
-	},
 	"scripts": {
 		"start": "node src/index.js"
 	},
-	"keywords": [
-		"proxy"
-	],
-	"author": "",
-	"license": "GPL-3.0-or-later",
 	"dependencies": {
 		"@proudparrot2/uv": "^2.0.0",
 		"@tomphttp/bare-server-node": "^2.0.1",
@@ -28,5 +26,9 @@
 		"eslint": "^8.36.0",
 		"nodemon": "^3.0.1",
 		"prettier": "^2.8.4"
+	},
+	"engines": {
+		"node": ">=16.0.0",
+		"npm": ">=7.0.0"
 	}
 }

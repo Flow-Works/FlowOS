@@ -1,7 +1,7 @@
 {
-	"name": "Ultraviolet App",
-	"description": "Node.js Ultraviolet instance",
-	"repository": "https://github.com/titaniumnetwork-dev/Ultraviolet-App",
-	"logo": "https://raw.githubusercontent.com/titaniumnetwork-dev/Ultraviolet-Static/main/public/uv.png",
-	"keywords": ["tomp", "ultraviolet"]
+	"name": "FlowOS",
+	"description": "The customizable webOS.",
+	"repository": "https://github.com/Flow-Works/FlowOS",
+	"logo": "https://raw.githubusercontent.com/Flow-Works/FlowOS/main/FlowOS/public/assets/logo.png",
+	"keywords": ["tomp", "ultraviolet", "webos"]
 }
