@@ -1,4 +1,7 @@
-import loginConfig from './configs/login.json';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
+const loginConfig = require('./configs/login.json');
 
 import express from 'express';
 import crypto from 'crypto';

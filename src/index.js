@@ -1,4 +1,7 @@
-import config from './configs/config.json';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
+const config = require('./configs/config.json');
 
 import express from 'express';
 import rateLimit from 'express-rate-limit';
@@ -11,8 +14,6 @@ import { join } from 'node:path';
 
 import { publicPath } from '../FlowOS/lib/index.js';
 import passwordRouter from './password.js';
-
-dotenv.config();
 
 const bare = createBareServer('/bare/');
 const app = express();
