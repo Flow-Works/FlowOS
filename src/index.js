@@ -1,8 +1,3 @@
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-
-const config = require('./configs/config.json');
-
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import compression from 'compression';
