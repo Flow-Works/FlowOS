@@ -1,44 +1,63 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js';
+import * as auth from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
+import * as analytics from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js';
+
+window.firebaseConfig = {
+	apiKey: 'AIzaSyCVyXj1Z7l2Bbu51JGyhntNLI8iYaC-yus',
+	authDomain: 'flow-os.firebaseapp.com',
+	projectId: 'flow-os',
+	storageBucket: 'flow-os.appspot.com',
+	messagingSenderId: '1062493642028',
+	appId: '1:1062493642028:web:3665c0b593f45342bee089',
+	measurementId: 'G-3RNYBG5J74'
+};
+
+(async () => {
+	window.app = initializeApp(parent.firebaseConfig);
+
+	window.analytics = analytics;
+	window._analytics = await analytics.getAnalytics(app);
+
+	window.auth = auth;
+	window._auth = await auth.getAuth(app);
+})();
+
 class FlowInstance {
 	version = 'v1.0.0';
+	init = false;
+	setup = false;
 
 	constructor() {
 		utils.registerSW();
 	}
 
-	boot() {
+	boot = async () => {
 		document.querySelector('.boot').style.opacity = 0;
-		setTimeout(() => {
-			document.querySelector('.boot').style.pointerEvents = 'none';
-		}, 700);
+		setTimeout(() => { document.querySelector('.boot').style.pointerEvents = 'none'; }, 700);
+
+		utils.loadCSS(config.settings.get('theme').url);
 
 		if (!config.css.get()) config.css.set('');
 		if (!config.apps.get()) config.apps.set([]);
-		if (config.password.get()) {
-			window.loginWindow = new WinBox({
-				title: 'Login',
-				class: ['no-close'],
-				modal: true,
-				html: `<iframe src="/builtin/apps/login.html" title="Login" scrolling="yes"></iframe>`,
-				onclose: () => {
-					this.apps.register();
-					this.registerHotkeys();
-					config.settings.get('modules').urls.forEach(async (item) => {
-						utils.loadJS(item);
-					});
-					const spotlight = new BarItem('spotlight');
 
-					spotlight.setText('🔎');
-					spotlight.element.onclick = () => {
-						Flow.spotlight.toggle();
-					};
-				}
-			});
-		} else {
-			window.localStorage.clear();
-		}
-
-		if (!config.password.get()) {
-			config.settings.set('theme', { url: '/builtin/themes/catppuccin-dark.css' });
+		_auth.onAuthStateChanged((user) => {
+			if (this.init || this.setup) parent.window.location.reload();
+			if (user) {
+				this.apps.register();
+				this.registerHotkeys();
+				config.settings.get('modules').urls.forEach(async (item) => {
+					utils.loadJS(item);
+				});
+		
+				const spotlight = new BarItem('spotlight');
+		
+				spotlight.setText('🔎');
+				spotlight.element.onclick = () => {
+					Flow.spotlight.toggle();
+				};
+				this.init = true;
+				return;
+			}
 			new WinBox({
 				title: 'Setup Wizard',
 				class: ['no-close', 'no-move', 'no-close', 'no-min', 'no-full', 'no-resize'],
@@ -47,10 +66,9 @@ class FlowInstance {
 				height: '650px',
 				html: `<iframe src="/builtin/apps/setup.html" title="Setup Wizard" scrolling="yes"></iframe>`,
 			});
-		}
-
-		utils.loadCSS(config.settings.get('theme').url);
-	}
+			this.setup = true;
+		});
+	};
 
 	spotlight = {
 		add: (app) => {

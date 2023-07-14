@@ -13,7 +13,6 @@ import { uvPath } from '@proudparrot2/uv';
 import { join } from 'node:path';
 
 import { publicPath } from '../FlowOS/lib/index.js';
-import passwordRouter from './password.js';
 
 const bare = createBareServer('/bare/');
 const app = express();
@@ -48,7 +47,6 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 app.use(express.static(publicPath));
-app.use('/pwd/', passwordRouter, limiter);
 app.use('/uv/', express.static(uvPath));
 
 app.use((req, res) => {

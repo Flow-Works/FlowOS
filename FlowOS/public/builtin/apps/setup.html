@@ -6,8 +6,6 @@
 		<link rel="stylesheet" href="/styles/style.css" />
 		<link rel="stylesheet" href="/styles/window.css" />
 
-		<script src="/builtin/apps/scripts/setup.js" defer></script>
-
 		<link rel="stylesheet" href="/builtin/apps/styles/setup.css" />
 	</head>
 	<body>
@@ -18,38 +16,58 @@
 				<button type="submit" onclick="nextPage()">Continue</button>
 			</div>
 			<div class="page2">
-				<h1>Create an account.</h1>
-				<form>
-					<label>Enter Username</label>
-					<input type="username" name="username" required />
+				<div class="login">
+					<h1>Login with FlowID.</h1>
+					<form action="/accounts/login" method="post" id="login">
+						<label>Enter Email</label>
+						<input type="email" name="email" required />
+						<p></p>
+						<label>Enter Password</label>
+						<input type="password" name="password" required minlength="8" />
+						<div style="text-align: center;">
+							<sub name="sub" style="margin-top:5px;">...</sub>
+						</div>
+						<button type="submit">
+							Login
+						</button>
+					</form>
 					<p></p>
-					<label>Enter Password</label>
-					<input type="password" name="password" required />
+					<div style="text-align: center;">
+						<a href="#" onclick="switchType()">don't have an account?</a>
+						<a href="#" onclick="switchType()">forgot password?</a>
+					</div>
+				</div>
+				<div class="signup" style="display: none;">
+					<h1>Create a FlowID.</h1>
+					<form action="/accounts/signup" method="post" id="signup">
+						<label>Enter Email</label>
+						<input type="email" name="email" required />
+						<p></p>
+						<label>Enter Username</label>
+						<input type="username" name="username" required minlength="4" />
+						<p></p>
+						<label>Enter Password</label>
+						<input type="password" name="password" required minlength="8" />
+						<div style="text-align: center;">
+							<sub name="sub" style="margin-top:5px;">...</sub>
+						</div>
+						<button type="submit">
+							Sign Up
+						</button>
+					</form>
 					<p></p>
-					<button type="submit" style="width: calc(100% + 20px)">
-						Continue
-					</button>
-				</form>
+					<div style="text-align: center;">
+						<a href="#" onclick="switchType()">already have an account?</a>
+					</div>
+				</div>
 			</div>
 			<div class="page3">
-				<h1>Personalize your account.</h1>
-				<form>
-					<label>Profile Picture</label>
-					<input
-						type="file"
-						name="file"
-						style="width: calc(100% - 20px)"
-					/>
-					<p></p>
-					<button type="submit">Continue</button>
-				</form>
-			</div>
-			<div class="page4">
 				<h1>Setup Finished!</h1>
 				<button type="submit" onclick="reboot()">Reboot</button>
 			</div>
 		</div>
-
+		
 		<script src="/scripts/window.js" defer></script>
+		<script src="/builtin/apps/scripts/setup.js" defer type="module"></script>
 	</body>
 </html>

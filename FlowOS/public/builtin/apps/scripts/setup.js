@@ -1,46 +1,77 @@
+const loginForm = document.getElementById('login');
+const signupForm = document.getElementById('signup');
+
+const loginContainer = document.querySelector('.login');
+const signupContainer = document.querySelector('.signup');
+
+const _auth = parent._auth;
+const auth = parent.auth;
+
 let page = 1;
 
-const toBase64 = file => new Promise((resolve, reject) => {
-	const reader = new FileReader();
-	reader.readAsDataURL(file);
-	reader.onload = () => resolve(reader.result);
-	reader.onerror = reject;
-});
+window.reboot = () => {
+	parent.window.location.href = parent.window.location.href;
+};
 
-const nextPage = () => {
+window.onload = () => {
+	loginForm.onsubmit = (e) => {
+		e.preventDefault();
+		handleForm(loginForm, 'login');
+	};
+
+	signupForm.onsubmit = (e) => {
+		e.preventDefault();
+		handleForm(signupForm, 'signup');
+	};
+};
+
+const handleForm = async (form, type) => {
+	switch (type) {
+		case 'login':
+			const login_data = await auth.signInWithEmailAndPassword(_auth, form.elements.email.value, form.elements.password.value)
+				.catch((error) => handleAuthError(error, 0));
+			handleAuthLogin(login_data.user);
+			break;
+		case 'signup':
+			const signup_data = await auth.createUserWithEmailAndPassword(_auth, form.elements.email.value, form.elements.password.value)
+				.catch((error) => handleAuthError(error, 1));
+			handleAuthSignup(signup_data.user, form.elements.username.value);
+			break;
+	}
+};
+
+window.nextPage = () => {
 	document.querySelector(`.page${page}`).style.display = 'none';
 	document.querySelector(`.page${page + 1}`).style.display = 'block';
 	page++;
 };
 
-const reboot = () => {
-	fetch(`/pwd/encrypt?password=${document.querySelector('input[type="password"]').value}`).then(res => res.text())
-		.then(async (data) => {
-			parent.config.password.set(data);
-			const file = document.querySelector('input[type="file"]').files[0];
-			if (file) {
-				parent.config.settings.set('profile', {
-					url: await toBase64(file),
-					username: document.querySelector('input[type="username"]').value
-				});
-			} else {
-				parent.config.settings.set('profile', {
-					url: '/assets/profile.png',
-					username: document.querySelector('input[type="username"]').value
-				});
-			}
-			parent.window.location.href = parent.window.location.href;
-		});
+window.switchType = () => {
+	if (signupContainer.style.display === 'none') {
+		signupContainer.style.display = 'block';
+		loginContainer.style.display = 'none';
+	} else {
+		loginContainer.style.display = 'block';
+		signupContainer.style.display = 'none';
+	}
 };
 
-window.onload = () => {
-	document.querySelectorAll('form')[0].onsubmit = (e) => {
-		e.preventDefault();
-		nextPage();
-	};
+window.handleAuthError = (error, subID) => {
+	document.querySelectorAll('sub')[subID].innerText = error.message;
+	console.error(error);
+};
 
-	document.querySelectorAll('form')[1].onsubmit = (e) => {
-		e.preventDefault();
-		nextPage();
-	};
+window.handleAuthLogin = (user) => {
+	document.querySelectorAll('sub')[0].innerText = `Logged in as ${user.displayName}`;
+	nextPage();
+};
+
+window.handleAuthSignup = (user, username) => {
+	document.querySelectorAll('sub')[1].innerText = `Logged in as ${user.displayName}`;
+
+	user.updateProfile({
+  		displayName: username
+	});
+
+	nextPage();
 };
