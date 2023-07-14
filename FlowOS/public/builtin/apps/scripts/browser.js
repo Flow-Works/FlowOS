@@ -1,110 +1,56 @@
 let id = 0;
-let history = [];
 
-const targetObj = {
-	active: {
-		iframe: null,
-		id: null
-	}
-};
-
-const targetProxy = new Proxy(targetObj, {
-	set: (target, key, value) => {
-		history = [value.id].concat(history);
-
-		if (history.length > 1 && history[0] !== history[1]) {
-			try {
-				value.iframe.style.display = 'block';
-			} catch (e) { };
-			try {
-				document.querySelector(`iframe[id="${
-                        history[1]
-                    }"]`).style.display = 'none';
-			} catch (e) {};
-			target[key] = value;
-		}
-		return true;
-	}
-});
+const history = [];
+const tabs = [];
 
 class Tab {
 	constructor() {
 		id++;
-
-		const iframeID = id - 1;
+		const _id = id;
 
 		const div = document.createElement('div');
-
-		const a = document.createElement('a');
-		a.id = id;
-		a.innerText = 'Loading... ';
-		a.href = '#';
-
-		const a2 = document.createElement('a');
-		a2.innerText = '[x]';
-		a2.href = '#';
-
-		div.appendChild(a);
-		div.appendChild(a2);
-
+		const titleBtn = document.createElement('a');
+		const closeBtn = document.createElement('a');
 		const tab = document.createElement('iframe');
+
+		titleBtn.id = id;
+		titleBtn.innerText = 'Loading... ';
+		titleBtn.href = '#';
+
+		closeBtn.innerText = '[x]';
+		closeBtn.href = '#';
+
 		tab.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(parent.config.settings.get('search').url);
 		tab.id = id;
-		tab.onload = () => {
-			a.innerText = `${tab.contentDocument.title} `;
-			parent.config.settings.get('search').urls.forEach((url) => {
-				injectJS(tab, url, false, () => {});
-			});
+		tab.onload = () => handleTab(tab, titleBtn);
 
-			let open = false;
-			injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
-				tab.contentWindow.eruda.init({
-					tool: ['console', 'elements', 'code', 'block']
-				});
-				tab.contentWindow.eruda._entryBtn.hide();
-				injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
-					tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
-				});
-				document.querySelector('.owo').onclick = () => {
-					if (open == false) {
-						tab.contentWindow.eruda.show();
-					} else {
-						tab.contentWindow.eruda.hide();
-					}
-	
-					open = !open;
-				};
-			});
-			document.querySelector('.delete').onclick = () => {
-				blockElement(tab);
-			};
+		tabs.push({ tab, id: _id });
+
+		titleBtn.onclick = () => {
+			setActiveTab(_id);
 		};
 
-		a.onclick = () => {
-			targetProxy.active = {
-				iframe: tab,
-				id
-			};
-		};
-
-		a2.onclick = () => {
-			iframe.remove();
+		closeBtn.onclick = () => {
+			tab.remove();
 			div.remove();
-			const it = history[1];
-			if (id !== it) {
-				targetProxy.active = {
-					iframe: document.querySelector(`iframe[id="${
-						it
-					}"]`),
-					id: it
-				};
+
+			removeObjectWithId(tabs, _id);
+
+			if (tabs == []) {
+				new Tab();
+			} else {
+				if (tabs.includes(history.at(-1))) {
+					setActiveTab(history.at(-1));
+				} else {
+					setActiveTab(tabs.at(-1));
+				}
 			}
 		};
 
-		targetProxy.active = {
-			iframe: tab,
-			id
-		};
+		setActiveTab(_id);
+
+		div.appendChild(titleBtn);
+		div.appendChild(closeBtn);
 
 		document.querySelector('.tabs').append(div);
 		document.querySelector('main').append(tab);
@@ -119,22 +65,89 @@ window.onload = () => {
 	});
 };
 
-const injectJS = (iframe, FILE_URL, async = true, callback) => {
+const setActiveTab = (id) => {
+	const tab = tabs.find(x => x.id == id);
+	
+	if (tab) {
+		history.push(tab);
+
+		tabs.find(x => x.id == id).tab.style.display = 'block';
+		if (history.length > 1) {
+			history.at(-2).tab.style.display = 'none';
+		}
+	}
+
+	/*history.push(tabData);
+
+	if (history.length > 1 && tabData !== history.at(-2)) {
+		tabData.tab.style.display = 'block';
+		tabs.at(-1).tab.style.display = 'none';
+		
+		if (tabData.tab) {
+			tabData.tab.style.display = 'block';
+		} else {
+			tabs.at(-1).tab.style.display = 'block';
+		}
+
+		console.log(tabs.includes(history.at(-2)), tabs, history);
+
+		if (tabs.includes(history.at(-2))) {
+			history.at(-2).tab.style.display = 'none';
+		} else {
+			tabs.at(-1).tab.style.display = 'none';
+		}
+	};*/
+};
+
+const handleTab = (tab, titleBtn) => {
+	let open = false;
+
+	titleBtn.innerText = `${tab.contentDocument.title} `;
+	
+	parent.config.settings.get('search').urls.forEach((url) => {
+		injectJS(tab, url, false, () => {});
+	});
+			
+	injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
+		injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
+			tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
+		});
+
+		tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code'] });
+		tab.contentWindow.eruda._entryBtn.hide();
+
+		document.querySelector('.eruda').onclick = () => {
+			if (open == false) {
+				tab.contentWindow.eruda.show();
+			} else {
+				tab.contentWindow.eruda.hide();
+			}
+	
+			open = !open;
+		};
+	});
+	
+	document.querySelector('.block').onclick = () => {
+		blockElement(tab);
+	};
+};
+
+const injectJS = (tab, FILE_URL, async = true, callback) => {
 	const scriptEle = document.createElement('script');
 
 	scriptEle.setAttribute('src', FILE_URL);
 	scriptEle.setAttribute('type', 'text/javascript');
 	scriptEle.setAttribute('async', async);
 
-	iframe.contentDocument.head.appendChild(scriptEle);
+	tab.contentDocument.head.appendChild(scriptEle);
 	
 	scriptEle.addEventListener('load', () => {
 		callback();
 	});
 };
 
-const blockElement = (iframe) => {
-	for (const element of iframe.contentDocument.getElementsByTagName('a')) {
+const blockElement = (tab) => {
+	for (const element of tab.contentDocument.getElementsByTagName('a')) {
 		(element).style.pointerEvents = 'none';
 	}
 	
@@ -143,15 +156,21 @@ const blockElement = (iframe) => {
 		const target = e.target || e.srcElement;
 		target.style.display = 'none';
 		
-		iframe.contentDocument.removeEventListener('click', handler, false);
+		tab.contentDocument.removeEventListener('click', handler, false);
 		cursor('default');
 		
-		for (const element of iframe.contentDocument.getElementsByTagName('a')) {
+		for (const element of tab.contentDocument.getElementsByTagName('a')) {
 			(element).style.pointerEvents = 'initial';
 		}
 	};
 	
-	iframe.contentDocument.addEventListener('click', handler, false);
-	const cursor = (cur) => { iframe.contentDocument.body.style.cursor = cur; };
+	tab.contentDocument.addEventListener('click', handler, false);
+	const cursor = (cur) => { tab.contentDocument.body.style.cursor = cur; };
 	cursor('crosshair');
+};
+
+const removeObjectWithId = (arr, id) => {
+	arr.splice(arr.findIndex((i) => {
+		return i.id === id;
+	}), 1);
 };
