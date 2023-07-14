@@ -68,7 +68,7 @@ window.onload = () => {
 const setActiveTab = (id) => {
 	const tab = tabs.find(x => x.id == id);
 	
-	if (tab) {
+	if (tab && history[0] !== history[1]) {
 		history.push(tab);
 
 		tabs.find(x => x.id == id).tab.style.display = 'block';
