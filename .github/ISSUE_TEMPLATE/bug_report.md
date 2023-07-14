@@ -6,7 +6,7 @@ labels: ""
 assignees: ""
 ---
 
-Issue tracker is **ONLY** used for reporting bugs. New features should be discussed on our Discord server.
+<!-- Issue tracker is **ONLY** used for reporting bugs. New features should be discussed on our Discord server. -->
 
 <!--- Provide a general summary of the issue in the Title above -->
 
@@ -18,10 +18,6 @@ Issue tracker is **ONLY** used for reporting bugs. New features should be discus
 
 <!--- Tell us what happens instead of the expected behavior -->
 
-## Possible Solution
-
-<!--- Not obligatory, but suggest a fix/reason for the bug, -->
-
 ## Steps to Reproduce
 
 <!--- Provide a link to a live example, or an unambiguous set of steps to -->
@@ -31,6 +27,11 @@ Issue tracker is **ONLY** used for reporting bugs. New features should be discus
 2.
 3.
 4.
+
+<!-- THE REST IS OPTIONAL -->
+## Possible Solution
+
+<!--- Not obligatory, but suggest a fix/reason for the bug, -->
 
 ## Context (Environment)
 
