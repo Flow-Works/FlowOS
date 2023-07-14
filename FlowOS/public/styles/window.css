@@ -9,6 +9,11 @@ html {
 	scroll-behavior: smooth;
 	position: relative;
 	height: calc(100% - 10px);
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
 }
 
 input,
