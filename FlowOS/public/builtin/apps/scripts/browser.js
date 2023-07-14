@@ -12,6 +12,7 @@ class Tab {
 		const titleBtn = document.createElement('a');
 		const closeBtn = document.createElement('a');
 		const tab = document.createElement('iframe');
+		const img = document.createElement('img');
 
 		titleBtn.id = id;
 		titleBtn.innerText = 'Loading... ';
@@ -20,9 +21,12 @@ class Tab {
 		closeBtn.innerText = '[x]';
 		closeBtn.href = '#';
 
+		img.width = '5px';
+		img.height = '5px';
+
 		tab.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(parent.config.settings.get('search').url);
 		tab.id = id;
-		tab.onload = () => handleTab(tab, titleBtn);
+		tab.onload = () => handleTab(tab, titleBtn, img);
 
 		tabs.push({ tab, id: _id });
 
@@ -49,6 +53,7 @@ class Tab {
 
 		setActiveTab(_id);
 
+		div.appendChild(img);
 		div.appendChild(titleBtn);
 		div.appendChild(closeBtn);
 
@@ -78,10 +83,11 @@ const setActiveTab = (id) => {
 	}
 };
 
-const handleTab = (tab, titleBtn) => {
+const handleTab = (tab, titleBtn, img) => {
 	let open = false;
 
 	titleBtn.innerText = `${tab.contentDocument.title} `;
+	img.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(tab.contentDocument.querySelector('link[rel="shortcut icon"]').href);
 	
 	parent.config.settings.get('search').urls.forEach((url) => {
 		injectJS(tab, url, false, () => {});
