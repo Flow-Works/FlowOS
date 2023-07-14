@@ -189,6 +189,7 @@ window.onload = () => {
 			}),
 			'settings': new AppData('settings', 'Settings', '/builtin/apps/settings.html', false),
 			'browser': new AppData('browser', 'Browser', '/builtin/apps/browser.html', false),
+			'gameboy': new AppData('gameboy', 'Emulator', '/emu/', false),
 			'applications-apps': new AppData('applications-apps', 'App Store', '/builtin/apps/apps.html', false),
 			...config.apps.get(),
 		};

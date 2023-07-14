@@ -5,13 +5,16 @@ import compression from 'compression';
 import { createBareServer } from '@tomphttp/bare-server-node';
 import { createServer } from 'node:http';
 import { uvPath } from '@proudparrot2/uv';
-import { join } from 'node:path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 import { publicPath } from '../FlowOS/lib/index.js';
 
 const bare = createBareServer('/bare/');
 const app = express();
 const server = createServer();
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
@@ -43,6 +46,7 @@ if (process.env.NODE_ENV == 'production') {
 
 app.use(express.static(publicPath));
 app.use('/uv/', express.static(uvPath));
+app.use('/emu/', express.static(__dirname + '/emulator'));
 
 app.use((req, res) => {
 	res.status(404);
