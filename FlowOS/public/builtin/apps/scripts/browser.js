@@ -76,27 +76,6 @@ const setActiveTab = (id) => {
 			history.at(-2).tab.style.display = 'none';
 		}
 	}
-
-	/*history.push(tabData);
-
-	if (history.length > 1 && tabData !== history.at(-2)) {
-		tabData.tab.style.display = 'block';
-		tabs.at(-1).tab.style.display = 'none';
-		
-		if (tabData.tab) {
-			tabData.tab.style.display = 'block';
-		} else {
-			tabs.at(-1).tab.style.display = 'block';
-		}
-
-		console.log(tabs.includes(history.at(-2)), tabs, history);
-
-		if (tabs.includes(history.at(-2))) {
-			history.at(-2).tab.style.display = 'none';
-		} else {
-			tabs.at(-1).tab.style.display = 'none';
-		}
-	};*/
 };
 
 const handleTab = (tab, titleBtn) => {
