@@ -18,7 +18,7 @@ class FlowInstance {
 				title: 'Login',
 				class: ['no-close'],
 				modal: true,
-				html: `<iframe src="/builtin/apps/login.html" scrolling="yes"></iframe>`,
+				html: `<iframe src="/builtin/apps/login.html" title="Login" scrolling="yes"></iframe>`,
 				onclose: () => {
 					this.apps.register();
 					this.registerHotkeys();
@@ -44,8 +44,8 @@ class FlowInstance {
 				class: ['no-close', 'no-move', 'no-close', 'no-min', 'no-full', 'no-resize'],
 				x: 'center',
 				y: 'center',
-				height: '500px',
-				html: `<iframe src="/builtin/apps/setup.html" scrolling="yes"></iframe>`,
+				height: '650px',
+				html: `<iframe src="/builtin/apps/setup.html" title="Setup Wizard" scrolling="yes"></iframe>`,
 			});
 		}
 
