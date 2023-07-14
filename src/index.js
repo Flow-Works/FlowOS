@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import config from './configs/config.json';
 
 import express from 'express';
 import rateLimit from 'express-rate-limit';

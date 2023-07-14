@@ -1,3 +1,5 @@
+import loginConfig from './configs/login.json';
+
 import express from 'express';
 import crypto from 'crypto';
 import cache from 'memory-cache';
@@ -5,7 +7,7 @@ import cache from 'memory-cache';
 const router = express.Router();
 
 const encrypt = (plainText) => {
-	return crypto.createHash('sha256').update(plainText).update(makeHash(process.env.SALT)).digest('hex');
+	return crypto.createHash('sha256').update(plainText).update(makeHash(loginConfig.salt)).digest('hex');
 };
 
 const cacheMiddleware = (req, res, next) => {

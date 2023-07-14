@@ -70,11 +70,12 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    yarn install
    ```
-4. Enter your `KEY`, `IV`, `SECRET` in `.env`
+4. Enter your `salt` in `src/configs/login.json`
 
-   ```ini
-   # SHA-256 SALT
-   SALT=anything-can-go-here
+   ```jsonc
+   	{
+		"salt": "anything-goes-here"
+	}
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
