@@ -22,6 +22,7 @@
 			}
 		],
 		"prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
-		"func-style": ["error", "expression", { "allowArrowFunctions": true }]
+		"func-style": ["error", "expression", { "allowArrowFunctions": true }],
+		"no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 1}]
 	}
 }
