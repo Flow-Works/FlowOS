@@ -31,7 +31,6 @@ const cacheMiddleware = (req, res, next) => {
 const makeHash = (val) => {
     return crypto.createHash('sha256').update(val, 'utf-8').digest();
 };
-  
 
 router.get('/encrypt', cacheMiddleware, (req, res) => {
 	const enc = encrypt(req.query.password);

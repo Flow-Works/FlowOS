@@ -46,7 +46,6 @@ class SettingsTextarea extends SettingsFormItem {
 	}
 }
 
-
 class SettingsDropdown extends SettingsFormItem {
 	constructor(SETTING_INPUT_ID, label, defaultValue = '', options = []) {
 		super(SETTING_INPUT_ID, label, 'select', '', defaultValue);
