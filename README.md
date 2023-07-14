@@ -75,9 +75,6 @@ To get a local copy up and running follow these simple example steps.
    ```ini
    # SHA-256 SALT
    SALT=anything-can-go-here
-
-   # COOKIE SECRET
-   SECRET=anything-can-go-here
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
