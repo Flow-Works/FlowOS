@@ -1,4 +1,5 @@
 let id = 0;
+let history = [];
 
 const targetObj = {
 	active: {
@@ -7,7 +8,6 @@ const targetObj = {
 	}
 };
 
-let history = [];
 const targetProxy = new Proxy(targetObj, {
 	set: (target, key, value) => {
 		history = [value.id].concat(history);
@@ -15,7 +15,7 @@ const targetProxy = new Proxy(targetObj, {
 		if (history.length > 1 && history[0] !== history[1]) {
 			try {
 				value.iframe.style.display = 'block';
-			} catch (e) {};
+			} catch (e) { };
 			try {
 				document.querySelector(`iframe[id="${
                         history[1]
@@ -31,6 +31,8 @@ class Tab {
 	constructor() {
 		id++;
 
+		const iframeID = id - 1;
+
 		const div = document.createElement('div');
 
 		const a = document.createElement('a');
@@ -45,42 +47,42 @@ class Tab {
 		div.appendChild(a);
 		div.appendChild(a2);
 
-		const iframe = document.createElement('iframe');
-		iframe.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(parent.config.settings.get('search').url);
-		iframe.id = id;
-		iframe.onload = () => {
+		const tab = document.createElement('iframe');
+		tab.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(parent.config.settings.get('search').url);
+		tab.id = id;
+		tab.onload = () => {
+			a.innerText = `${tab.contentDocument.title} `;
 			parent.config.settings.get('search').urls.forEach((url) => {
-				injectJS(frames[id - 1], url, false, () => {});
+				injectJS(tab, url, false, () => {});
 			});
 
 			let open = false;
-			injectJS(frames[id - 1], 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
-				frames[id - 1].window.eruda.init({
+			injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
+				tab.contentWindow.eruda.init({
 					tool: ['console', 'elements', 'code', 'block']
 				});
-				frames[id - 1].window.eruda._entryBtn.hide();
-				injectJS(frames[id - 1], 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
-					frames[id - 1].window.eruda.add(frames[id - 1].window.erudaCode);
+				tab.contentWindow.eruda._entryBtn.hide();
+				injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
+					tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
 				});
 				document.querySelector('.owo').onclick = () => {
 					if (open == false) {
-						frames[id - 1].window.eruda.show();
+						tab.contentWindow.eruda.show();
 					} else {
-						frames[id - 1].window.eruda.hide();
+						tab.contentWindow.eruda.hide();
 					}
 	
 					open = !open;
 				};
 			});
 			document.querySelector('.delete').onclick = () => {
-				blockElement(frames[id - 1]);
+				blockElement(tab);
 			};
-			a.innerText = `${iframe.contentDocument.title} `;
 		};
 
 		a.onclick = () => {
 			targetProxy.active = {
-				iframe,
+				iframe: tab,
 				id
 			};
 		};
@@ -100,12 +102,12 @@ class Tab {
 		};
 
 		targetProxy.active = {
-			iframe,
+			iframe: tab,
 			id
 		};
 
 		document.querySelector('.tabs').append(div);
-		document.querySelector('main').append(iframe);
+		document.querySelector('main').append(tab);
 	}
 }
 
@@ -124,7 +126,7 @@ const injectJS = (iframe, FILE_URL, async = true, callback) => {
 	scriptEle.setAttribute('type', 'text/javascript');
 	scriptEle.setAttribute('async', async);
 
-	iframe.document.head.appendChild(scriptEle);
+	iframe.contentDocument.head.appendChild(scriptEle);
 	
 	scriptEle.addEventListener('load', () => {
 		callback();
@@ -132,7 +134,7 @@ const injectJS = (iframe, FILE_URL, async = true, callback) => {
 };
 
 const blockElement = (iframe) => {
-	for (const element of iframe.document.getElementsByTagName('a')) {
+	for (const element of iframe.contentDocument.getElementsByTagName('a')) {
 		(element).style.pointerEvents = 'none';
 	}
 	
@@ -141,15 +143,15 @@ const blockElement = (iframe) => {
 		const target = e.target || e.srcElement;
 		target.style.display = 'none';
 		
-		iframe.document.removeEventListener('click', handler, false);
+		iframe.contentDocument.removeEventListener('click', handler, false);
 		cursor('default');
 		
-		for (const element of iframe.document.getElementsByTagName('a')) {
+		for (const element of iframe.contentDocument.getElementsByTagName('a')) {
 			(element).style.pointerEvents = 'initial';
 		}
 	};
 	
-	iframe.document.addEventListener('click', handler, false);
-	const cursor = (cur) => { iframe.document.body.style.cursor = cur; };
+	iframe.contentDocument.addEventListener('click', handler, false);
+	const cursor = (cur) => { iframe.contentDocument.body.style.cursor = cur; };
 	cursor('crosshair');
 };
