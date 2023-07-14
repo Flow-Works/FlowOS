@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import compression from 'compression';
-import minify from 'express-minify';
 
 import { createBareServer } from '@tomphttp/bare-server-node';
 import { createServer } from 'node:http';
@@ -40,7 +39,6 @@ const shouldCompress = (req, res) => {
 
 if (process.env.NODE_ENV == 'production') {
 	app.use(compression({ filter: shouldCompress }));
-	app.use(minify());
 	
 	app.use((req, res, next) => {
 		res.setHeader('Cache-Control', 'maxage=2592000');
