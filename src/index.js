@@ -47,7 +47,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.register(fastifyCompress);
 app.register(
     fastifyCaching,
-    { privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 31622400 },
+    { privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 31536000 },
 );
 
 app.register(fastifyStatic, {
