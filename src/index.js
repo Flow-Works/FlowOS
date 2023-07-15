@@ -82,7 +82,6 @@ const shutdown = () => {
 };
 
 app.get('/uv/uv.config.js', (req, res) => {
-	res.header('Service-Worker-Allowed', '/uv/service/');
 	res.type('text/javascript').send(fs.readFileSync(`${publicPath}/uv/uv.config.js`));
 });
 
