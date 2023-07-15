@@ -10,15 +10,18 @@
 	</head>
 	
 	<body>
-		<div class="topnav" style="display: flex">
+		<div class="topnav">
+			<div>
+				<a style="padding: 5px 10px" class="history" onclick="clickList[0].src = '/builtin/browser/history.html'">🕒</a>
+			</div>
 			<div>
 				<a style="padding: 5px 10px" class="hide">⬆️</a>
 			</div>
 			<div>
-				<a style="padding: 5px 2.5px" class="eruda">⚙️</a>
+				<a style="padding: 5px 0" class="eruda">⚙️</a>
 			</div>
 			<div>
-				<a style="padding: 5px 2.5px" class="block">🗑️</a>
+				<a style="padding: 5px 0" class="block">🔫</a>
 			</div>
 			<span class="tabs-container">
 				<span class="tabs"></span>
@@ -26,7 +29,18 @@
 			<div><a style="padding: 5px 10px" onclick="new Tab();">➕</a></div>
 		</div>
 
-		<input />
+		<div class="topnav tb">
+			<div>
+				<a style="padding: 5px 0" class="prev" onclick="clickList[0].contentWindow.history.back();">⬅️</a>
+			</div>
+			<div>
+				<a style="padding: 5px 0" class="forw" onclick="clickList[0].contentWindow.history.forward();">➡️</a>
+			</div>
+			<div>
+				<a style="padding: 5px 0" class="forw" onclick="clickList[0].contentWindow.location.reload();">🔃</a>
+			</div>
+			<input />
+		</div>
 
 		<main></main>
 

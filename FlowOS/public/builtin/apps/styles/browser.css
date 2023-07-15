@@ -56,7 +56,16 @@ main {
 	width: 100%;
 }
 
-body > input {
-	margin-bottom:10px;
+body > div > input {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 5px;
+	border-radius: 5px;
+	color: var(--text-color);
+	height: 100%;
+	background: var(--surface-bg);
 	height: 30px;
+	margin: 0;
+	margin-bottom: 5px;
 }
