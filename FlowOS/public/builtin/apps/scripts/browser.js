@@ -1,7 +1,11 @@
+const input = document.querySelector('input');
+
 let id = 0;
 
-const history = [];
+const clickList = [];
 const tabs = [];
+
+const uv = parent.__uv$config;
 
 class Tab {
 	constructor() {
@@ -21,17 +25,20 @@ class Tab {
 		closeBtn.innerText = '[x]';
 		closeBtn.href = '#';
 
-		img.width = '5px';
-		img.height = '5px';
+		img.width = '18';
+		img.height = '18';
+		img.src = '/assets/loading.gif';
 
-		tab.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(parent.config.settings.get('search').url);
+		tab.src = uv.prefix + uv.encodeUrl(parent.config.settings.get('search').url);
 		tab.id = id;
-		tab.onload = () => handleTab(tab, titleBtn, img);
+		tab.onload = () => {
+			handleTab(tab, titleBtn, img);
+		};
 
 		tabs.push({ tab, id: _id });
 
 		titleBtn.onclick = () => {
-			setActiveTab(_id);
+			setActiveTab(tab);
 		};
 
 		closeBtn.onclick = () => {
@@ -40,18 +47,14 @@ class Tab {
 
 			removeObjectWithId(tabs, _id);
 
-			if (tabs == []) {
-				new Tab();
+			if (tabs.includes(clickList.at(-1))) {
+				setActiveTab(clickList.at(-1));
+			} else if (tabs.at(-1)) {
+				setActiveTab(tabs.at(-1));
 			} else {
-				if (tabs.includes(history.at(-1))) {
-					setActiveTab(history.at(-1));
-				} else {
-					setActiveTab(tabs.at(-1));
-				}
+				new Tab();
 			}
 		};
-
-		setActiveTab(_id);
 
 		div.appendChild(img);
 		div.appendChild(titleBtn);
@@ -59,6 +62,8 @@ class Tab {
 
 		document.querySelector('.tabs').append(div);
 		document.querySelector('main').append(tab);
+
+		setActiveTab(tab);
 	}
 }
 
@@ -70,24 +75,27 @@ window.onload = () => {
 	});
 };
 
-const setActiveTab = (id) => {
-	const tab = tabs.find(x => x.id == id);
-	
-	if (tab && history[0] !== history[1]) {
-		history.push(tab);
+const setActiveTab = (tab) => {
+	clickList.push(tab);
 
-		tabs.find(x => x.id == id).tab.style.display = 'block';
-		if (history.length > 1) {
-			history.at(-2).tab.style.display = 'none';
-		}
+	if (!tab && clickList[0] !== clickList[1]) {
+		return;
+	}
+
+	input.value = uv.decodeUrl(tab.src.split('/').pop());
+	tab.style.display = 'block';
+	if (clickList.length > 1) {
+		clickList.at(-2).style.display = 'none';
 	}
 };
 
 const handleTab = (tab, titleBtn, img) => {
 	let open = false;
+	const url = uv.decodeUrl(tab.src.split('/').pop());
 
+	input.value = url;
 	titleBtn.innerText = `${tab.contentDocument.title} `;
-	img.src = parent.__uv$config.prefix + parent.__uv$config.encodeUrl(tab.contentDocument.querySelector('link[rel="shortcut icon"]').href);
+	img.src = `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}`;
 	
 	parent.config.settings.get('search').urls.forEach((url) => {
 		injectJS(tab, url, false, () => {});
@@ -98,7 +106,7 @@ const handleTab = (tab, titleBtn, img) => {
 			tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
 		});
 
-		tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code'] });
+		tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code', 'source'] });
 		tab.contentWindow.eruda._entryBtn.hide();
 
 		document.querySelector('.eruda').onclick = () => {
@@ -158,4 +166,10 @@ const removeObjectWithId = (arr, id) => {
 	arr.splice(arr.findIndex((i) => {
 		return i.id === id;
 	}), 1);
+};
+
+input.onkeydown = (e) => {
+	if (e.key == 'Enter') {
+		clickList[0].src = uv.prefix + uv.encodeUrl(input.value);
+	}
 };
