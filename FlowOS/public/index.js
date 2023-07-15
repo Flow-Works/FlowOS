@@ -12,15 +12,13 @@ window.firebaseConfig = {
 	measurementId: 'G-3RNYBG5J74'
 };
 
-(async () => {
-	window.app = initializeApp(parent.firebaseConfig);
+window.app = initializeApp(parent.firebaseConfig);
 
-	window.analytics = analytics;
-	window._analytics = await analytics.getAnalytics(app);
+window.analytics = analytics;
+window._analytics = await analytics.getAnalytics(app);
 
-	window.auth = auth;
-	window._auth = await auth.getAuth(app);
-})();
+window.auth = auth;
+window._auth = await auth.getAuth(app);
 
 class FlowInstance {
 	version = 'v1.0.0';

@@ -13,7 +13,8 @@
 	"scripts": {
 		"start": "NODE_ENV=production node src/index.js",
 		"dev": "nodemon src/index.js",
-		"lint": "eslint --ext .js --ignore-path .gitignore ."
+		"lint": "eslint --ext .js --ignore-path .gitignore .",
+		"commit": "cz"
 	},
 	"dependencies": {
 		"@fastify/caching": "^8.3.0",
@@ -26,6 +27,8 @@
 		"fastify": "^4.19.2"
 	},
 	"devDependencies": {
+		"commitizen": "^4.3.0",
+		"conventional-commit-types-emoji": "^0.1.0",
 		"eslint": "^8.44.0",
 		"eslint-plugin-prefer-arrow": "^1.2.3",
 		"nodemon": "^3.0.1",
@@ -34,5 +37,10 @@
 	"engines": {
 		"node": ">=16.0.0",
 		"npm": ">=7.0.0"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/conventional-commit-types-emoji"
+		}
 	}
 }

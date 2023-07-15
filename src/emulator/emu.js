@@ -2,7 +2,8 @@ input.onchange = async () => {
     const url = URL.createObjectURL(new Blob([input.files[0]]))
     const parts = input.files[0].name.split(".")
 
-    const core = await (async (ext) => {
+    const core = await (async () => {
+        const ext = parts.pop();
         if (["fds", "nes", "unif", "unf"].includes(ext))
             return "nes"
 
@@ -55,7 +56,7 @@ input.onchange = async () => {
             box.appendChild(select)
             box.appendChild(button)
         })
-    })(parts.pop())
+    })()
 
     const div = document.createElement("div")
     const sub = document.createElement("div")
