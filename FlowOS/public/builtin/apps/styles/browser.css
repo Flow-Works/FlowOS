@@ -1,10 +1,18 @@
+body, html {
+	display: flex;
+	flex-direction: column;
+}
+
 .topnav div {
+	display: flex;
+	align-items: center;
+	gap: 5px;
 	padding: 5px;
 	border-radius: 5px;
 	color: var(--text-color);
-	display: block;
 	height: 100%;
 	background: var(--surface-bg);
+	height: 30px;
 }
 
 .topnav a {
@@ -25,7 +33,7 @@
 	display: flex;
 	overflow-y: hidden;
 	overflow-x: scroll;
-	gap: 5px;
+	gap: 10px;
 	margin-bottom: 5px;
 	height: max-content;
 	min-width: min-content;
@@ -44,6 +52,11 @@ iframe {
 }
 
 main {
+	flex: 1;
 	width: 100%;
-	height: calc(100% - 40px);
+}
+
+body > input {
+	margin-bottom:10px;
+	height: 30px;
 }

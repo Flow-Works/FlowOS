@@ -48,10 +48,13 @@ app.register(
 	fastifyCompress,
 	{ threshold: 1 }
 );
-app.register(
-    fastifyCaching,
-    { privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 31_536_000 },
-);
+
+if (process.env.NODE_ENV == 'production') {
+	app.register(
+		fastifyCaching,
+		{ privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 3600 },
+	);
+}
 
 app.register(fastifyStatic, {
 	root: uvPath,
@@ -79,7 +82,6 @@ const shutdown = () => {
 };
 
 app.get('/uv/uv.config.js', (req, res) => {
-	res.header('Service-Worker-Allowed', '/uv/service/');
 	res.type('text/javascript').send(fs.readFileSync(`${publicPath}/uv/uv.config.js`));
 });
 
