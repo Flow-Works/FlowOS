@@ -7,6 +7,8 @@ const tabs = [];
 
 const uv = parent.__uv$config;
 
+let inputShowing = true;
+
 class Tab {
 	constructor() {
 		id++;
@@ -172,4 +174,19 @@ input.onkeydown = (e) => {
 	if (e.key == 'Enter') {
 		clickList[0].src = uv.prefix + uv.encodeUrl(input.value);
 	}
+};
+
+document.querySelector('.hide').onclick = () => {
+	switch (inputShowing) {
+		case true:
+			document.querySelector('.hide').innerText = '⬇️';
+			input.style.display = 'none';
+			break;
+		case false:
+			document.querySelector('.hide').innerText = '⬆️';
+			input.style.display = 'block';
+			break;
+	}
+
+	inputShowing = !inputShowing;
 };
