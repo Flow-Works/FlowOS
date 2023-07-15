@@ -16,6 +16,8 @@
 		"lint": "eslint --ext .js --ignore-path .gitignore ."
 	},
 	"dependencies": {
+		"@fastify/caching": "^8.3.0",
+		"@fastify/compress": "^6.4.0",
 		"@fastify/express": "^2.3.0",
 		"@fastify/static": "^6.10.2",
 		"@proudparrot2/uv": "^2.0.0",

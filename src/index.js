@@ -1,6 +1,7 @@
-import Fastify from 'fastify';
+import fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
-import ExpressPlugin from '@fastify/express';
+import fastifyCompress from '@fastify/compress';
+import fastifyCaching from '@fastify/caching';
 
 import { createBareServer } from '@tomphttp/bare-server-node';
 import { createServer } from 'http';
@@ -17,7 +18,7 @@ let server;
 
 const bare = createBareServer('/bare/');
 
-const app = Fastify({ http2: false, serverFactory: (handler) => {
+const app = fastify({ http2: false, serverFactory: (handler) => {
 	server = createServer((req, res) => {
 		if (bare.shouldRoute(req)) {
 			bare.routeRequest(req, res);
@@ -43,12 +44,12 @@ const app = Fastify({ http2: false, serverFactory: (handler) => {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.register(ExpressPlugin);
-app.register(fastifyStatic, {
-	root: publicPath,
-	prefix: '/',
-	decorateReply: false,
-});
+app.register(fastifyCompress);
+app.register(
+    fastifyCaching,
+    { privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 31622400 },
+);
+
 app.register(fastifyStatic, {
 	root: uvPath,
 	prefix: '/uv/',
@@ -56,6 +57,11 @@ app.register(fastifyStatic, {
 	setHeaders: (res, path, stat) => {
 		res.setHeader('Service-Worker-Allowed', '/uv/service/');
 	}
+});
+app.register(fastifyStatic, {
+	root: publicPath,
+	prefix: '/',
+	decorateReply: false,
 });
 app.register(fastifyStatic, {
 	root: join(__dirname, '/emulator'),
