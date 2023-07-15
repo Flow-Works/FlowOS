@@ -2,7 +2,7 @@
 
 const xor = {
 	encode: (str, key=2) => {
-		return encodeURIComponent(str.split('').map(e=>e.charCodeAt()).map((e,i)=>i%key?String.fromCharCode(e ^ 2) : String.fromCharCode(e)).join(''))
+		return encodeURIComponent(str.split('').map(e=>e.charCodeAt()).map((e,i)=>i%key?String.fromCharCode(e ^ 2) : String.fromCharCode(e)).join(''));
 	}
 };
 

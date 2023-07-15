@@ -78,7 +78,7 @@ window.handleAuthSignup = (user, username) => {
 
 window.forgotPassword = async () => {
 	if (loginForm.elements.email.value) {
-		const reset = await auth.sendPasswordResetEmail(_auth, loginForm.elements.email.value)
+		await auth.sendPasswordResetEmail(_auth, loginForm.elements.email.value)
 			.catch((error) => handleAuthError(error, 0));
 		document.querySelectorAll('sub')[0].innerText = `Email sent to ${loginForm.elements.email.value}`;
 	}

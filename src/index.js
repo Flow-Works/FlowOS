@@ -50,7 +50,7 @@ app.register(
 );
 app.register(
     fastifyCaching,
-    { privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 31536000 },
+    { privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 31_536_000 },
 );
 
 app.register(fastifyStatic, {
@@ -80,7 +80,7 @@ const shutdown = () => {
 
 app.get('/uv/uv.config.js', (req, res) => {
 	res.header('Service-Worker-Allowed', '/uv/service/');
-	res.type('text/javascript').send(fs.readFileSync(publicPath + '/uv/uv.config.js'));
+	res.type('text/javascript').send(fs.readFileSync(`${publicPath}/uv/uv.config.js`));
 });
 
 process.on('SIGINT', shutdown);

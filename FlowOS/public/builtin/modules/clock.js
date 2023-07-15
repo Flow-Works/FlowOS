@@ -1,6 +1,6 @@
 const clock = new BarItem('clock');
 
-let clockfaces = [
+const clockfaces = [
 	{
 		face: '🕛',
 		time: ['12:00', '00:00'],
