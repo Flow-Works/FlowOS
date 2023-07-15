@@ -9,6 +9,19 @@ const uv = parent.__uv$config;
 
 let inputShowing = true;
 
+const history = {
+	add: (url, title, favicon) => {
+		return window.localStorage.setItem('history', JSON.stringify([{ url, title, favicon, date: new Date() }, ...history.get()]));
+	},
+	get: () => {
+		return JSON.parse(window.localStorage.getItem('history'));
+	}
+};
+
+if (!window.localStorage.getItem('history')) {
+	window.localStorage.setItem('history', '[]');
+}
+
 class Tab {
 	constructor() {
 		id++;
@@ -84,7 +97,8 @@ const setActiveTab = (tab) => {
 		return;
 	}
 
-	input.value = uv.decodeUrl(tab.src.split('/').pop());
+	try { input.value = uv.decodeUrl(tab.src.split('/').pop()); }
+	catch(e) {};
 	tab.style.display = 'block';
 	if (clickList.length > 1) {
 		clickList.at(-2).style.display = 'none';
@@ -93,10 +107,17 @@ const setActiveTab = (tab) => {
 
 const handleTab = (tab, titleBtn, img) => {
 	let open = false;
-	const url = uv.decodeUrl(tab.src.split('/').pop());
+	const unurl = tab.src.split('/').pop();
+	let url = uv.decodeUrl(unurl);
 
-	input.value = url;
+	if (tab.contentWindow.location.pathname.startsWith('/builtin/browser')) {
+		input.value = 'flow:' + url.split('/').pop().split('.')[0];
+	} else {
+		input.value = url;
+		history.add(tab.contentWindow.location.href, tab.contentDocument.title, `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}`);
+	}
 	titleBtn.innerText = `${tab.contentDocument.title} `;
+	console.log(unurl, url);
 	img.src = `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}`;
 	
 	parent.config.settings.get('search').urls.forEach((url) => {
@@ -108,7 +129,7 @@ const handleTab = (tab, titleBtn, img) => {
 			tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
 		});
 
-		tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code', 'source'] });
+		tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code', 'sources'] });
 		tab.contentWindow.eruda._entryBtn.hide();
 
 		document.querySelector('.eruda').onclick = () => {
@@ -172,7 +193,11 @@ const removeObjectWithId = (arr, id) => {
 
 input.onkeydown = (e) => {
 	if (e.key == 'Enter') {
-		clickList[0].src = uv.prefix + uv.encodeUrl(input.value);
+		if (input.value.startsWith('flow:')) {
+			clickList[0].src = '/builtin/browser/' + input.value.split(':')[1] + '.html';
+		} else {
+			clickList[0].src = uv.prefix + uv.encodeUrl(input.value);
+		}
 	}
 };
 
@@ -180,11 +205,11 @@ document.querySelector('.hide').onclick = () => {
 	switch (inputShowing) {
 		case true:
 			document.querySelector('.hide').innerText = '⬇️';
-			input.style.display = 'none';
+			document.querySelector('.tb').style.display = 'none';
 			break;
 		case false:
 			document.querySelector('.hide').innerText = '⬆️';
-			input.style.display = 'block';
+			document.querySelector('.tb').style.display = 'flex';
 			break;
 	}
 
