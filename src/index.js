@@ -7,7 +7,7 @@ import { createBareServer } from '@tomphttp/bare-server-node';
 import { uvPath } from '@proudparrot2/uv';
 import { publicPath } from '../FlowOS/lib/index.js';
 
-import { createServer } from 'http2';
+import { createServer } from 'http';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
@@ -18,7 +18,7 @@ let server;
 
 const bare = createBareServer('/bare/');
 
-const app = fastify({ http2: true, serverFactory: (handler) => {
+const app = fastify({ serverFactory: (handler) => {
 	server = createServer((req, res) => {
 		if (bare.shouldRoute(req)) {
 			bare.routeRequest(req, res);
