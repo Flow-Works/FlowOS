@@ -41,6 +41,9 @@
 	"config": {
 		"commitizen": {
 			"path": "./node_modules/commitizen-emoji"
+		},
+		"commitizenEmoji": {
+			"conventionalFormat": true
 		}
 	}
 }
