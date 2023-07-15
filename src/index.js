@@ -4,13 +4,13 @@ import fastifyCompress from '@fastify/compress';
 import fastifyCaching from '@fastify/caching';
 
 import { createBareServer } from '@tomphttp/bare-server-node';
-import { createServer } from 'http';
 import { uvPath } from '@proudparrot2/uv';
+import { publicPath } from '../FlowOS/lib/index.js';
+
+import { createServer } from 'http2';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-
-import { publicPath } from '../FlowOS/lib/index.js';
 
 const port = process.env.PORT || 3000;
 
@@ -18,7 +18,7 @@ let server;
 
 const bare = createBareServer('/bare/');
 
-const app = fastify({ http2: false, serverFactory: (handler) => {
+const app = fastify({ http2: true, serverFactory: (handler) => {
 	server = createServer((req, res) => {
 		if (bare.shouldRoute(req)) {
 			bare.routeRequest(req, res);
