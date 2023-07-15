@@ -44,7 +44,10 @@ const app = fastify({ serverFactory: (handler) => {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.register(fastifyCompress);
+app.register(
+	fastifyCompress,
+	{ threshold: 1 }
+);
 app.register(
     fastifyCaching,
     { privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 31536000 },
