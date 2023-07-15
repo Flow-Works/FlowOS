@@ -7,7 +7,7 @@ import { createBareServer } from '@tomphttp/bare-server-node';
 import { uvPath } from '@proudparrot2/uv';
 import { publicPath } from '../FlowOS/lib/index.js';
 
-import { createServer } from 'http2';
+import { createServer } from 'http';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
