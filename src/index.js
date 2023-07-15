@@ -1,76 +1,66 @@
-import express from 'express';
-import rateLimit from 'express-rate-limit';
-import compression from 'compression';
+import Fastify from 'fastify';
+import fastifyStatic from '@fastify/static';
+import ExpressPlugin from '@fastify/express';
 
 import { createBareServer } from '@tomphttp/bare-server-node';
-import { createServer } from 'node:http';
+import { createServer } from 'http';
 import { uvPath } from '@proudparrot2/uv';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 import { publicPath } from '../FlowOS/lib/index.js';
 
+const port = process.env.PORT || 3000;
+
+let server;
+
 const bare = createBareServer('/bare/');
-const app = express();
-const server = createServer();
+
+const app = Fastify({ http2: false, serverFactory: (handler) => {
+	server = createServer((req, res) => {
+		if (bare.shouldRoute(req)) {
+			bare.routeRequest(req, res);
+		} else {
+			handler(req, res);
+		}
+	});
+
+	server.on('upgrade', (req, socket, head) => {
+		if (bare.shouldRoute(req)) {
+			bare.routeUpgrade(req, socket, head);
+		} else {
+			socket.end();
+		}
+	});
+	
+	server.on('listening', () => {
+		console.log(`Listening on: http://localhost:${port}`);
+	});
+  
+	return server;
+} });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000,
-	max: 100,
-	standardHeaders: true,
-	legacyHeaders: false,
+app.register(ExpressPlugin);
+app.register(fastifyStatic, {
+	root: publicPath,
+	prefix: '/',
+	decorateReply: false,
 });
-
-app.set('host', process.env.IP || '127.0.0.1');
-app.set('port', process.env.PORT || 3000);
-app.disable('x-powered-by');
-
-const shouldCompress = (req, res) => {
-	if (req.headers['x-no-compression']) {
-	  return false;
-	}
-
-	return compression.filter(req, res);
-};
-
-if (process.env.NODE_ENV == 'production') {
-	app.use(compression({ filter: shouldCompress }));
-	
-	app.use((req, res, next) => {
-		res.setHeader('Cache-Control', 'maxage=2592000');
-		next();
-	});	
-}
-
-app.use(express.static(publicPath));
-app.use('/uv/', express.static(uvPath));
-app.use('/emu/', express.static(__dirname + '/emulator'));
-
-app.use((req, res) => {
-	res.status(404);
-	res.sendFile(join(publicPath, '404.html'));
-});
-
-server.on('request', (req, res) => {
-	if (bare.shouldRoute(req)) {
-		bare.routeRequest(req, res);
-	} else {
-		app(req, res);
+app.register(fastifyStatic, {
+	root: uvPath,
+	prefix: '/uv/',
+	decorateReply: false,
+	setHeaders: (res, path, stat) => {
+		res.setHeader('Service-Worker-Allowed', '/uv/service/');
 	}
 });
-
-server.on('upgrade', (req, socket, head) => {
-	if (bare.shouldRoute(req)) {
-		bare.routeUpgrade(req, socket, head);
-	} else {
-		socket.end();
-	}
-});
-
-server.on('listening', () => {
-	console.log(`Listening on: http://localhost:${app.get('port')}`);
+app.register(fastifyStatic, {
+	root: join(__dirname, '/emulator'),
+	prefix: '/emu/',
+	decorateReply: false,
 });
 
 const shutdown = () => {
@@ -79,9 +69,14 @@ const shutdown = () => {
 	process.exit(0);
 };
 
+app.get('/uv/uv.config.js', (req, res) => {
+	res.header('Service-Worker-Allowed', '/uv/service/');
+	res.type('text/javascript').send(fs.readFileSync(publicPath + '/uv/uv.config.js'));
+});
+
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-server.listen({
-	port: app.get('port'),
+app.ready(() => {
+	server.listen({ port });
 });
