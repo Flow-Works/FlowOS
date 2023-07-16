@@ -1,3 +1,6 @@
+/* eslint-env browser */
+/* global WinBox */
+
 window.onerror = (e) => {
     new WinBox({
         title: 'Error',

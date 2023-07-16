@@ -1,5 +1,9 @@
-loadJS('https://flow-works.github.io/appstore/apps.js', () => {
-	Object.values(appStore).forEach((data) => {
+/* eslint-env browser */
+
+import config from '../../../scripts/configManager.js';
+
+import('https://flow-works.github.io/appstore/apps.js').then((appStore) => {
+	Object.values(appStore.default).forEach((data) => {
 		const a = document.createElement('div');
 		a.classList.add('tooltip');
 		a.href = '#';
@@ -11,7 +15,7 @@ loadJS('https://flow-works.github.io/appstore/apps.js', () => {
 		h3.innerText = data.title;
 
 		const span = document.createElement('span');
-		if (parent.config.apps.get()[data.APP_ID]) {
+		if (config.apps.get()[data.APP_ID]) {
 			button.innerText = 'Uninstall';
 			h3.innerText = `${data.title} (Installed)`;
 			span.innerText = `${data.title} (Installed)`;
@@ -33,14 +37,14 @@ loadJS('https://flow-works.github.io/appstore/apps.js', () => {
 
 		button.onclick = () => {
 			const obj = {
-				...parent.config.apps.get()
+				...config.apps.get()
 			};
-			if (parent.config.apps.get()[data.APP_ID]) {
+			if (config.apps.get()[data.APP_ID]) {
 				delete obj[data.APP_ID];
 			} else {
 				obj[data.APP_ID] = data;
 			}
-			parent.config.apps.set(obj);
+			config.apps.set(obj);
 			window.location.reload();
 			parent.document.querySelector('.app-switcher .apps').innerHTML = '';
 			parent.Flow.apps.register();

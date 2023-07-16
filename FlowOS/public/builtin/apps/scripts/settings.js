@@ -1,4 +1,13 @@
+/* eslint-env browser */
+import config from '../../../scripts/configManager.js';
+
+import { _auth } from '../../../scripts/firebase.js';
+
 window.onload = () => {
+	document.querySelector('.signout').onclick = () => {
+		_auth.signOut();
+		parent.window.location.reload();
+	};
 	Object.values(parent.Flow.settings.items).forEach((setting) => {
 		const section = document.createElement('form');
 		section.classList.add(`settings-${setting.SETTING_ID}`);
@@ -32,7 +41,7 @@ window.onload = () => {
 				});
 			}
 
-			inputEl.value = input.type == 'textarea' ? parent.config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID].join('\n') : parent.config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID];
+			inputEl.value = input.type == 'textarea' ? config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID].join('\n') : config.settings.get(setting.SETTING_ID)[input.SETTING_INPUT_ID];
 
 			section.appendChild(label);
 			section.appendChild(inputEl);
@@ -49,7 +58,7 @@ window.onload = () => {
 					obj[input.SETTING_INPUT_ID] = input.type == 'textarea' ? document.querySelector(`.settings-${setting.SETTING_ID}-${input.SETTING_INPUT_ID}`).value.split('\n') : document.querySelector(`.settings-${setting.SETTING_ID}-${input.SETTING_INPUT_ID}`).value;
 				});
 
-				parent.config.settings.set(setting.SETTING_ID, obj);
+				config.settings.set(setting.SETTING_ID, obj);
 				parent.window.location.href = parent.window.location.href;
 			};
 		});

@@ -1,4 +1,4 @@
-// This file overwrites the stock UV config.js
+/* eslint-env browser */
 
 const plain = {
 	encode: (str) => {

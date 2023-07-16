@@ -1,3 +1,7 @@
+/* eslint-env browser */
+
+import config from '../../../scripts/configManager.js';
+
 const input = document.querySelector('input');
 
 let id = 0;
@@ -44,7 +48,7 @@ class Tab {
 		img.height = '18';
 		img.src = '/assets/loading.gif';
 
-		tab.src = uv.prefix + uv.encodeUrl(parent.config.settings.get('search').url);
+		tab.src = uv.prefix + uv.encodeUrl(config.settings.get('search').url);
 		tab.id = id;
 		tab.onload = () => {
 			handleTab(tab, titleBtn, img);
@@ -120,7 +124,7 @@ const handleTab = (tab, titleBtn, img) => {
 	console.log(unurl, url);
 	img.src = `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}`;
 	
-	parent.config.settings.get('search').urls.forEach((url) => {
+	config.settings.get('search').urls.forEach((url) => {
 		injectJS(tab, url, false, () => {});
 	});
 			

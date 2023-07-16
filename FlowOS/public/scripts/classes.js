@@ -1,3 +1,6 @@
+/* eslint-env browser */
+/* global Flow */
+
 class AppData {
 	constructor(APP_ID, title, url, proxy, config = {}) {
 		this.APP_ID = APP_ID;
@@ -60,10 +63,11 @@ class BarItem {
 		this.element = document.createElement('div');
 		this.element.classList.add('bar-item');
 		this.element.classList.add(`bar-${MODULE_ID}`);
-		Flow.bar.add(this);
 	}
 
 	setText(text) {
 		this.element.innerText = text;
 	}
 }
+
+export { AppData, SettingsCategory, SettingsInput, SettingsDropdown, SettingsTextarea, BarItem };

@@ -1,3 +1,7 @@
+/* eslint-env browser */
+
+import { BarItem } from '../../scripts/classes.js';
+
 const clock = new BarItem('clock');
 
 const clockfaces = [
@@ -133,3 +137,5 @@ const checkTime = (i) => {
 };
 
 startTime();
+
+export default clock;

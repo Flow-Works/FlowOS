@@ -1,3 +1,8 @@
+/* eslint-env browser */
+
+import config from '../../scripts/configManager.js';
+import { BarItem, SettingsCategory, SettingsInput, SettingsDropdown } from '../../scripts/classes.js';
+
 const weather = new BarItem('weather');
 new SettingsCategory('weather', 'Weather', 
     new SettingsInput('city', 'City Name', 'London', 'London'),
@@ -66,3 +71,5 @@ const startWeather = () => {
 };
 
 startWeather();
+
+export default weather;
