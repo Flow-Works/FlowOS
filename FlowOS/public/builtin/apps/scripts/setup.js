@@ -29,7 +29,7 @@ window.switchType = () => {
 };
 
 window.forgotPassword = async () => {
-	if (loginForm.elements.email.value) {
+	if (loginForm.elements.email.value && loginForm.elements.email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/s)) {
 		await auth.sendPasswordResetEmail(_auth, loginForm.elements.email.value)
 			.catch((error) => handleAuthError(error, 0));
 		document.querySelectorAll('sub')[0].innerText = `Email sent to ${loginForm.elements.email.value}`;
