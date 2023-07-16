@@ -9,7 +9,7 @@
     	<a href="https://flowos-thinliquid.webapp-store.de/"><strong>Explore the wiki »</strong></a>
     	<br />
     	<br />
-    	<a href="https://flow-os-944d4a8f0b70.herokuapp.com/">Try it Out</a>
+    	<a href="https://flow-os.liquid.is-a.dev/">Try it Out</a>
     	·
     	<a href="https://github.com/Flow-Works/FlowOS/issues">Report Bug</a>
     	·
