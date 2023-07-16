@@ -1,3 +1,7 @@
+/* eslint-env browser */
+
+import { loadCSS } from './utilities.js';
+
 window.addEventListener('load', () => {
 	loadCSS(parent.parent.config.settings.get('theme').url);
 });

@@ -1,6 +1,10 @@
-if (navigator.getBattery) {
-    const battery = new BarItem('battery');
+/* eslint-env browser */
 
+import { BarItem } from '../../scripts/classes.js';
+
+const battery = new BarItem('battery');
+
+if (navigator.getBattery) {
     navigator.getBattery().then((bt) => {
         battery.setText(`${bt.charging ? '⚡' : '🔋'} ${Math.round(bt.level * 100)}%`);
 
@@ -13,3 +17,5 @@ if (navigator.getBattery) {
         });
     });
 }
+
+export default battery;

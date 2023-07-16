@@ -1,3 +1,8 @@
+/* eslint-env browser */
+/* global require monaco*/
+
+import config from '../../../scripts/configManager.js';
+
 require.config({
 	paths: {
 		'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.8.3/min/vs'
@@ -18,18 +23,18 @@ const proxy = URL.createObjectURL(new Blob([`
 
 require(['vs/editor/editor.main'], () => {
 	const editor = monaco.editor.create(document.querySelector('.container'), {
-		value: parent.config.css.get(),
+		value: config.css.get(),
 		language: 'css',
 		theme: 'vs-dark'
 	});
 
 	editor.addListener('didType', () => {
-		parent.config.css.set(editor.getValue());
+		config.css.set(editor.getValue());
 		parent.document.querySelector('[flow-style]').innerHTML = editor.getValue();
 	});
 
 	editor.addListener('didPaste', () => {
-		parent.config.css.set(editor.getValue());
+		config.css.set(editor.getValue());
 		parent.document.querySelector('[flow-style]').innerHTML = editor.getValue();
 	});
 });

@@ -1,24 +1,18 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js';
-import * as auth from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
-import * as analytics from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js';
+/* eslint-env browser */
+/* global __uv$config WinBox */
 
-window.firebaseConfig = {
-	apiKey: 'AIzaSyCVyXj1Z7l2Bbu51JGyhntNLI8iYaC-yus',
-	authDomain: 'flow-os.firebaseapp.com',
-	projectId: 'flow-os',
-	storageBucket: 'flow-os.appspot.com',
-	messagingSenderId: '1062493642028',
-	appId: '1:1062493642028:web:3665c0b593f45342bee089',
-	measurementId: 'G-3RNYBG5J74'
-};
+import hotkeys from 'https://cdn.jsdelivr.net/npm/hotkeys-js@3.11.2/+esm';
 
-window.app = initializeApp(parent.firebaseConfig);
+import { _auth } from './scripts/firebase.js';
 
-window.analytics = analytics;
-window._analytics = await analytics.getAnalytics(app);
+import Logger from './scripts/logger.js';
+import { registerSW, loadCSS, sleep } from './scripts/utilities.js';
+import config from './scripts/configManager.js';
+import { AppData, SettingsCategory, SettingsInput, SettingsTextarea } from './scripts/classes.js';
 
-window.auth = auth;
-window._auth = await auth.getAuth(app);
+import './uv/uv.config.js';
+
+const logger = new Logger();
 
 class FlowInstance {
 	version = 'v1.0.0';
@@ -26,14 +20,14 @@ class FlowInstance {
 	setup = false;
 
 	constructor() {
-		utils.registerSW();
+		registerSW();
 	}
 
 	boot = async () => {
 		document.querySelector('.boot').style.opacity = 0;
 		setTimeout(() => { document.querySelector('.boot').style.pointerEvents = 'none'; }, 700);
 
-		utils.loadCSS(config.settings.get('theme').url);
+		loadCSS(config.settings.get('theme').url);
 
 		if (!config.css.get()) config.css.set('');
 		if (!config.apps.get()) config.apps.set([]);
@@ -43,16 +37,15 @@ class FlowInstance {
 			if (user) {
 				this.apps.register();
 				this.registerHotkeys();
-				config.settings.get('modules').urls.forEach(async (item) => {
-					utils.loadJS(item);
+				import('./builtin/modules/spotlight.js').then((module) => {
+					this.bar.add(module.default);
 				});
-		
-				const spotlight = new BarItem('spotlight');
-		
-				spotlight.setText('🔎');
-				spotlight.element.onclick = () => {
-					Flow.spotlight.toggle();
-				};
+				config.settings.get('modules').urls.forEach(async (url) => {
+					import(url).then((module) => {
+						this.bar.add(module.default);
+					});
+				});
+
 				this.init = true;
 				return;
 			}
@@ -73,23 +66,23 @@ class FlowInstance {
 			document.querySelector('.app-switcher .apps').append(app);
 		},
 
-		async toggle() {
-			switch (this.state) {
+		toggle: async () => {
+			switch (this.spotlight.state) {
 				case true:
 					document.querySelector('.app-switcher').style.opacity = 1;
-					Flow.bar.items.spotlight.setText('🔎');
+					this.bar.items.spotlight.setText('🔎');
 					document.querySelector('.app-switcher').style.opacity = 0;
-					await utils.sleep(200);
+					await sleep(200);
 					document.querySelector('.app-switcher').style.display = 'none';
-					this.state = false;
+					this.spotlight.state = false;
 					break;
 				case false:
-					Flow.bar.items.spotlight.setText('❌');
+					this.bar.items.spotlight.setText('❌');
 					document.querySelector('.app-switcher').style.opacity = 0;
 					document.querySelector('.app-switcher').style.display = 'block';
-					await utils.sleep(200);
+					await sleep(200);
 					document.querySelector('.app-switcher').style.opacity = 1;
-					this.state = true;
+					this.spotlight.state = true;
 					break;
 			}
 		},
@@ -100,7 +93,7 @@ class FlowInstance {
 	settings = {
 		items: {},
 
-		add(ITEM) {
+		add: (ITEM) => {
 			if (!config.settings.get(ITEM.SETTING_ID)) {
 				const obj = {};
 				ITEM.inputs.forEach(({
@@ -112,20 +105,20 @@ class FlowInstance {
 				});
 				config.settings.set(ITEM.SETTING_ID, obj);
 			}
-			this.items[ITEM.SETTING_ID] = ITEM;
+			this.settings.items[ITEM.SETTING_ID] = ITEM;
 		}
 	};
 
 	bar = {
 		items: {},
 
-		add(ITEM) {
-			this.items[ITEM.MODULE_ID] = ITEM;
-			document.querySelector('.bar').append(this.items[ITEM.MODULE_ID].element);
+		add: (ITEM) => {
+			this.bar.items[ITEM.MODULE_ID] = ITEM;
+			document.querySelector('.bar').append(this.bar.items[ITEM.MODULE_ID].element);
 		}
 	};
 
-	registerHotkeys() {
+	registerHotkeys = () => {
 		hotkeys('alt+space, ctrl+space', (e) => {
 			e.preventDefault();
 			this.spotlight.toggle();
@@ -140,19 +133,19 @@ class FlowInstance {
 			e.preventDefault();
 			this.apps.open('settings');
 		});
-	}
+	};
 
 	apps = {
-		register() {
+		register: () => {
 			for (const [APP_ID, value] of Object.entries(window.apps())) {
 				const appListItem = document.createElement('li');
 				appListItem.innerHTML = `<img src="/assets/icons/${APP_ID}.svg" width="25px"/>${value.title}`;
 				appListItem.onclick = () => {
-					this.open(APP_ID);
-					Flow.spotlight.toggle();
+					this.apps.open(APP_ID);
+					this.spotlight.toggle();
 				};
 
-				Flow.spotlight.add(appListItem);
+				this.spotlight.add(appListItem);
 			}
 		},
 
@@ -174,7 +167,6 @@ class FlowInstance {
 };
 
 window.Flow = new FlowInstance();
-window.logger = new Logger();
 
 window.onload = () => {
 	window.apps = () => {
@@ -198,7 +190,7 @@ window.onload = () => {
 	style.innerHTML = config.css.get();
 	document.head.append(style);
 
-	Flow.boot();
+	window.Flow.boot();
 };
 
 new SettingsCategory('profile', 'Profile',
