@@ -1,5 +1,5 @@
 .sidenav {
-	width: 230px;
+	width: 10%;
 	position: fixed;
 	z-index: 1;
 	top: 20px;
@@ -22,7 +22,7 @@
 }
 
 main {
-	margin-left: 240px; /* Same width as the sidebar + left position in px */
+	margin-left: calc(10% + 10px); /* Same width as the sidebar + left position in px */
 	padding: 0px 10px;
 }
 

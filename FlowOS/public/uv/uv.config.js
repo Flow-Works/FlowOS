@@ -12,6 +12,7 @@ const plain = {
 };
 
 self.__uv$config = {
+	proxyName: 'uv',
 	prefix: '/uv/service/',
 	bare: '/bare/',
 	encodeUrl: plain.encode,

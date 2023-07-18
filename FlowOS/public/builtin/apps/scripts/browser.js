@@ -1,15 +1,16 @@
 /* eslint-env browser */
 
 import config from '../../../scripts/configManager.js';
+import '/stomp/bootstrapper.js';
 
 const input = document.querySelector('input');
 
 let id = 0;
 
-const clickList = [];
+window.clickList = [];
 const tabs = [];
 
-const uv = parent.__uv$config;
+const proxyConfig = parent.currentProxy;
 
 let inputShowing = true;
 
@@ -48,7 +49,7 @@ class Tab {
 		img.height = '18';
 		img.src = '/assets/loading.gif';
 
-		tab.src = uv.prefix + uv.encodeUrl(config.settings.get('search').url);
+		tab.src = proxyConfig.prefix + proxyConfig.encodeUrl(config.settings.get('search').url);
 		tab.id = id;
 		tab.onload = () => {
 			handleTab(tab, titleBtn, img);
@@ -66,8 +67,8 @@ class Tab {
 
 			removeObjectWithId(tabs, _id);
 
-			if (tabs.includes(clickList.at(-1))) {
-				setActiveTab(clickList.at(-1));
+			if (tabs.includes(window.clickList.at(-1))) {
+				setActiveTab(window.clickList.at(-1));
 			} else if (tabs.at(-1)) {
 				setActiveTab(tabs.at(-1));
 			} else {
@@ -95,24 +96,24 @@ window.onload = () => {
 };
 
 const setActiveTab = (tab) => {
-	clickList.push(tab);
+	window.clickList.push(tab);
 
-	if (!tab && clickList[0] !== clickList[1]) {
+	if (!tab && window.clickList[0] !== window.clickList[1]) {
 		return;
 	}
 
-	try { input.value = uv.decodeUrl(tab.src.split('/').pop()); }
+	try { input.value = proxyConfig.decodeUrl(tab.src.split('/').pop()); }
 	catch(e) {};
 	tab.style.display = 'block';
-	if (clickList.length > 1) {
-		clickList.at(-2).style.display = 'none';
+	if (window.clickList.length > 1) {
+		window.clickList.at(-2).style.display = 'none';
 	}
 };
 
 const handleTab = (tab, titleBtn, img) => {
 	let open = false;
 	const unurl = tab.src.split('/').pop();
-	let url = uv.decodeUrl(unurl);
+	let url = proxyConfig.decodeUrl(unurl);
 
 	if (tab.contentWindow.location.pathname.startsWith('/builtin/browser')) {
 		input.value = 'flow:' + url.split('/').pop().split('.')[0];
@@ -128,24 +129,28 @@ const handleTab = (tab, titleBtn, img) => {
 		injectJS(tab, url, false, () => {});
 	});
 			
-	injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda', false, () => {
-		injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda-code', false, () => {
-			tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
-		});
+	if (proxyConfig.proxyName !== 'stomp') {
+		injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda', true, () => {
+			injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda-code', true, () => {
+				tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
+			});
 
-		tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code', 'sources'] });
-		tab.contentWindow.eruda._entryBtn.hide();
+			tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code', 'sources'] });
+			tab.contentWindow.eruda._entryBtn.hide();
 
-		document.querySelector('.eruda').onclick = () => {
-			if (open == false) {
+			document.querySelector('.eruda').onclick = () => {
+				if (open == false) {
 				tab.contentWindow.eruda.show();
-			} else {
+				} else {
 				tab.contentWindow.eruda.hide();
-			}
+				}
 	
-			open = !open;
-		};
-	});
+				open = !open;
+			};
+		});
+	} else {
+		document.querySelector('.eruda').parentElement.style.display = 'none';
+	}
 	
 	document.querySelector('.block').onclick = () => {
 		blockElement(tab);
@@ -156,13 +161,16 @@ const injectJS = (tab, FILE_URL, async = true, callback) => {
 	const scriptEle = document.createElement('script');
 
 	scriptEle.setAttribute('src', FILE_URL);
-	scriptEle.setAttribute('type', 'text/javascript');
-	scriptEle.setAttribute('async', async);
+	scriptEle.setAttribute('defer', async);
 
-	tab.contentDocument.head.appendChild(scriptEle);
+	tab.contentDocument.body.appendChild(scriptEle);
 	
 	scriptEle.addEventListener('load', () => {
 		callback();
+	});
+
+	scriptEle.addEventListener('error', (e) => {
+		console.error(e);
 	});
 };
 
@@ -198,9 +206,9 @@ const removeObjectWithId = (arr, id) => {
 input.onkeydown = (e) => {
 	if (e.key == 'Enter') {
 		if (input.value.startsWith('flow:')) {
-			clickList[0].src = '/builtin/browser/' + input.value.split(':')[1] + '.html';
+			window.clickList[0].src = '/builtin/browser/' + input.value.split(':')[1] + '.html';
 		} else {
-			clickList[0].src = uv.prefix + uv.encodeUrl(input.value);
+			window.clickList[0].src = proxyConfig.prefix + proxyConfig.encodeUrl(input.value);
 		}
 	}
 };

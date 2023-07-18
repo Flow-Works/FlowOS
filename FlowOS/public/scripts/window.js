@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
 });
 
 window.addEventListener('error', (e) => {
-	parent.logger.error(`${e.filename} at line ${e.lineno}: ${e.message}`);
+	console.error(`${e.filename} at line ${e.lineno}: ${e.message}`);
 });
 
 window.loadJS = (FILE_URL, callback) => {

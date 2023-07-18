@@ -1,5 +1,5 @@
 /* eslint-env browser */
-/* global __uv$config WinBox */
+/* global __uv$config __stomp$config WinBox */
 
 import hotkeys from 'https://cdn.jsdelivr.net/npm/hotkeys-js@3.11.2/+esm';
 
@@ -8,9 +8,11 @@ import { _auth } from './scripts/firebase.js';
 import Logger from './scripts/logger.js';
 import { registerSW, loadCSS, sleep } from './scripts/utilities.js';
 import config from './scripts/configManager.js';
-import { AppData, SettingsCategory, SettingsInput, SettingsTextarea } from './scripts/classes.js';
+import { AppData, SettingsCategory, SettingsInput, SettingsTextarea, SettingsDropdown } from './scripts/classes.js';
 
 import './uv/uv.config.js';
+import './stomp/bootstrapper.js';
+import './stmp/stomp.js';
 
 const logger = new Logger();
 
@@ -169,6 +171,33 @@ class FlowInstance {
 window.Flow = new FlowInstance();
 
 window.onload = () => {
+	new SettingsCategory('profile', 'Profile',
+	new SettingsInput('username', 'Username', '', ''),
+	new SettingsInput('url', 'Image URL', 'https://mysite.to/image.png', '')
+);
+
+new SettingsCategory('search', 'Browser',
+	new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
+	new SettingsTextarea('urls', 'Extension URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', ''),
+	new SettingsDropdown('proxy', 'Proxy', 'Ultraviolet', ['Ultraviolet', 'STomp'])
+);
+
+new SettingsCategory('theme', 'Theme',
+	new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin-dark.css')
+);
+
+new SettingsCategory('modules', 'Modules/Scripts',
+	new SettingsTextarea('urls', 'Module URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', '/builtin/modules/battery.js\n/builtin/modules/clock.js\n/builtin/modules/weather.js')
+);
+	switch (config.settings.get('search').proxy) {
+		case 'STomp':
+			self.currentProxy = __stomp$config;
+			break;
+		case 'Ultraviolet':
+			self.currentProxy = __uv$config;
+			break;
+	}
+
 	window.apps = () => {
 		return {
 			'help': new AppData('help', 'Help', 'https://flowos-thinliquid.webapp-store.de/', false),
@@ -192,21 +221,3 @@ window.onload = () => {
 
 	window.Flow.boot();
 };
-
-new SettingsCategory('profile', 'Profile',
-	new SettingsInput('username', 'Username', '', ''),
-	new SettingsInput('url', 'Image URL', 'https://mysite.to/image.png', '')
-);
-
-new SettingsCategory('search', 'Browser',
-	new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
-	new SettingsTextarea('urls', 'Extension URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', '')
-);
-
-new SettingsCategory('theme', 'Theme',
-	new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin-dark.css')
-);
-
-new SettingsCategory('modules', 'Modules/Scripts',
-	new SettingsTextarea('urls', 'Module URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', '/builtin/modules/battery.js\n/builtin/modules/clock.js\n/builtin/modules/weather.js')
-);
