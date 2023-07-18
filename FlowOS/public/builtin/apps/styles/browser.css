@@ -26,18 +26,16 @@ body, html {
 .tabs-container {
 	flex: 1;
 	display: flex;
+	overflow: hidden;
 }
 
 .topnav,
 .tabs {
 	display: flex;
-	overflow-y: hidden;
-	overflow-x: scroll;
+	overflow: hidden;
 	gap: 10px;
 	margin-bottom: 5px;
 	height: max-content;
-	min-width: min-content;
-	overflow-x: hidden;
 }
 
 .tabs > div {
@@ -69,3 +67,55 @@ body > div > input {
 	margin: 0;
 	margin-bottom: 5px;
 }
+
+.material-icons {font-size: 20px!important;}
+
+.btn {
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	column-gap: 10px;
+	padding: 0.6rem;
+	cursor: pointer;
+	border-radius: 10px;
+	border: none;
+	position: relative;
+  }
+  
+  .dropdown .material-icons {
+	font-size: 1.1rem!important;
+  }
+  
+  .dropdown {
+	position: absolute;
+	width: 250px;
+	border-radius: 10px;
+	margin-top: 0.3rem;
+	right: 5px;
+	top: 80px;
+	background: var(--surface-bg);
+	transition: all 0.1s cubic-bezier(0.16, 1, 0.5, 1);
+	transform: translateY(0.5rem);
+	visibility: hidden;
+	opacity: 0;
+  }
+  
+  .dropdown a {
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+	padding: 0.8rem 1rem;
+	text-decoration: none;
+  }
+  
+  .dropdown a:hover {
+	background-color: var(--color);
+	color: var(--primary);
+  }
+
+  .show {
+	transform: translateY(0rem);
+	visibility: visible;
+	opacity: 1;
+  }

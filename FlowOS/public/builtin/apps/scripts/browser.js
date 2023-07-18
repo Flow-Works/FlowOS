@@ -5,6 +5,24 @@ import '/stomp/bootstrapper.js';
 
 const input = document.querySelector('input');
 
+const dropdownBtn = document.querySelector(".more");
+const dropdownMenu = document.getElementById("dropdown");
+
+const toggleDropdown = () => {
+	dropdownMenu.classList.toggle("show");
+};
+
+dropdownBtn.addEventListener("click", (e) => {
+	e.stopPropagation();
+	toggleDropdown();
+});
+
+document.documentElement.addEventListener("click", () => {
+	if (dropdownMenu.classList.contains("show")) {
+	  toggleDropdown();
+	}
+  });
+
 let id = 0;
 
 window.clickList = [];
@@ -116,7 +134,7 @@ const handleTab = (tab, titleBtn, img) => {
 	let url = proxyConfig.decodeUrl(unurl);
 
 	if (tab.contentWindow.location.pathname.startsWith('/builtin/browser')) {
-		input.value = 'flow:' + url.split('/').pop().split('.')[0];
+		input.value = 'flow://' + url.split('/').pop().split('.')[0];
 	} else {
 		input.value = url;
 		history.add(tab.contentWindow.location.href, tab.contentDocument.title, `https://s2.googleusercontent.com/s2/favicons?domain_url=${url}`);
@@ -216,11 +234,11 @@ input.onkeydown = (e) => {
 document.querySelector('.hide').onclick = () => {
 	switch (inputShowing) {
 		case true:
-			document.querySelector('.hide').innerText = '⬇️';
+			document.querySelector('.hide').innerText = 'expand_more';
 			document.querySelector('.tb').style.display = 'none';
 			break;
 		case false:
-			document.querySelector('.hide').innerText = '⬆️';
+			document.querySelector('.hide').innerText = 'expand_less';
 			document.querySelector('.tb').style.display = 'flex';
 			break;
 	}
