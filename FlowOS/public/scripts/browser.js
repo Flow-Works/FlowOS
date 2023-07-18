@@ -1,13 +1,14 @@
 /* eslint-env browser */
 
 import { loadCSS } from './utilities.js';
+import config from './configManager.js';
 
 window.addEventListener('load', () => {
-	loadCSS(parent.parent.config.settings.get('theme').url);
+	loadCSS(config.settings.get('theme').url);
 });
 
 window.addEventListener('error', (e) => {
-	parent.parent.logger.error(`${e.filename} at line ${e.lineno}: ${e.message}`);
+	console.error(`${e.filename} at line ${e.lineno}: ${e.message}`);
 });
 
 window.loadJS = (FILE_URL, callback) => {

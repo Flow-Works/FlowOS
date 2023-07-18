@@ -4,6 +4,7 @@ import fastifyCompress from '@fastify/compress';
 import fastifyCaching from '@fastify/caching';
 
 import { createBareServer } from '@tomphttp/bare-server-node';
+import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@proudparrot2/uv';
 import { publicPath } from '../FlowOS/lib/index.js';
 
@@ -60,8 +61,16 @@ app.register(fastifyStatic, {
 	root: uvPath,
 	prefix: '/uv/',
 	decorateReply: false,
-	setHeaders: (res, path, stat) => {
+	setHeaders: (res) => {
 		res.setHeader('Service-Worker-Allowed', '/uv/service/');
+	}
+});
+app.register(fastifyStatic, {
+	root: stompPath,
+	prefix: '/stomp/',
+	decorateReply: false,
+	setHeaders: (res) => {
+		res.setHeader('Service-Worker-Allowed', '/stomp/');
 	}
 });
 app.register(fastifyStatic, {
