@@ -70,13 +70,6 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    yarn install
    ```
-4. Enter your `salt` in `src/configs/login.json`
-
-   ```jsonc
-   	{
-		"salt": "anything-goes-here"
-	}
-   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
