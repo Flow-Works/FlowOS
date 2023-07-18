@@ -5,20 +5,20 @@ import '/stomp/bootstrapper.js';
 
 const input = document.querySelector('input');
 
-const dropdownBtn = document.querySelector(".more");
-const dropdownMenu = document.getElementById("dropdown");
+const dropdownBtn = document.querySelector('.more');
+const dropdownMenu = document.getElementById('dropdown');
 
 const toggleDropdown = () => {
-	dropdownMenu.classList.toggle("show");
+	dropdownMenu.classList.toggle('show');
 };
 
-dropdownBtn.addEventListener("click", (e) => {
+dropdownBtn.addEventListener('click', (e) => {
 	e.stopPropagation();
 	toggleDropdown();
 });
 
-document.documentElement.addEventListener("click", () => {
-	if (dropdownMenu.classList.contains("show")) {
+document.documentElement.addEventListener('click', () => {
+	if (dropdownMenu.classList.contains('show')) {
 	  toggleDropdown();
 	}
   });
