@@ -34,19 +34,19 @@ class FlowInstance {
 		if (!config.css.get()) config.css.set('');
 		if (!config.apps.get()) config.apps.set([]);
 
-		_auth.onAuthStateChanged((user) => {
+		_auth.onAuthStateChanged(async (user) => {
 			if (this.init || this.setup) parent.window.location.reload();
 			if (user) {
 				this.apps.register();
 				this.registerHotkeys();
-				import('./builtin/modules/spotlight.js').then((module) => {
-					this.bar.add(module.default);
-				});
-				config.settings.get('modules').urls.forEach(async (url) => {
-					import(url).then((module) => {
-						this.bar.add(module.default);
-					});
-				});
+				const spotlight = await import('./builtin/modules/spotlight.js');
+				await this.bar.add(spotlight.default);
+				
+				for (let i = 0; i < config.settings.get('modules').urls.length; i++) {
+					const url = config.settings.get('modules').urls[i];
+					const module = await import(url);
+					await this.bar.add(module.default);
+				};
 
 				this.init = true;
 				return;
