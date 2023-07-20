@@ -16,6 +16,16 @@ import './stmp/stomp.js';
 
 const logger = new Logger();
 
+window.immortalize = async () => {
+	console.log('Loading 3MB Tailwind Package...');
+	await sleep(500);
+	console.log('Immortalizing OS...');
+	await sleep(200);
+	console.log('Rebooting...');
+	config.settings.set('theme', '/builtin/themes/immortal.css');
+	window.location.reload();
+};
+
 class FlowInstance {
 	version = 'v1.0.1';
 	init = false;
