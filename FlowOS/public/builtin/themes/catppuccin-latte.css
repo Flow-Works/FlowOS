@@ -7,7 +7,7 @@
 	--window-bg: #eff1f5;
 	--surface-bg: #ccd0da;
 	--text-color: #4c4f69;
-	--desktop-bg: url("/builtin/wallpapers/catppuccin-light.png"); /* or lightest color */
+	--desktop-bg: #dce0e8; /* or lightest color */
 	--font-family: "JetBrains Mono", monospace;
 }
 

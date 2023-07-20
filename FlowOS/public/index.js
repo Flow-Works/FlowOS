@@ -41,7 +41,7 @@ class FlowInstance {
 				this.registerHotkeys();
 				const spotlight = await import('./builtin/modules/spotlight.js');
 				await this.bar.add(spotlight.default);
-				
+
 				for (let i = 0; i < config.settings.get('modules').urls.length; i++) {
 					const url = config.settings.get('modules').urls[i];
 					const module = await import(url);
@@ -183,7 +183,7 @@ new SettingsCategory('search', 'Browser',
 );
 
 new SettingsCategory('theme', 'Theme',
-	new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin-dark.css')
+	new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin-macchiato.css')
 );
 
 new SettingsCategory('modules', 'Modules/Scripts',
