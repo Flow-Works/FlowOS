@@ -22,7 +22,8 @@ window.immortalize = async () => {
 	console.log('Immortalizing OS...');
 	await sleep(200);
 	console.log('Rebooting...');
-	config.settings.set('theme', '{ "url": "/builtin/themes/immortal.css" }');
+	await config.settings.set('theme', '{"url":"/builtin/themes/immortal.css"}');
+	await sleep(200);
 	window.location.reload();
 };
 
