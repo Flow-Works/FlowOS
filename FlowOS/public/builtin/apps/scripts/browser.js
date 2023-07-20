@@ -167,7 +167,7 @@ const handleTab = (tab, titleBtn, img) => {
 			};
 		});
 	} else {
-		document.querySelector('.eruda').parentElement.style.display = 'none';
+		document.querySelector('.eruda').style.display = 'none';
 	}
 	
 	document.querySelector('.block').onclick = () => {
