@@ -224,7 +224,7 @@ const removeObjectWithId = (arr, id) => {
 input.onkeydown = (e) => {
 	if (e.key == 'Enter') {
 		if (input.value.startsWith('flow:')) {
-			window.clickList[0].src = '/builtin/browser/' + input.value.split(':')[1] + '.html';
+			window.clickList[0].src = '/builtin/browser/' + input.value.split('://')[1] + '.html';
 		} else {
 			window.clickList[0].src = proxyConfig.prefix + proxyConfig.encodeUrl(input.value);
 		}
