@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+
+:root {
+	--primary: #3e8fb0;
+	--boot-bg: #232136;
+	--bar-bg: #2a273f;
+	--window-bg: #393552;
+	--surface-bg: #2a283e;
+	--text-color: #e0def4;
+	--desktop-bg: #232136; /* or darkest color */
+	--font-family: "JetBrains Mono", monospace;
+}
