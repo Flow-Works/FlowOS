@@ -245,3 +245,5 @@ document.querySelector('.hide').onclick = () => {
 
 	inputShowing = !inputShowing;
 };
+
+window.newTab = () => new Tab();
