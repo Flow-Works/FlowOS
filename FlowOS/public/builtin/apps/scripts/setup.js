@@ -86,3 +86,11 @@ const handleForm = async (form, type) => {
 			break;
 	}
 };
+
+window.guest = async () => {
+	await auth.signInAnonymously(_auth).catch((error) => {
+		handleAuthError(error, 0);
+		handleAuthError(error, 1);
+	});
+	window.reboot();
+};
