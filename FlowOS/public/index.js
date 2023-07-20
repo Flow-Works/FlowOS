@@ -17,7 +17,7 @@ import './stmp/stomp.js';
 const logger = new Logger();
 
 class FlowInstance {
-	version = 'v1.0.0';
+	version = 'v1.0.1';
 	init = false;
 	setup = false;
 
