@@ -9,7 +9,7 @@ import { config } from './scripts/managers.js';
 import apps from './constants/apps.js';
 
 export default class FlowInstance {
-	version = 'v1.0.0-beta';
+	version = 'v1.0.1-beta';
 	init = false;
 	setup = false;
 
@@ -25,6 +25,7 @@ export default class FlowInstance {
 
 		if (!config.css.get()) config.css.set('');
 		if (!config.apps.get()) config.apps.set([]);
+		if (!config.customApps.get()) config.customApps.set([]);
 
 		_auth.onAuthStateChanged(async (user) => {
 			if (this.init || this.setup) parent.window.location.reload();
