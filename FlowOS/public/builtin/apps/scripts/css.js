@@ -1,7 +1,7 @@
 /* eslint-env browser */
 /* global require monaco*/
 
-import config from '../../../scripts/configManager.js';
+import { config } from '../../../scripts/managers.js';
 
 require.config({
 	paths: {

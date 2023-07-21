@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-export default {
+const config = {
 	css: {
 		get: () => {
 			return window.localStorage.getItem('css');
@@ -34,3 +34,5 @@ export default {
 		},
 	}
 };
+
+export { config };
