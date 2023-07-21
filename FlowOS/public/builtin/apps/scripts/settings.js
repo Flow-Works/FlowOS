@@ -1,7 +1,7 @@
 /* eslint-env browser */
-import config from '../../../scripts/configManager.js';
 
 import { _auth } from '../../../scripts/firebase.js';
+import { config } from '../../../scripts/managers.js';
 
 window.onload = () => {
 	document.querySelector('.signout').onclick = () => {

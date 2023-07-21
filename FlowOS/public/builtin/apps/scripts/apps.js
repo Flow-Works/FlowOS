@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import config from '../../../scripts/configManager.js';
+import { config } from '../../../scripts/managers.js';
 
 import('https://flow-works.github.io/appstore/apps.js').then((appStore) => {
 	Object.values(appStore.default).forEach((data) => {

@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import config from '../../scripts/configManager.js';
+import { config } from '../../scripts/managers.js';
 import { BarItem, SettingsCategory, SettingsInput, SettingsDropdown } from '../../scripts/classes.js';
 
 const weather = new BarItem('weather');

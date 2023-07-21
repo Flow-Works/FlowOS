@@ -1,7 +1,7 @@
 /* eslint-env browser */
 
 import { loadCSS } from './utilities.js';
-import config from './configManager.js';
+import { config } from './managers.js';
 
 window.addEventListener('load', () => {
 	loadCSS(config.settings.get('theme').url);

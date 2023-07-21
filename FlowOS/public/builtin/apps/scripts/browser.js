@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import config from '../../../scripts/configManager.js';
+import { config } from '../../../scripts/managers.js';
 import '/stomp/bootstrapper.js';
 
 const input = document.querySelector('input');
