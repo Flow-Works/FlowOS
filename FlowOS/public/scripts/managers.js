@@ -25,6 +25,14 @@ const config = {
 			return window.localStorage.setItem('apps', JSON.stringify(value));
 		},
 	},
+	customApps: {
+		get: () => {
+			return JSON.parse(window.localStorage.getItem('custom-apps'));
+		},
+		set: (value) => {
+			return window.localStorage.setItem('custom-apps', JSON.stringify(value));
+		},
+	},
 	settings: {
 		get: (item) => {
 			return JSON.parse(window.localStorage.getItem(item));
