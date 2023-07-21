@@ -14,7 +14,7 @@ window.firebaseConfig = {
 	measurementId: 'G-3RNYBG5J74'
 };
 
-const app = initializeApp(parent.firebaseConfig);
+const app = initializeApp(window.firebaseConfig);
 const _analytics = await analytics.getAnalytics(app);
 const _auth = await auth.getAuth(app);
 
