@@ -9,10 +9,10 @@ import { config } from './scripts/managers.js';
 import apps from './constants/apps.js';
 
 export default class FlowInstance {
-	version = 'v1.0.4-beta';
+	version = 'v1.0.5-beta';
 	init = false;
 	setup = false;
-	
+
 	constructor() {
 		registerSW();
 	}
