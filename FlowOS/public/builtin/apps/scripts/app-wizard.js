@@ -30,7 +30,7 @@ Object.values(config.customApps.get()).forEach((data) => {
 
     const img = document.createElement('img');
     img.setAttribute('width', '100px');
-    img.src = `/assets/icons/${data.APP_ID}.svg`;
+    img.src = data.icon;
     a.appendChild(img);
     a.appendChild(h3);
     h3.appendChild(p);
