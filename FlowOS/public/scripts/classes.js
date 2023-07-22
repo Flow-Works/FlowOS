@@ -1,7 +1,7 @@
 /* eslint-env browser */
 /* global Flow */
 
-class AppData {
+export class AppData {
 	constructor(APP_ID, title, url, proxy, config = {}) {
 		this.APP_ID = APP_ID;
 		this.title = title;
@@ -11,8 +11,8 @@ class AppData {
 	}
 }
 
-class SettingsCategory {
-	constructor(SETTING_ID, title, ...inputs) {
+export class SettingsCategory {
+	constructor(SETTING_ID, title, inputs) {
 		this.SETTING_ID = SETTING_ID;
 		this.title = title;
 		this.inputs = inputs;
@@ -24,7 +24,7 @@ class SettingsCategory {
 	}
 }
 
-class SettingsFormItem {
+export class SettingsFormItem {
 	constructor(SETTING_INPUT_ID, label, type, placeholder = '', defaultValue = '') {
 		this.SETTING_INPUT_ID = SETTING_INPUT_ID;
 		this.label = label;
@@ -35,29 +35,29 @@ class SettingsFormItem {
 	}
 }
 
-class SettingsInput extends SettingsFormItem {
+export class SettingsInput extends SettingsFormItem {
 	constructor(SETTING_INPUT_ID, label, placeholder = '', defaultValue = '') {
 		super(SETTING_INPUT_ID, label, 'input', placeholder, defaultValue);
 		return this;
 	}
 }
 
-class SettingsTextarea extends SettingsFormItem {
+export class SettingsTextarea extends SettingsFormItem {
 	constructor(SETTING_INPUT_ID, label, placeholder = '', defaultValue = '') {
 		super(SETTING_INPUT_ID, label, 'textarea', placeholder, defaultValue);
 		return this;
 	}
 }
 
-class SettingsDropdown extends SettingsFormItem {
-	constructor(SETTING_INPUT_ID, label, defaultValue = '', options = []) {
+export class SettingsDropdown extends SettingsFormItem {
+	constructor(SETTING_INPUT_ID, label, defaultValue, options) {
 		super(SETTING_INPUT_ID, label, 'select', '', defaultValue);
 		this.options = options;
 		return this;
 	}
 }
 
-class BarItem {
+export class BarItem {
 	constructor(MODULE_ID) {
 		this.MODULE_ID = MODULE_ID;
 		this.element = document.createElement('div');
@@ -69,5 +69,3 @@ class BarItem {
 		this.element.innerText = text;
 	}
 }
-
-export { AppData, SettingsCategory, SettingsInput, SettingsDropdown, SettingsTextarea, BarItem };
