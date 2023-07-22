@@ -12,7 +12,7 @@ export default class FlowInstance {
 	version = 'v1.0.4-beta';
 	init = false;
 	setup = false;
-
+	
 	constructor() {
 		registerSW();
 	}

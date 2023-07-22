@@ -40,3 +40,17 @@ window.onload = () => {
 
 	window.Flow.boot();
 };
+
+document.querySelector('.searchbar').onkeyup = () => {
+	const input = document.querySelector('.searchbar').value.toLowerCase();
+	let x = Array.from(document.querySelector('ul.apps').children);
+
+	x.forEach((item) => {
+		if (!item.innerText.toLowerCase().includes(input)) {
+			item.style.display='none';
+		}
+		else {
+			item.style.display='flex';                 
+		}
+	});
+};
