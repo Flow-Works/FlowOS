@@ -9,7 +9,7 @@ import { config } from './scripts/managers.js';
 import apps from './constants/apps.js';
 
 export default class FlowInstance {
-	version = 'v1.0.2-beta';
+	version = 'v1.0.4-beta';
 	init = false;
 	setup = false;
 
