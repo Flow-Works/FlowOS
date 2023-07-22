@@ -28,7 +28,7 @@ import('https://flow-works.github.io/appstore/apps.js').then((appStore) => {
 
 		const img = document.createElement('img');
 		img.setAttribute('width', '100px');
-		img.src = `/assets/icons/${data.APP_ID}.svg`;
+		img.src = data.icon;
 		a.appendChild(img);
 		a.appendChild(h3);
 		h3.appendChild(p);
