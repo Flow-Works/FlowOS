@@ -62,7 +62,7 @@ window.onmousemove = (e) => {
 	}
 };
 
-document.querySelector('.json').onsubmit = async () => {
+document.querySelector('.url').onsubmit = async () => {
     const res = await fetch(document.querySelector('input').value);
     const data = await res.json();
 
