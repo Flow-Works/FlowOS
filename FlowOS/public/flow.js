@@ -9,7 +9,7 @@ import { config } from './scripts/managers.js';
 import apps from './constants/apps.js';
 
 export default class FlowInstance {
-	version = 'v1.0.3-beta';
+	version = 'v1.0.4-beta';
 	init = false;
 	setup = false;
 
@@ -136,7 +136,7 @@ export default class FlowInstance {
 		register: () => {
 			for (const [APP_ID, value] of Object.entries(apps())) {
 				const appListItem = document.createElement('li');
-				appListItem.innerHTML = `<img src="/assets/icons/${APP_ID}.svg" width="25px"/>${value.title}`;
+				appListItem.innerHTML = `<img src="${value.icon}" width="25px"/>${value.title}`;
 				appListItem.onclick = () => {
 					this.apps.open(APP_ID);
 					this.spotlight.toggle();
@@ -147,17 +147,18 @@ export default class FlowInstance {
 		},
 
 		open: (APP_ID) => {
+			const app = apps()[APP_ID];
 			let url;
-			window.logger.debug(JSON.stringify(apps()[APP_ID]));
-			url = apps()[APP_ID].proxy == false ? apps()[APP_ID].url : `${currentProxy.prefix}${currentProxy.encodeUrl(apps()[APP_ID].url)}`;
+			window.logger.debug(JSON.stringify(app));
+			url = app.proxy == false ? app.url : `${currentProxy.prefix}${currentProxy.encodeUrl(app.url)}`;
 			window.logger.debug(url);
 			new WinBox({
-				title: apps()[APP_ID].title,
-				icon: `assets/icons/${APP_ID}.svg`,
-				html: `<iframe src="${url}" scrolling="yes" title="${apps()[APP_ID].title}"></iframe>`,
+				title: app.title,
+				icon: app.icon,
+				html: `<iframe src="${url}" scrolling="yes" title="${app.title}"></iframe>`,
 				x: 'center',
 				y: 'center',
-				...apps()[APP_ID].config
+				...app.config
 			});
 		}
 	};

@@ -2,8 +2,9 @@
 /* global Flow */
 
 export class AppData {
-	constructor(APP_ID, title, url, proxy, config = {}) {
+	constructor(APP_ID, title, url, icon, proxy, config = {}) {
 		this.APP_ID = APP_ID;
+		this.icon = icon;
 		this.title = title;
 		this.url = url;
 		this.proxy = proxy;
