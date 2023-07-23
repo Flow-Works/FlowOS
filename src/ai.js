@@ -24,7 +24,7 @@ const ai = (app, opts, done) => {
             model: req.body.model,
             messages: req.body.logs,
         });
-        return res.send(chatCompletion.data.choices[0].message);
+        return res.type('application/json').send(chatCompletion.data.choices[0].message);
     });
 
     done();
