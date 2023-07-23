@@ -69,7 +69,9 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    yarn install
    ```
-3. Run
+3. Get ChimeraGPT key: https://discord.gg/chimeragpt
+4. Add `API_KEY` to .env
+5. Run
    ```sh
    yarn start
    ```
