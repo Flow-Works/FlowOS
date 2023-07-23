@@ -11,12 +11,12 @@ document.querySelector('form').onsubmit = async (e) => {
 
     const value = document.querySelector('input').value;
     document.querySelector('input').value = '';
-    
+
     document.querySelector('button').disabled = true;
     logs.push({ role: 'user', content: value });
     you.set(value);
 
-    const res = await fetch('http://localhost:3000' + '/ai/chat', {
+    const res = await fetch('/ai/chat', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
