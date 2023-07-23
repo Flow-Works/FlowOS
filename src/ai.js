@@ -21,7 +21,7 @@ const ai = (app, opts, done) => {
 
     app.post('/chat', async (req, res) => {
         const chatCompletion = await openai.createChatCompletion({
-            model: 'gpt-3.5-turbo',
+            model: req.body.model,
             messages: req.body.logs,
         });
         return res.send(chatCompletion.data.choices[0].message);

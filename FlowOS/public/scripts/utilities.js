@@ -62,11 +62,6 @@ export const sleep = (ms) => {
 };
 
 export const registerSettings = () => {
-	new SettingsCategory('profile', 'Profile', [
-		new SettingsInput('username', 'Username', '', ''),
-		new SettingsInput('url', 'Image URL', 'https://mysite.to/image.png', '')
-	]);
-
 	new SettingsCategory('search', 'Browser', [
 		new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
 		new SettingsTextarea('urls', 'Extension URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', ''),
@@ -79,6 +74,10 @@ export const registerSettings = () => {
 
 	new SettingsCategory('modules', 'Modules/Scripts', [
 		new SettingsTextarea('urls', 'Module URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', '/builtin/modules/battery.js\n/builtin/modules/clock.js\n/builtin/modules/weather.js')
+	]);
+
+	new SettingsCategory('flowgpt', 'FlowGPT', [
+		new SettingsDropdown('model', 'AI Model', 'gpt-3.5-turbo', ['gpt-4', 'gpt-4-0314', 'gpt-4-poe', 'gpt-4-32k', 'gpt-4-32k-poe', 'gpt-3.5-turbo', 'gpt-3.5-turbo-0301', 'gpt-3.5-turbo-poe', 'gpt-3.5-turbo-16k-poe', 'llama-2-13b-chat'])
 	]);
 
 	return true;

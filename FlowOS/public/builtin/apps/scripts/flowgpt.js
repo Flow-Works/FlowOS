@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked@5.1.1/+esm';
+import { config } from '../../../scripts/managers.js';
 
 const logs = [];
 document.querySelector('form').onsubmit = async (e) => {
@@ -21,7 +22,7 @@ document.querySelector('form').onsubmit = async (e) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ logs: [ ...logs, { role: 'user', content: value } ] })
+        body: JSON.stringify({ model: config.settings.get('flowgpt').model, logs: [ ...logs, { role: 'user', content: value } ] })
     });
 
     const data = await res.json();
