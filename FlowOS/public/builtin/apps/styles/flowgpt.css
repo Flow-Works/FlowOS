@@ -1,0 +1,32 @@
+.flowgpt {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.fill {
+    flex: 1;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+}
+
+form textarea {
+    flex: 1;
+}
+
+form button {
+    width: unset;
+}
+
+p {
+    display: inline;
+}
+
+code {
+    background: var(--surface-bg);
+    padding: 2px;
+    border-radius: 2px;
+}

@@ -10,7 +10,7 @@
         "name": "yarn",
         "runtimeExecutable": "yarn",
         "runtimeArgs": [
-          "dev"
+          "start"
         ],
         "cwd": "${workspaceRoot}",
         "timeout": 10000
