@@ -1,7 +1,6 @@
 import fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyCompress from '@fastify/compress';
-import fastifyCaching from '@fastify/caching';
 
 import { createBareServer } from '@tomphttp/bare-server-node';
 import { stompPath } from '@sysce/stomp';
@@ -12,6 +11,8 @@ import { createServer } from 'http';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+
+import ai from './ai.js';
 
 const port = process.env.PORT || 3000;
 
@@ -50,12 +51,7 @@ app.register(
 	{ threshold: 1 }
 );
 
-if (process.env.NODE_ENV == 'production') {
-	app.register(
-		fastifyCaching,
-		{ privacy: fastifyCaching.privacy.PUBLIC, expiresIn: 3600 },
-	);
-}
+app.register(ai, { prefix: '/ai/' });
 
 app.register(fastifyStatic, {
 	root: uvPath,
