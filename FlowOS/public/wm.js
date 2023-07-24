@@ -16,6 +16,7 @@ export class WindowManager {
 			title: app.title,
 			icon: app.icon,
 			url: app.url,
+			proxy: app.proxy,
 			x: 'center',
 			y: 'center',
 			...app.config,
