@@ -74,11 +74,6 @@ app.register(fastifyStatic, {
 	prefix: '/',
 	decorateReply: false,
 });
-app.register(fastifyStatic, {
-	root: join(__dirname, '/emulator'),
-	prefix: '/emu/',
-	decorateReply: false,
-});
 
 const shutdown = () => {
 	server.close();

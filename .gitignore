@@ -1,2 +1,3 @@
 node_modules
 src/emulator/data/minify/node_modules
+.env
