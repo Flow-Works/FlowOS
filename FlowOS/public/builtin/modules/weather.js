@@ -4,10 +4,10 @@ import { config } from '../../scripts/managers.js';
 import { BarItem, SettingsCategory, SettingsInput, SettingsDropdown } from '../../scripts/classes.js';
 
 const weather = new BarItem('weather');
-new SettingsCategory('weather', 'Weather', 
+new SettingsCategory('weather', 'Weather', [
     new SettingsInput('city', 'City Name', 'London', 'London'),
     new SettingsDropdown('measurement', 'Measurement System', 'Celsius', ['Celsius', 'Fahrenheit']),
-);
+]);
 
 const weatherMap = {
     1000: '☀️',

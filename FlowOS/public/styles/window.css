@@ -10,6 +10,7 @@ html {
 	position: relative;
 	height: calc(100% - 2.5px);
 	box-sizing: border-box;
+	background: transparent!important;
 }
 
 *, *:before, *:after {

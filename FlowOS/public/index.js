@@ -17,7 +17,7 @@ window.immortalize = async () => {
 	console.log('Immortalizing OS...');
 	await sleep(200);
 	console.log('Rebooting...');
-	await config.settings.set('theme', {'url':'/builtin/themes/immortal.css'});
+	await config.settings.set('theme', { url: '/builtin/themes/immortal.css' });
 	await sleep(200);
 	window.location.reload();
 };
@@ -47,10 +47,9 @@ document.querySelector('.searchbar').onkeyup = () => {
 
 	x.forEach((item) => {
 		if (!item.innerText.toLowerCase().includes(input)) {
-			item.style.display='none';
-		}
-		else {
-			item.style.display='flex';                 
+			item.style.display = 'none';
+		} else {
+			item.style.display = 'flex';
 		}
 	});
 };
