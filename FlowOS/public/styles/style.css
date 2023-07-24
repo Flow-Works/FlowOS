@@ -2,14 +2,16 @@
 	--boot-bg: black;
 }
 
-*,
-.winbox .wb-title {
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+*, .wb-title {
 	color: var(--text-color);
 	font-family: var(--font-family);
 }
 
-.winbox .wb-header,
-.winbox .wb-body {
+.wb-header {
 	background: var(--window-bg);
 }
 
@@ -26,43 +28,70 @@ body {
 
 .app-switcher {
 	display: none;
-	transition: opacity 0.2s;
 	position: absolute;
+	
+	flex-direction: column;
+	gap: 5px;
+	transition: opacity 0.2s;
 	top: 50%;
 	left: 50%;
 	z-index: 1000;
 	transform: translate(-50%, -50%);
 	background: var(--window-bg);
 	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-	max-width: 500px;
-	width: calc(100vw - 50px);
-	border-radius: 10px;
-	opacity: 0;
-	height: calc(100vh - 50px);
-	max-height: 200px;
+	max-width: 600px;
+	width: calc(100vw - 60px);
+	max-height: 300px;
+	height: calc(100vh - 60px);
 	overflow: hidden;
-	box-sizing: border-box;
-	padding: 15px;
+	padding: 20px;
+	background: transparent;
+	backdrop-filter: blur(20px);
+	outline: 2px solid var(--primary);
+
+	opacity: 0;
+	border-radius: 10px;
+}
+
+.app-switcher input {
+	padding: 10px;
+	width: 100%;
+	border-radius: 10px;
+	background: var(--desktop-bg);
+	color: var(--text-color);
 }
 
 .app-switcher ul {
-	list-style: none;
-	padding: 0;
-	box-sizing: border-box;
+	display: grid;
+  	grid-template-columns: 1fr 1fr 1fr;
+	flex-grow: 1;
 	overflow: scroll;
-	height: calc(100% - 50px);
+	padding-left: 0;
+	gap: 10px;
+	padding: 2px;
 }
 
 .app-switcher li {
+	list-style: none;
 	display: flex;
+	min-width: 0;
 	gap: 10px;
-	padding: 15px;
+	padding: 10px;
 	border-radius: 10px;
 	align-items: center;
+	transition: outline .5s;
+	outline: 2px solid transparent;
+}
+
+.app-switcher li p {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin: 0;
 }
 
 .app-switcher li:hover {
-	background: var(--surface-bg);
+	outline: 2px solid var(--primary);
 }
 
 .boot {
@@ -159,4 +188,33 @@ body {
 	width: calc(100% - 20px);
 	margin: 5px 0;
 	font-family: var(--font-family);
+}
+
+.winbox {
+	background: transparent;
+	border-radius: 10px;
+	outline: 2px solid transparent;
+	transition: outline 1s cubic-bezier(0, 0, 0, 1);
+}
+
+.winbox.focus {
+	outline: 2px solid var(--primary)!important;
+}
+
+.winbox:has(> .wb-header:hover), .winbox:has(> .wb-body:hover) {
+	outline: 2px dashed var(--primary);
+}
+
+.wb-header {
+	border-radius: 10px 10px 0 0;
+}
+
+.wb-body {
+	backdrop-filter: blur(20px);
+	border-radius: 0 0 10px 10px;
+	background: transparent;
+}
+
+.winbox iframe {
+	background: transparent;
 }

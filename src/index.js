@@ -8,8 +8,6 @@ import { uvPath } from '@proudparrot2/uv';
 import { publicPath } from '../FlowOS/lib/index.js';
 
 import { createServer } from 'http';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 import ai from './ai.js';
@@ -43,8 +41,6 @@ const app = fastify({ serverFactory: (handler) => {
   
 	return server;
 } });
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.register(
 	fastifyCompress,

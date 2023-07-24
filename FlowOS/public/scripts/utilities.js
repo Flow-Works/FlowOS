@@ -17,6 +17,7 @@ export const registerSW = async () => {
 };
 
 export const loadCSS = (FILE_URL) => {
+	const startDate = new Date();
 	const styleEle = document.createElement('link');
 
 	styleEle.setAttribute('rel', 'stylesheet');
@@ -26,33 +27,13 @@ export const loadCSS = (FILE_URL) => {
 	document.head.appendChild(styleEle);
 
 	styleEle.addEventListener('load', () => {
-		logger.info(`Stylesheet loaded: ${FILE_URL}`);
+		const nowDate = new Date();
+		logger.debug(FILE_URL + ' - ' + Math.abs(startDate - nowDate) + 'ms');
 		return true;
 	});
 
 	styleEle.addEventListener('error', (ev) => {
-		logger.info(`Failed to load stylesheet: ${FILE_URL}`, ev);
-		return false;
-	});
-};
-
-export const loadJS = (FILE_URL, module = true, async = true) => {
-	const scriptEle = document.createElement('script');
-
-	scriptEle.setAttribute('src', FILE_URL);
-	scriptEle.setAttribute('type', 'text/javascript');
-	scriptEle.setAttribute('type', module ? 'module' : '');
-	scriptEle.setAttribute('async', async);
-
-	document.body.appendChild(scriptEle);
-
-	scriptEle.addEventListener('load', () => {
-		logger.info(`Script loaded: ${FILE_URL}`);
-		return true;
-	});
-
-	scriptEle.addEventListener('error', (ev) => {
-		logger.error(`Failed to load script: ${FILE_URL}`, ev);
+		logger.debug(FILE_URL, ev);
 		return false;
 	});
 };

@@ -4,7 +4,7 @@ body, html {
     font-weight: bold;
     font-size: 20px;
     overflow: hidden;
-    background-color: var(--window-bg);
+    background-color: transparent;
     padding:0;
     margin:0;
 }
