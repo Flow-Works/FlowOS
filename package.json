@@ -51,5 +51,6 @@
 		"commitizenEmoji": {
 			"conventionalFormat": true
 		}
-	}
+	},
+	"packageManager": "yarn@3.6.1"
 }
