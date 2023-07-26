@@ -66,7 +66,6 @@ class Tab {
 		img.width = '18';
 		img.height = '18';
 		img.src = '/assets/loading.gif';
-
 		tab.src = proxyConfig.prefix + proxyConfig.encodeUrl(config.settings.get('search').url);
 		tab.id = id;
 		tab.onload = () => {
@@ -226,7 +225,12 @@ input.onkeydown = (e) => {
 		if (input.value.startsWith('flow:')) {
 			window.clickList[0].src = '/builtin/browser/' + input.value.split('://')[1] + '.html';
 		} else {
-			window.clickList[0].src = proxyConfig.prefix + proxyConfig.encodeUrl(input.value);
+			let inputValue = input.value;
+
+if (!inputValue.startsWith('http://') && !inputValue.startsWith('https://')) {
+    inputValue = 'http://' + inputValue;
+}
+			window.clickList[0].src = proxyConfig.prefix + proxyConfig.encodeUrl(inputValue);
 		}
 	}
 };

@@ -1,11 +1,11 @@
 import fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyCompress from '@fastify/compress';
-
+import { fileURLToPath } from 'url';
+const publicPath = fileURLToPath(new URL('../public/', import.meta.url));
 import { createBareServer } from '@tomphttp/bare-server-node';
 import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@proudparrot2/uv';
-import { publicPath } from '../FlowOS/lib/index.js';
 
 import { createServer } from 'http';
 import fs from 'fs';
