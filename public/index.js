@@ -1,5 +1,5 @@
 /* eslint-env browser */
-/* global __uv$config __stomp$config */
+/* global __uv$config */
 
 import Logger from './scripts/logger.js';
 import { registerSettings, useCustomCSS, sleep } from './scripts/utilities.js';
@@ -8,8 +8,6 @@ import { config } from './scripts/managers.js';
 import FlowInstance from './flow.js';
 
 import './uv/uv.config.js';
-import './stomp/bootstrapper.js';
-import './stmp/stomp.js';
 
 window.immortalize = async () => {
 	console.log('Loading 3MB Tailwind Package...');
@@ -28,9 +26,6 @@ self.logger = new Logger();
 window.onload = () => {
 	registerSettings();
 	switch (config.settings.get('search').proxy) {
-		case 'STomp':
-			self.currentProxy = __stomp$config;
-			break;
 		case 'Ultraviolet':
 			self.currentProxy = __uv$config;
 			break;

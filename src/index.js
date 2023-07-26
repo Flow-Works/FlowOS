@@ -4,7 +4,6 @@ import fastifyCompress from '@fastify/compress';
 import { fileURLToPath } from 'url';
 const publicPath = fileURLToPath(new URL('../public/', import.meta.url));
 import { createBareServer } from '@tomphttp/bare-server-node';
-import { stompPath } from '@sysce/stomp';
 import { uvPath } from '@proudparrot2/uv';
 
 import { createServer } from 'http';
@@ -55,14 +54,6 @@ app.register(fastifyStatic, {
 	decorateReply: false,
 	setHeaders: (res) => {
 		res.setHeader('Service-Worker-Allowed', '/uv/service/');
-	}
-});
-app.register(fastifyStatic, {
-	root: stompPath,
-	prefix: '/stomp/',
-	decorateReply: false,
-	setHeaders: (res) => {
-		res.setHeader('Service-Worker-Allowed', '/stomp/');
 	}
 });
 app.register(fastifyStatic, {
