@@ -44,7 +44,7 @@ Object.values(config.customApps.get()).forEach((data) => {
         delete obj[data.APP_ID];
         config.customApps.set(obj);
         window.location.reload();
-        parent.document.querySelector('.app-switcher .apps').innerHTML = '';
+        parent.document.querySelector('.spotlight .apps').innerHTML = '';
         parent.Flow.apps.register();
     };
 
@@ -72,7 +72,7 @@ document.querySelector('.url').onsubmit = async () => {
     obj[data.APP_ID] = data;
     config.customApps.set(obj);
     window.location.reload();
-    parent.document.querySelector('.app-switcher .apps').innerHTML = '';
+    parent.document.querySelector('.spotlight .apps').innerHTML = '';
     parent.Flow.apps.register();
 };
 
@@ -84,6 +84,6 @@ document.querySelector('.json').onsubmit = () => {
     obj[data.APP_ID] = data;
     config.customApps.set(obj);
     window.location.reload();
-    parent.document.querySelector('.app-switcher .apps').innerHTML = '';
+    parent.document.querySelector('.spotlight .apps').innerHTML = '';
     parent.Flow.apps.register();
 };

@@ -46,7 +46,7 @@ import('https://flow-works.github.io/appstore/apps.js').then((appStore) => {
 			}
 			config.apps.set(obj);
 			window.location.reload();
-			parent.document.querySelector('.app-switcher .apps').innerHTML = '';
+			parent.document.querySelector('.spotlight .apps').innerHTML = '';
 			parent.Flow.apps.register();
 		};
 
