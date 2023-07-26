@@ -240,6 +240,7 @@ body {
 	display: flex;
 	align-items: center;
 	flex: 1;
+	height: 30px;
 	padding: 10px;
 	background: var(--surface-bg);
 	transition: all .4s cubic-bezier(1, 0, 1, 0);
