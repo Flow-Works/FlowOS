@@ -2,9 +2,11 @@
 	--boot-bg: black;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
-}
+*, *:before, *:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+  }
 
 *, .wb-title {
 	color: var(--text-color);
@@ -26,7 +28,7 @@ body {
 	margin: 0;
 }
 
-.app-switcher {
+.spotlight {
 	display: none;
 	position: absolute;
 	
@@ -53,7 +55,7 @@ body {
 	border-radius: 10px;
 }
 
-.app-switcher input {
+.spotlight input {
 	padding: 10px;
 	width: 100%;
 	border-radius: 10px;
@@ -61,7 +63,7 @@ body {
 	color: var(--text-color);
 }
 
-.app-switcher ul {
+.spotlight ul {
 	display: grid;
   	grid-template-columns: 1fr 1fr 1fr;
 	flex-grow: 1;
@@ -71,7 +73,7 @@ body {
 	padding: 2px;
 }
 
-.app-switcher li {
+.spotlight li {
 	list-style: none;
 	display: flex;
 	min-width: 0;
@@ -83,14 +85,14 @@ body {
 	outline: 2px solid transparent;
 }
 
-.app-switcher li p {
+.spotlight li p {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	margin: 0;
 }
 
-.app-switcher li:hover {
+.spotlight li:hover {
 	outline: 2px solid var(--primary);
 }
 
@@ -217,4 +219,54 @@ body {
 
 .winbox iframe {
 	background: transparent;
+}
+
+.taskbar {
+	height: 50px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: var(--window-bg);
+	display: flex;
+	gap: 10px;
+	padding: 10px;
+	flex-direction: row;
+	align-items: center;
+}
+
+.taskbar-item {
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	padding: 10px;
+	background: var(--surface-bg);
+	transition: all .4s cubic-bezier(1, 0, 1, 0);
+	gap: 10px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.taskbar-item.new-item {
+	flex: .00001;
+	animation: flexGrow .4s ease forwards;
+}
+
+.taskbar-item.remove-item {
+	flex: 1;
+	animation: flexShrink .4s ease forwards;
+}
+
+@keyframes flexShrink {
+	to {
+	  flex: .01;
+	  flex: .00001;
+	}
+}
+  
+@keyframes flexGrow {
+	to {
+	  flex: 1;
+	}
 }
