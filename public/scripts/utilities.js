@@ -46,7 +46,7 @@ export const registerSettings = () => {
 	new SettingsCategory('search', 'Browser', [
 		new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
 		new SettingsTextarea('urls', 'Extension URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', ''),
-		new SettingsDropdown('proxy', 'Proxy', 'Ultraviolet', ['Ultraviolet', 'STomp'])
+		new SettingsDropdown('proxy', 'Proxy', 'Ultraviolet', ['Ultraviolet'])
 	]);
 
 	new SettingsCategory('theme', 'Theme', [
