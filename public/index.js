@@ -25,10 +25,8 @@ self.logger = new Logger();
 
 window.onload = () => {
 	registerSettings();
-	switch (config.settings.get('search').proxy) {
-		case 'Ultraviolet':
-			self.currentProxy = __uv$config;
-			break;
+	if (config.settings.get('search').proxy === 'Ultraviolet') {
+		self.currentProxy = __uv$config;
 	}
 
 	useCustomCSS();
@@ -36,15 +34,14 @@ window.onload = () => {
 	window.Flow.boot();
 };
 
-document.querySelector('.searchbar').onkeyup = () => {
-	const input = document.querySelector('.searchbar').value.toLowerCase();
-	let x = Array.from(document.querySelector('ul.apps').children);
+const searchBar = document.querySelector('.searchbar');
+const appsList = document.querySelector('ul.apps');
 
-	x.forEach((item) => {
-		if (!item.innerText.toLowerCase().includes(input)) {
-			item.style.display = 'none';
-		} else {
-			item.style.display = 'flex';
-		}
+searchBar.addEventListener('keyup', () => {
+	const input = searchBar.value.toLowerCase();
+	const apps = Array.from(appsList.children);
+
+	apps.forEach((item) => {
+		item.style.display = item.innerText.toLowerCase().includes(input) ? 'flex' : 'none';
 	});
-};
+});

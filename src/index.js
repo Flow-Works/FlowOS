@@ -9,6 +9,9 @@ import { uvPath } from '@proudparrot2/uv';
 import { createServer } from 'http';
 import fs from 'fs';
 
+import Module from 'node:module';
+const require = Module.createRequire(import.meta.url);
+
 import ai from './ai.js';
 
 const port = process.env.PORT || 3000;
@@ -70,6 +73,16 @@ const shutdown = () => {
 
 app.get('/uv/uv.config.js', (req, res) => {
 	res.type('text/javascript').send(fs.readFileSync(`${publicPath}/uv/uv.config.js`));
+});
+
+app.get('/ver', (req, res) => {
+	require('child_process').exec('git rev-parse HEAD', (err1, hash) => {
+		require('child_process').exec('git branch --show-current', (err2, branch) => {
+			require('child_process').exec('git ls-remote --get-url', (err3, url) => {
+				res.type('application/json').send({ hash: hash.replace(/\n/g, ''), branch: branch.replace(/\n/g, ''), url: url.replace(/\n/g, '')  });
+			});
+		});
+	});
 });
 
 process.on('SIGINT', shutdown);

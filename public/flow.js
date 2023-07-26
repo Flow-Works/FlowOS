@@ -9,7 +9,7 @@ import apps from './constants/apps.js';
 import { WindowManager, WindowInstance } from './wm.js';
 
 export default class FlowInstance {
-	version = 'v1.0.8-beta';
+	version; branch; url;
 	wm = new WindowManager();
 
 	#init = false;
@@ -17,7 +17,16 @@ export default class FlowInstance {
 
 	constructor() {
 		registerSW();
+		this.setVersion();
 	}
+
+	setVersion = async () => {
+		const res = await fetch('/ver');
+		const data = await res.json();
+		this.version = data.hash;
+		this.branch = data.branch;
+		this.url = data.url;
+	};
 
 	boot = async () => {
 		document.querySelector('.boot').style.opacity = 0;
@@ -37,8 +46,7 @@ export default class FlowInstance {
 				this.apps.register();
 				this.hotkeys.register();
 
-				for (let i = 0; i < config.settings.get('modules').urls.length; i++) {
-					const url = config.settings.get('modules').urls[i];
+				for (const url of config.settings.get('modules').urls) {
 					const module = await import(url);
 					await this.bar.add(module.default);
 				}
