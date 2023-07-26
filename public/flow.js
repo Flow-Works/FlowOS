@@ -9,7 +9,7 @@ import apps from './constants/apps.js';
 import { WindowManager, WindowInstance } from './wm.js';
 
 export default class FlowInstance {
-	version = 'v1.0.7-beta';
+	version = 'v1.0.8-beta';
 	wm = new WindowManager();
 
 	#init = false;
