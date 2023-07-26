@@ -196,7 +196,7 @@ body {
 	background: transparent;
 	border-radius: 10px;
 	outline: 2px solid transparent;
-	transition: outline 1s cubic-bezier(0, 0, 0, 1);
+	transition: width .3s, height .3s, left .3s, top .3s, outline 1s cubic-bezier(0, 0, 0, 1);
 }
 
 .winbox.focus {
@@ -209,12 +209,18 @@ body {
 
 .wb-header {
 	border-radius: 10px 10px 0 0;
+	transition: border-radius .3s;
+}
+
+.max .wb-header, .max .wb-body {
+	border-radius: 0;
 }
 
 .wb-body {
 	backdrop-filter: blur(20px);
 	border-radius: 0 0 10px 10px;
 	background: transparent;
+	transition: border-radius .3s;
 }
 
 .winbox iframe {
@@ -233,6 +239,7 @@ body {
 	padding: 10px;
 	flex-direction: row;
 	align-items: center;
+	z-index: 1000;
 }
 
 .taskbar-item {
@@ -240,6 +247,7 @@ body {
 	display: flex;
 	align-items: center;
 	flex: 1;
+	height: 30px;
 	padding: 10px;
 	background: var(--surface-bg);
 	transition: all .4s cubic-bezier(1, 0, 1, 0);
