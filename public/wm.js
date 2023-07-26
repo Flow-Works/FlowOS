@@ -34,6 +34,30 @@ export class WindowInstance {
 		this.instance = new WinBox(windowOptions);
 		windows.push(this.instance);
 
+		const taskbarItem = document.createElement('a');
+		const taskbarImg = document.createElement('img');
+		taskbarItem.classList.add('taskbar-item');
+		taskbarItem.classList.add('new-item');
+		taskbarImg.src = windowOptions.icon;
+		taskbarImg.height = '18';
+
+		taskbarItem.append(taskbarImg);
+		taskbarItem.innerHTML += this.instance.title;
+		document.querySelector('.taskbar').append(taskbarItem);
+
+		const _onclose = this.instance.onclose;
+		this.instance.onclose = (force) => {
+			taskbarItem.classList.add('remove-item');
+			if (_onclose) _onclose(force);
+			setTimeout(() => {
+				taskbarItem.remove();
+			}, 400);
+		};
+
+		taskbarItem.onclick = () => {
+			this.instance.focus();
+		};
+
 		return { instance: this.instance };
 	}
 

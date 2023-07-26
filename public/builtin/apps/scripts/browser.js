@@ -1,7 +1,6 @@
 /* eslint-env browser */
 
 import { config } from '../../../scripts/managers.js';
-import '/stomp/bootstrapper.js';
 
 const input = document.querySelector('input');
 
@@ -146,28 +145,24 @@ const handleTab = (tab, titleBtn, img) => {
 		injectJS(tab, url, false, () => {});
 	});
 			
-	if (proxyConfig.proxyName !== 'stomp') {
-		injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda', true, () => {
-			injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda-code', true, () => {
-				tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
-			});
-
-			tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code', 'sources'] });
-			tab.contentWindow.eruda._entryBtn.hide();
-
-			document.querySelector('.eruda').onclick = () => {
-				if (open == false) {
-				tab.contentWindow.eruda.show();
-				} else {
-				tab.contentWindow.eruda.hide();
-				}
-	
-				open = !open;
-			};
+	injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda', true, () => {
+		injectJS(tab, 'https://cdn.jsdelivr.net/npm/eruda-code', true, () => {
+			tab.contentWindow.eruda.add(tab.contentWindow.erudaCode);
 		});
-	} else {
-		document.querySelector('.eruda').style.display = 'none';
-	}
+
+		tab.contentWindow.eruda.init({ tool: ['console', 'elements', 'code', 'sources'] });
+		tab.contentWindow.eruda._entryBtn.hide();
+
+		document.querySelector('.eruda').onclick = () => {
+			if (open == false) {
+				tab.contentWindow.eruda.show();
+			} else {
+				tab.contentWindow.eruda.hide();
+			}
+	
+			open = !open;
+		};
+	});
 	
 	document.querySelector('.block').onclick = () => {
 		blockElement(tab);

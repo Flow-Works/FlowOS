@@ -48,18 +48,15 @@
 
 		<div class="bar"></div>
 
-		<div class="app-switcher">
+		<div class="spotlight">
 			<input class="searchbar" placeholder="Search apps..."/>
 			<ul class="apps"></ul>
 		</div>
-		<!--
-		<script src="https://cdn.jsdelivr.net/npm/winbox/dist/winbox.bundle.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/hotkeys-js/dist/hotkeys.min.js"></script>
-		<script src="/scripts/handler.js" defer></script>
-		<script src="/scripts/classes.js" defer></script>
-		<script src="/scripts/utils.js" defer></script>
-		<script src="/uv/uv.config.js" defer></script>
-		-->
+
+		<div class="taskbar">
+			<img src="/assets/logo.svg" height="25px" onclick="Flow.spotlight.toggle();">
+		</div>
+
 		<script>
 			;(function () {
     			var src = '//cdn.jsdelivr.net/npm/eruda';

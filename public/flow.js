@@ -9,7 +9,7 @@ import apps from './constants/apps.js';
 import { WindowManager, WindowInstance } from './wm.js';
 
 export default class FlowInstance {
-	version = 'v1.0.7-beta';
+	version = 'v1.0.8-beta';
 	wm = new WindowManager();
 
 	#init = false;
@@ -36,8 +36,6 @@ export default class FlowInstance {
 			if (user) {
 				this.apps.register();
 				this.hotkeys.register();
-				const spotlight = await import('./builtin/modules/spotlight.js');
-				await this.bar.add(spotlight.default);
 
 				for (let i = 0; i < config.settings.get('modules').urls.length; i++) {
 					const url = config.settings.get('modules').urls[i];
@@ -69,25 +67,23 @@ export default class FlowInstance {
 
 	spotlight = {
 		add: (app) => {
-			document.querySelector('.app-switcher .apps').append(app);
+			document.querySelector('.spotlight .apps').append(app);
 		},
 
 		toggle: async () => {
 			switch (this.spotlight.state) {
 				case true:
-					document.querySelector('.app-switcher').style.opacity = 1;
-					this.bar.items.spotlight.setText('🔎');
-					document.querySelector('.app-switcher').style.opacity = 0;
+					document.querySelector('.spotlight').style.opacity = 1;
+					document.querySelector('.spotlight').style.opacity = 0;
 					await sleep(200);
-					document.querySelector('.app-switcher').style.display = 'none';
+					document.querySelector('.spotlight').style.display = 'none';
 					this.spotlight.state = false;
 					break;
 				case false:
-					this.bar.items.spotlight.setText('❌');
-					document.querySelector('.app-switcher').style.opacity = 0;
-					document.querySelector('.app-switcher').style.display = 'flex';
+					document.querySelector('.spotlight').style.opacity = 0;
+					document.querySelector('.spotlight').style.display = 'flex';
 					await sleep(200);
-					document.querySelector('.app-switcher').style.opacity = 1;
+					document.querySelector('.spotlight').style.opacity = 1;
 					this.spotlight.state = true;
 					break;
 			}
