@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import 'dotenv/config';
 
 const configuration = new Configuration({
-  apiKey: process.env.API_KEY,
+  apiKey: require('../API_KEY.json').apiKey,
   basePath: 'https://chimeragpt.adventblocks.cc/v1'
 });
 

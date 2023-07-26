@@ -65,13 +65,17 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/Flow-Works/FlowOS
    ```
-2. Install packages
+2. cd into the project
+   ```sh
+   cd ./FlowOS
+   ```
+3. Install packages
    ```sh
    yarn install
    ```
-3. Get ChimeraGPT key: https://discord.gg/chimeragpt
-4. Add `API_KEY` to .env
-5. Run
+4. Get ChimeraGPT key: https://discord.gg/chimeragpt
+5. Change `"" to "yourapikey"` in API_KEY.json
+6. Run
    ```sh
    yarn start
    ```
