@@ -1,30 +1,14 @@
-const key = btoa(navigator.userAgent + navigator.language);
+/* eslint-env browser */
 
 const plain = {
-    encode: (str) => {
-        if (!str) return str;
-        let xorResult = '';
-        for(let i = 0; i < str.length; i++) {
-            xorResult += String.fromCharCode(str.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
-        let base64Result = btoa(xorResult);
-        return base64Result;
-    },
-    decode: (str) => {
-        if (!str) return str;
-        let base64Decoded;
-        try {
-            base64Decoded = atob(str);
-        } catch (e) {
-            console.error('Failed to decode base64 string');
-            return str; // or handle the error as you see fit
-        }
-        let result = '';
-        for(let i = 0; i < base64Decoded.length; i++) {
-            result += String.fromCharCode(base64Decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
-        return result;
-    },
+	encode: (str) => {
+		if (!str) return str;
+		return encodeURIComponent(str);
+	},
+	decode: (str) => {
+		if (!str) return str;
+		return decodeURIComponent(str);
+	},
 };
 
 self.__uv$config = {
