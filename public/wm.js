@@ -2,8 +2,6 @@
 /* global WinBox */
 
 import 'https://cdn.jsdelivr.net/npm/winbox@0.2.82';
-
-import { sleep } from './scripts/utilities.js';
 import apps from './constants/apps.js';
 
 export const windows = [];
