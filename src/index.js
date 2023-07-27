@@ -89,5 +89,5 @@ process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
 app.ready(() => {
-	server.listen({ port });
+	server.listen(port, '127.0.0.1');
 });
