@@ -15,11 +15,18 @@ export default class FlowInstance {
 	#init = false;
 	#setup = false;
 
+	/**
+	 * Creates a FlowOS instance
+	 */
 	constructor() {
 		registerSW();
 		this.setVersion();
 	}
 
+	/**
+	 * Sets the git commit values
+	 * @returns {void}
+	 */
 	setVersion = async () => {
 		const res = await fetch('/ver');
 		const data = await res.json();
@@ -28,6 +35,10 @@ export default class FlowInstance {
 		this.url = data.url;
 	};
 
+	/**
+	 * Boots up the FlowOS runtime
+	 * @returns {void}
+	 */
 	boot = async () => {
 		document.querySelector('.boot').style.opacity = 0;
 		setTimeout(() => {
@@ -74,10 +85,17 @@ export default class FlowInstance {
 	};
 
 	spotlight = {
-		add: (app) => {
-			document.querySelector('.spotlight .apps').append(app);
-		},
+		/**
+		 * Adds an application to the spotlight
+		 * @param {string} app
+		 * @returns {undefined}
+		 */
+		add: (app) => document.querySelector('.spotlight .apps').append(app),
 
+		/**
+		 * Toggles the spotlight's visibility
+		 * @returns {boolean}
+		 */
 		toggle: async () => {
 			switch (this.spotlight.state) {
 				case true:
@@ -95,6 +113,8 @@ export default class FlowInstance {
 					this.spotlight.state = true;
 					break;
 			}
+
+			return this.spotlight.state;
 		},
 
 		state: false,
@@ -103,13 +123,17 @@ export default class FlowInstance {
 	settings = {
 		items: {},
 
+		/**
+		 * Adds a settings category to the settings list
+		 * @param {SettingsCategory} ITEM
+		 * @returns {void}
+		 */
 		add: (ITEM) => {
 			self.logger.debug(JSON.stringify(ITEM));
 			if (!config.settings.get(ITEM.SETTING_ID)) {
 				const obj = {};
 				ITEM.inputs.forEach(({ type, SETTING_INPUT_ID, defaultValue }) => {
-					obj[SETTING_INPUT_ID] =
-						type == 'textarea' ? defaultValue.split('\n') : defaultValue;
+					obj[SETTING_INPUT_ID] = type == 'textarea' ? defaultValue.split('\n') : defaultValue;
 				});
 				config.settings.set(ITEM.SETTING_ID, obj);
 			}
@@ -120,6 +144,11 @@ export default class FlowInstance {
 	bar = {
 		items: {},
 
+		/**
+		 * Adds a bar item to the topbar
+		 * @param {BarItem} ITEM
+		 * @returns {void}
+		 */
 		add: (ITEM) => {
 			this.bar.items[ITEM.MODULE_ID] = ITEM;
 			document
@@ -129,6 +158,10 @@ export default class FlowInstance {
 	};
 
 	hotkeys = {
+		/**
+		 * Registers Hotkeys
+		 * @returns {void}
+		 */
 		register: () => {
 			hotkeys('alt+space, ctrl+space', (e) => {
 				e.preventDefault();
@@ -148,6 +181,10 @@ export default class FlowInstance {
 	};
 
 	apps = {
+		/**
+		 * Registers applications
+		 * @returns {void}
+		 */
 		register: () => {
 			for (const [APP_ID, value] of Object.entries(apps())) {
 				const appListItem = document.createElement('li');
