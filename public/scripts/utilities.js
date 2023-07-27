@@ -71,3 +71,9 @@ export const useCustomCSS = () => {
 	document.head.append(style);
 	return true;
 };
+
+export const removeObjectWithId = (arr, id) => {
+	arr.splice(arr.findIndex((i) => {
+		return i.id === id;
+	}), 1);
+};

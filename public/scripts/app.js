@@ -11,6 +11,11 @@ window.addEventListener('error', (e) => {
 	console.error(`${e.filename} at line ${e.lineno}: ${e.message}`);
 });
 
+/**
+ * Loads JS into the page
+ * @param {string} FILE_URL
+ * @param {function} callback
+ */
 window.loadJS = (FILE_URL, callback) => {
 	const script = document.createElement('script');
 	script.src = FILE_URL;
@@ -25,6 +30,11 @@ window.loadJS = (FILE_URL, callback) => {
 	});
 };
 
+/**
+ * Loads CSS into the page
+ * @param {string} FILE_URL
+ * @returns {void}
+ */
 window.loadCSS = (FILE_URL) => {
 	const styleEle = document.createElement('link');
 
