@@ -128,7 +128,8 @@ const setActiveTab = (tab) => {
 
 const handleTab = (tab, titleBtn, img) => {
 	let open = false;
-	const unurl = tab.src.split('/').pop();
+	console.log(tab);
+	const unurl = new URL(tab.contentWindow.location).pathname.replace(/\/uv\/service\//g, '');
 	let url = proxyConfig.decodeUrl(unurl);
 
 	if (tab.contentWindow.location.pathname.startsWith('/builtin/browser')) {
