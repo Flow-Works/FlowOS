@@ -3,6 +3,7 @@
 
 import 'https://cdn.jsdelivr.net/npm/winbox@0.2.82';
 import apps from './constants/apps.js';
+import FlowSDK from './sdk/index.js';
 
 export const windows = [];
 
@@ -44,6 +45,10 @@ export class WindowInstance {
 		taskbarItem.append(taskbarImg);
 		taskbarItem.innerHTML += this.instance.title;
 		document.querySelector('.taskbar').append(taskbarItem);
+
+		if (windowOptions.proxy == true) {
+			this.instance.window.querySelector('iframe').contentWindow.FlowSDK = new FlowSDK(this.instance);
+		}
 
 		const _onclose = this.instance.onclose;
 		this.instance.onclose = (force) => {
