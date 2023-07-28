@@ -6,7 +6,7 @@ import { _auth } from './scripts/firebase.js';
 import { registerSW, loadCSS, sleep } from './scripts/utilities.js';
 import { config } from './scripts/managers.js';
 import apps from './constants/apps.js';
-import { WindowManager, WindowInstance } from './wm.js';
+import { WindowManager, AppInstance } from './wm.js';
 
 export default class FlowInstance {
 	version; branch; url;
@@ -54,7 +54,7 @@ export default class FlowInstance {
 				this.init = true;
 				return;
 			}
-			new WindowInstance({
+			new AppInstance({
 				title: 'Setup Wizard',
 				class: [
 					'no-close',

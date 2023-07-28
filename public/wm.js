@@ -1,7 +1,6 @@
 /* eslint-env browser */
-/* global WinBox */
 
-import 'https://cdn.jsdelivr.net/npm/winbox@0.2.82';
+import WinBox from 'https://cdn.jsdelivr.net/npm/winbox@0.2.82/src/js/winbox.js';
 import apps from './constants/apps.js';
 import FlowSDK from './sdk/index.js';
 
@@ -13,7 +12,7 @@ export class WindowManager {
 	open = (APP_ID) => {
 		const app = apps()[APP_ID];
 		window.logger.debug(JSON.stringify(app));
-		new WindowInstance({
+		new AppInstance({
 			title: app.title,
 			icon: app.icon,
 			url: app.url,
@@ -23,32 +22,58 @@ export class WindowManager {
 			...app.config,
 		});
 	};
+
+	createPopup = (type, title, content, callback = () => {}) => {
+		const popup = new WinBox({
+			title,
+			class: ['no-min', 'no-max', 'no-full'],
+			html: `
+				<div style="display: flex;align-items: center;justify-content: center;height: 100%;">
+					<div style="display: flex;gap: 10px;padding: 10px;">
+						<img src="/assets/icons/${type}.svg" width="50px" style="position: sticky;top: 0;align-self: flex-start;">
+						<p style="margin: 0;max-width: 230px;">${content}<br/></p>
+					</div>
+				</div>
+			`,
+			x: 'center',
+			y: 'center',
+			height: '200px',
+			width: '350px'
+		});
+
+		const button = document.createElement('button');
+		button.innerText = 'Ok';
+		button.classList.add('btn');
+		button.onclick = () => {
+			popup.hide(true);
+			callback();
+		};
+		popup.body.querySelector('div > div > p').append(button);
+	};
 }
 
-export class WindowInstance {
-	constructor(windowOptions) {
-		windowOptions.icon = windowOptions.icon
-			? windowOptions.icon
-			: '/assets/icons/application.svg';
-		windowOptions.proxy = windowOptions.proxy || false;
-		windowOptions.url = this.#useProxy(windowOptions.proxy, windowOptions.url);
-		this.instance = new WinBox(windowOptions);
-		windows.push(this.instance);
+class WindowInstance {
+	constructor(options) {
+		this.options = options;
+		console.log(this.options);
+	}
 
+	createWindow = () => {
+		this.instance = new WinBox(this.options);
+		this.#addToTaskbar();
+	};
+
+	#addToTaskbar = () => {
 		const taskbarItem = document.createElement('a');
 		const taskbarImg = document.createElement('img');
 		taskbarItem.classList.add('taskbar-item');
 		taskbarItem.classList.add('new-item');
-		taskbarImg.src = windowOptions.icon;
+		taskbarImg.src = this.options.icon;
 		taskbarImg.height = '18';
 
 		taskbarItem.append(taskbarImg);
-		taskbarItem.innerHTML += this.instance.title;
+		taskbarItem.innerHTML += this.options.title;
 		document.querySelector('.taskbar').append(taskbarItem);
-
-		if (windowOptions.proxy == true) {
-			this.instance.window.querySelector('iframe').contentWindow.FlowSDK = new FlowSDK(this.instance);
-		}
 
 		const _onclose = this.instance.onclose;
 		this.instance.onclose = (force) => {
@@ -62,8 +87,26 @@ export class WindowInstance {
 		taskbarItem.onclick = () => {
 			this.instance.focus();
 		};
+	};
+}
 
-		return { instance: this.instance };
+export class AppInstance extends WindowInstance {
+	constructor(appOptions) {
+		super(appOptions);
+		this.options.icon = appOptions.icon
+			? appOptions.icon
+			: '/assets/icons/application.svg';
+		this.options.proxy = appOptions.proxy || false;
+		this.options.url = this.#useProxy(this.options.proxy, this.options.url);
+		windows.push(this.instance);
+
+		this.createWindow();
+
+		if (this.options.proxy == true) {
+			this.instance.window.querySelector('iframe').contentWindow.FlowSDK = new FlowSDK(this.instance, this.options.url);
+		}
+
+		return this.instance;
 	}
 
 	#useProxy = (proxy, url) => {
@@ -71,4 +114,38 @@ export class WindowInstance {
 			return self.currentProxy.prefix + self.currentProxy.encodeUrl(url);
 		return url;
 	};
+}
+
+export class PopupInstance extends WindowInstance {
+	constructor(type, title, content, callback = () => {}) {
+		super({
+			title,
+			class: ['no-min', 'no-max', 'no-full'],
+			html: `
+				<div style="display: flex;align-items: center;justify-content: center;height: 100%;">
+					<div style="display: flex;gap: 10px;padding: 10px;">
+						<img src="/assets/icons/${type}.svg" width="50px" style="position: sticky;top: 0;align-self: flex-start;">
+						<p style="margin: 0;max-width: 230px;">${content}<br/></p>
+					</div>
+				</div>
+			`,
+			x: 'center',
+			y: 'center',
+			height: '200px',
+			width: '350px'
+		});
+
+		const button = document.createElement('button');
+		button.innerText = 'Ok';
+		button.classList.add('btn');
+		button.onclick = () => {
+			this.instance.hide(true);
+			callback();
+		};
+		this.instance.body.querySelector('div > div > p').append(button);
+
+		this.createWindow();
+
+		return this.instance;
+	}
 }

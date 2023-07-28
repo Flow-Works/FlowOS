@@ -1,5 +1,6 @@
 /* eslint-env browser */
-/* global WinBox */
+
+import WinBox from 'https://cdn.jsdelivr.net/npm/winbox@0.2.82/src/js/winbox.js';
 
 window.onerror = (e) => {
     new WinBox({
