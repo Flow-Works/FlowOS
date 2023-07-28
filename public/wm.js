@@ -9,6 +9,11 @@ export const windows = [];
 export class WindowManager {
 	constructor() {}
 
+	/**
+	 * Opens an application
+	 * @param {string} APP_ID
+	 * @returns {void}
+	 */
 	open = (APP_ID) => {
 		const app = apps()[APP_ID];
 		window.logger.debug(JSON.stringify(app));
@@ -109,6 +114,12 @@ export class AppInstance extends WindowInstance {
 		return this.instance;
 	}
 
+	/**
+	 * Decides whether to use proxy or not
+	 * @param {boolean} proxy
+	 * @param {string} url
+	 * @returns {string}
+	 */
 	#useProxy = (proxy, url) => {
 		if (proxy)
 			return self.currentProxy.prefix + self.currentProxy.encodeUrl(url);
