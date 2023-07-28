@@ -1,5 +1,9 @@
+@import url(https://cdn.jsdelivr.net/npm/winbox@0.2.82/dist/css/winbox.min.css);
+
 :root {
 	--boot-bg: black;
+	--blur: 30px;
+	--blur-bg: transparent;
 }
 
 *, *:before, *:after {
@@ -47,8 +51,8 @@ body {
 	height: calc(100vh - 60px);
 	overflow: hidden;
 	padding: 20px;
-	background: transparent;
-	backdrop-filter: blur(20px);
+	background: var(--blur-bg);
+	backdrop-filter: blur(var(--blur));
 	outline: 2px solid var(--primary);
 
 	opacity: 0;
@@ -193,7 +197,7 @@ body {
 }
 
 .winbox {
-	background: transparent;
+	background: var(--blur-bg);
 	border-radius: 10px;
 	outline: 2px solid transparent;
 	transition: width .3s, height .3s, left .3s, top .3s, outline 1s cubic-bezier(0, 0, 0, 1);
@@ -208,7 +212,9 @@ body {
 }
 
 .wb-header {
+	backdrop-filter: blur(var(--blur));
 	border-radius: 10px 10px 0 0;
+	background: var(--blur-bg);
 	transition: border-radius .3s;
 }
 
@@ -217,14 +223,14 @@ body {
 }
 
 .wb-body {
-	backdrop-filter: blur(20px);
+	backdrop-filter: blur(var(--blur));
 	border-radius: 0 0 10px 10px;
-	background: transparent;
+	background: var(--blur-bg);
 	transition: border-radius .3s;
 }
 
 .winbox iframe {
-	background: transparent;
+	background: var(--blur-bg);
 }
 
 .taskbar {
@@ -233,13 +239,16 @@ body {
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	background: var(--window-bg);
+	background: var(--blur-bg);
+	backdrop-filter: blur(var(--blur));
+	width: 100%;
 	display: flex;
 	gap: 10px;
 	padding: 10px;
 	flex-direction: row;
 	align-items: center;
 	z-index: 1000;
+	border-radius: 0 10px 0 0;
 }
 
 .taskbar-item {
@@ -249,9 +258,10 @@ body {
 	flex: 1;
 	height: 30px;
 	padding: 10px;
-	background: var(--surface-bg);
+	background: rgba(0,0,0,0.1);
 	transition: all .4s cubic-bezier(1, 0, 1, 0);
 	gap: 10px;
+	z-index: 1001;
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
@@ -277,4 +287,16 @@ body {
 	to {
 	  flex: 1;
 	}
+}
+
+.btn {
+	padding: 5px;
+	border: none;
+	background: var(--surface-bg);
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+.btn:hover {
+	color: var(--primary);
 }

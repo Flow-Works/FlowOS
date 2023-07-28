@@ -1,7 +1,6 @@
 /* eslint-env browser */
-/* global WinBox */
 
-import 'https://cdn.jsdelivr.net/npm/winbox@0.2.82';
+import WinBox from 'https://cdn.jsdelivr.net/npm/winbox@0.2.82/src/js/winbox.js';
 
 export default class Logger {
 	constructor() {}
