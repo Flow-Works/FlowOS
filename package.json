@@ -11,7 +11,7 @@
 	"author": "Flow Works",
 	"type": "module",
 	"scripts": {
-		"start": "sudo apt install git-all && NODE_ENV=production node src/index.js",
+		"start": "apt install git-all && NODE_ENV=production node src/index.js",
 		"dev": "nodemon src/index.js",
 		"lint": "eslint --ext .js --ignore-path .gitignore .",
 		"commit": "cz"
