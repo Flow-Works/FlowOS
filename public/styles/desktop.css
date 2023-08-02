@@ -1,0 +1,229 @@
+@import url(https://cdn.jsdelivr.net/npm/winbox@0.2.82/dist/css/winbox.min.css);
+
+.searchbar {
+	padding: 5px 10px;
+	border: none;
+	background: var(--surface-bg);
+	border-radius: 5px;
+	width: calc(100% - 20px);
+	margin: 5px 0;
+	font-family: var(--font-family);
+}
+
+.winbox {
+	background: var(--blur-bg);
+	border-radius: 10px;
+	outline: 2px solid transparent;
+	transition: width .3s, height .3s, left .3s, top .3s, outline 1s cubic-bezier(0, 0, 0, 1);
+}
+
+.winbox.focus {
+	outline: 2px solid var(--primary)!important;
+}
+
+.winbox:has(> .wb-header:hover), .winbox:has(> .wb-body:hover) {
+	outline: 2px dashed var(--primary);
+}
+
+.wb-header {
+	backdrop-filter: blur(var(--blur));
+	border-radius: 10px 10px 0 0;
+	background: var(--blur-bg)!important;
+	transition: border-radius .3s;
+}
+
+.max .wb-header, .max .wb-body {
+	border-radius: 0;
+}
+
+.wb-body {
+	backdrop-filter: blur(var(--blur));
+	border-radius: 0 0 10px 10px;
+	background: var(--blur-bg);
+	transition: border-radius .3s;
+}
+
+.winbox iframe {
+	background: var(--blur-bg);
+}
+
+.taskbar {
+	height: 50px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: var(--blur-bg);
+	backdrop-filter: blur(var(--blur));
+	width: 100%;
+	display: flex;
+	gap: 10px;
+	padding: 10px;
+	flex-direction: row;
+	align-items: center;
+	z-index: 1000;
+	border-radius: 0 10px 0 0;
+}
+
+.taskbar-item {
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	height: 30px;
+	padding: 10px;
+	background: rgba(0,0,0,0.1);
+	transition: all .4s cubic-bezier(1, 0, 1, 0);
+	gap: 10px;
+	z-index: 1001;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.taskbar-item.new-item {
+	flex: .00001;
+	animation: flexGrow .4s ease forwards;
+}
+
+.taskbar-item.remove-item {
+	flex: 1;
+	animation: flexShrink .4s ease forwards;
+}
+
+@keyframes flexShrink {
+	to {
+	  flex: .01;
+	  flex: .00001;
+	}
+}
+  
+@keyframes flexGrow {
+	to {
+	  flex: 1;
+	}
+}
+
+.bar {
+	padding: 10px;
+	width: calc(100vw - 20px);
+	z-index: 500;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	gap: 5px;
+	opacity: 0.75;
+	flex-direction: row-reverse;
+	justify-content: center;
+	transition: opacity 0.2s;
+	user-select: none;
+	pointer-events: none;
+}
+
+.bar:hover {
+	opacity: 1;
+}
+
+.bar-item {
+	pointer-events: all;
+	padding: 5px;
+	background: var(--bar-bg);
+	display: inline-block;
+	border-radius: 5px;
+}
+
+.spotlight {
+	display: none;
+	position: absolute;
+	
+	flex-direction: column;
+	gap: 5px;
+	transition: opacity 0.2s;
+	top: 50%;
+	left: 50%;
+	z-index: 1000;
+	transform: translate(-50%, -50%);
+	background: var(--window-bg);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+	max-width: 600px;
+	width: calc(100vw - 60px);
+	max-height: 300px;
+	height: calc(100vh - 60px);
+	overflow: hidden;
+	padding: 20px;
+	background: var(--blur-bg);
+	backdrop-filter: blur(var(--blur));
+	outline: 2px solid var(--primary);
+
+	opacity: 0;
+	border-radius: 10px;
+}
+
+.spotlight input {
+	padding: 10px;
+	width: 100%;
+	border-radius: 10px;
+	background: var(--desktop-bg);
+	color: var(--text-color);
+}
+
+.spotlight ul {
+	display: grid;
+  	grid-template-columns: 1fr 1fr 1fr;
+	flex-grow: 1;
+	overflow: scroll;
+	padding-left: 0;
+	gap: 10px;
+	padding: 2px;
+}
+
+.spotlight li {
+	list-style: none;
+	display: flex;
+	min-width: 0;
+	gap: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	align-items: center;
+	transition: outline .5s;
+	outline: 2px solid transparent;
+}
+
+.spotlight li p {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin: 0;
+}
+
+.spotlight li:hover {
+	outline: 2px solid var(--primary);
+}
+
+.boot {
+	width: 100vw;
+	height: 100vh;
+	background: #181926;
+	background: var(--boot-bg);
+	overflow: hidden;
+	transition-delay: opacity 1s;
+	transition: opacity 3s, background 1s;
+	z-index: 10000;
+	position: relative;
+}
+
+.boot main {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+*, .wb-title {
+	color: var(--text-color);
+	font-family: var(--font-family);
+}
+
+.wb-header {
+	background: var(--window-bg);
+}
