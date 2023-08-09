@@ -60,6 +60,14 @@ app.register(fastifyStatic, {
 	}
 });
 app.register(fastifyStatic, {
+	root: publicPath + '/dynamic/',
+	prefix: '/dynamic/',
+	decorateReply: false,
+	setHeaders: (res) => {
+		res.setHeader('Service-Worker-Allowed', '/service/');
+	}
+});
+app.register(fastifyStatic, {
 	root: publicPath,
 	prefix: '/',
 	decorateReply: false,

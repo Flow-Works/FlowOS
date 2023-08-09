@@ -92,7 +92,7 @@ export class Tab {
  	 */
 	#handleTab = (iframe, titleBtn, img) => {
 		const open = false;
-		const url = proxyConfig.decodeUrl(new URL(iframe.contentWindow.location).pathname.replace(/\/uv\/service\//g, ''));
+		const url = proxyConfig.decodeUrl(new URL(iframe.contentWindow.location).pathname.replace(new RegExp(`${proxyConfig.prefix.replaceAll('/', '\\/')}`, 'g'), ''));
 	
 		if (iframe.contentWindow.location.pathname.startsWith('/builtin/browser')) {
 			input.value = 'flow://' + url.split('/').pop().split('.')[0];
