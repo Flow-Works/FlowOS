@@ -158,7 +158,7 @@ export default class FlowInstance {
 		 */
 		add: (ITEM) => {
 			this.bar.items[ITEM.MODULE_ID] = ITEM;
-			document.querySelector(`.bar .${ITEM.metadata.position ?? 'left'}`)
+			document.querySelector(`.statusbar .${ITEM.metadata.position ?? 'left'}`)
 				.append(this.bar.items[ITEM.MODULE_ID].element);
 		},
 	};

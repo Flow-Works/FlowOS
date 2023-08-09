@@ -114,7 +114,7 @@
 	}
 }
 
-.bar {
+.statusbar {
 	padding: 10px;
 	width: 100%;
 	z-index: 500;
@@ -129,32 +129,32 @@
 	pointer-events: none;
 }
 
-.bar .left {
+.statusbar .left {
 	display: flex;
 	flex: 1;
 	gap: 5px;
 	justify-content: left;
 }
 
-.bar .middle {
+.statusbar .middle {
 	display: flex;
 	flex: 1;
 	gap: 5px;
 	justify-content: center;
 }
 
-.bar .right {
+.statusbar .right {
 	display: flex;
 	flex: 1;
 	gap: 5px;
 	justify-content: right;
 }
 
-.bar:hover {
+.statusbar:hover {
 	opacity: 1;
 }
 
-.bar-item {
+.statusbar-item {
 	pointer-events: all;
 	padding: 5px;
 	background: var(--bar-bg);
@@ -308,7 +308,7 @@
 	color: var(--primary);
 }
 
-.bar-icons span {
+.statusbar-icons span {
 	position: relative;
 	font-family: 'Agave Nerd Font';
 	font-size: 15px;

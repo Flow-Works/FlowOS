@@ -64,13 +64,13 @@ export class BarItem {
 		this.metadata = metadata;
 
 		this.element = document.createElement('div');
-		this.element.classList.add('bar-item');
-		this.element.classList.add(`bar-${MODULE_ID}`);
+		this.element.classList.add('statusbar-item');
+		this.element.classList.add(`statusbar-${MODULE_ID}`);
 
 		this.textElement = document.createElement('div');
 
 		this.iconsElement = document.createElement('span');
-		this.iconsElement.classList.add('bar-icons');
+		this.iconsElement.classList.add('statusbar-icons');
 	}
 
 	setText(text) {
