@@ -7,7 +7,9 @@ import { registerSW, loadCSS, sleep } from './scripts/utilities.js';
 import { config } from './scripts/managers.js';
 import apps from './constants/apps.js';
 import { WindowManager, AppInstance } from './wm.js';
+import Logger from './scripts/logger.js';
 
+const logger = new Logger();
 export default class FlowInstance {
 	version; branch; url;
 	wm = new WindowManager();
@@ -58,8 +60,12 @@ export default class FlowInstance {
 				this.hotkeys.register();
 
 				for (const url of config.settings.get('modules').urls) {
-					const module = await import(url);
-					await this.bar.add(module.default);
+					if (url !== '') {
+						try {
+							const module = await import(url);
+							await this.bar.add(module.default);
+						} catch(e) { logger.error(e); }
+					};
 				}
 
 				this.init = true;
@@ -147,12 +153,12 @@ export default class FlowInstance {
 		/**
 		 * Adds a bar item to the topbar
 		 * @param {BarItem} ITEM
+		 * @param {string} position
 		 * @returns {void}
 		 */
 		add: (ITEM) => {
 			this.bar.items[ITEM.MODULE_ID] = ITEM;
-			document
-				.querySelector('.bar')
+			document.querySelector(`.bar .${ITEM.metadata.position ?? 'left'}`)
 				.append(this.bar.items[ITEM.MODULE_ID].element);
 		},
 	};
