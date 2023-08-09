@@ -217,6 +217,10 @@
 	border: none!important;
 }
 
+.wb-title {
+	font-family: var(--font-family)!important;
+}
+
 .wb-body {
 	backdrop-filter: blur(var(--blur));
 	border-radius: 0 0 10px 10px;
