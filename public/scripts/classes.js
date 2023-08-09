@@ -59,14 +59,32 @@ export class SettingsDropdown extends SettingsFormItem {
 }
 
 export class BarItem {
-	constructor(MODULE_ID) {
+	constructor(MODULE_ID, metadata) {
 		this.MODULE_ID = MODULE_ID;
+		this.metadata = metadata;
+
 		this.element = document.createElement('div');
 		this.element.classList.add('bar-item');
 		this.element.classList.add(`bar-${MODULE_ID}`);
+
+		this.textElement = document.createElement('div');
+
+		this.iconsElement = document.createElement('span');
+		this.iconsElement.classList.add('bar-icons');
 	}
 
 	setText(text) {
-		this.element.innerText = text;
+		this.textElement.innerText = text;
+		this.element.append(this.textElement);
+	}
+
+	setIcons(icons) {
+		this.iconsElement.innerHTML = '';
+		icons.forEach((icon) => {
+			const iconElement = document.createElement('span');
+			iconElement.innerText = icon;
+			this.iconsElement.append(iconElement);
+		});
+		this.element.append(this.iconsElement);
 	}
 }

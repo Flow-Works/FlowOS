@@ -47,15 +47,21 @@
 			</main>
 		</div>
 
-		<div class="bar"></div>
+		<div class="bar">
+			<div class="left"></div>
+			<div class="middle"></div>
+			<div class="right"></div>
+		</div>
 
 		<div class="spotlight">
 			<input class="searchbar" placeholder="Search apps..."/>
 			<ul class="apps"></ul>
 		</div>
 
+		<div class="container"></div>
+
 		<div class="taskbar">
-			<img src="/assets/logo.svg" height="25px" onclick="Flow.spotlight.toggle();">
+			<div onclick="Flow.spotlight.toggle();"><img src="/assets/logo.svg" height="25px"></div>
 		</div>
 
 		<script>

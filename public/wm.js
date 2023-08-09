@@ -65,7 +65,7 @@ class WindowInstance {
 	}
 
 	createWindow = () => {
-		this.instance = new WinBox(this.options);
+		this.instance = new WinBox({ ...this.options, root: document.querySelector('.container') });
 		this.#addToTaskbar();
 	};
 
@@ -87,11 +87,33 @@ class WindowInstance {
 			if (_onclose) _onclose(force);
 			setTimeout(() => {
 				taskbarItem.remove();
-			}, 400);
+			}, 700);
 		};
 
+		taskbarItem.classList.add('focus');
+
+		this.instance.onfocus = () => {
+			taskbarItem.classList.add('focus');
+		};
+
+		this.instance.onblur = () => {
+			taskbarItem.classList.remove('focus');
+		};
+
+		let open = true;
+		this.instance.minimize(false);
+		this.instance.focus();
+
 		taskbarItem.onclick = () => {
-			this.instance.focus();
+			if (open == true) {
+				this.instance.minimize(true);
+				this.instance.blur();
+			} else {
+				this.instance.minimize(false);
+				this.instance.focus();
+			}
+
+			open = !open;
 		};
 	};
 }

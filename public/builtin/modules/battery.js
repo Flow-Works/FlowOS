@@ -2,20 +2,38 @@
 
 import { BarItem } from '../../scripts/classes.js';
 
-const battery = new BarItem('battery');
+const battery = new BarItem('battery', { position: 'right' });
+
+const icons = {
+    10: '󰁺',
+    20: '󰁻',
+    30: '󰁼',
+    40: '󰁽',
+    50: '󰁾',
+    60: '󰁿',
+    70: '󰂀',
+    80: '󰂁',
+    90: '󰂂',
+    100: '󰁹',
+};
 
 if (navigator.getBattery) {
     navigator.getBattery().then((bt) => {
-        battery.setText(`${bt.charging ? '⚡' : '🔋'} ${Math.round(bt.level * 100)}%`);
+        battery.setIcons([bt.charging ? '󰂄' : icons[bt.level * 100]]);
+        battery.setText(`${Math.round(bt.level * 100)}%`);
 
         bt.addEventListener('levelchange', () => {
-            battery.setText(`${bt.charging ? '⚡' : '🔋'} ${Math.round(bt.level * 100)}%`);
+            battery.setIcons([bt.charging ? '󰂄' : icons[bt.level * 100]]);
+            battery.setText(`${Math.round(bt.level * 100)}%`);
         });
 
         bt.addEventListener('chargingchange', () => {
-            battery.setText(`${bt.charging ? '⚡' : '🔋'} ${Math.round(bt.level * 100)}%`);
+            battery.setIcons([bt.charging ? '󰂄' : icons[bt.level * 100]]);
+            battery.setText(`${Math.round(bt.level * 100)}%`);
         });
     });
+} else {
+    battery.setIcons(['󰂃']);
 }
 
 export default battery;

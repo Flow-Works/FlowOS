@@ -1,7 +1,5 @@
 /* eslint-env browser */
-
-import WinBox from 'https://cdn.jsdelivr.net/npm/winbox@0.2.82/src/js/winbox.js';
-
+/* global Flow */
 export default class Logger {
 	constructor() {}
 
@@ -21,14 +19,7 @@ export default class Logger {
 	error(msg) {
 		this.log('error', '#ed8796', msg);
 
-		new WinBox({
-			title: 'Error',
-			html: `<div class="err">${msg}<style>.err { padding: 5px; }</style></div>`,
-			x: 'center',
-			y: 'center',
-			width: '300px',
-			height: '200px'
-		});
+		Flow.wm.createPopup('info', 'Error', msg);
 	}
 
 	success(msg) {
