@@ -6,17 +6,20 @@ class FlowSDK {
     constructor(win, src) {
         const decodedUrl = window.currentProxy.decodeUrl(src.replace(/\/uv\/service\//g, ''));
         (async () => {
-            const manifest = await this.#getManifest(decodedUrl);
+            this.manifest = await this.#getManifest(decodedUrl);
             this.window = win;
-            if (manifest.permissions) this.#handlePermissions(manifest.permissions);
+            if (this.manifest.permissions) this.#handlePermissions(this.manifest.permissions);
         })();
     }
+
+    onmanifest;
 
     #getManifest = async (decodedUrl) => {
         const res = await fetch(new URL(decodedUrl).origin + '/flow.json');
         if (res.status === 200) {
-            const perms = await res.json();
-            return perms;
+            const manifest = await res.json();
+            this.onmanifest(manifest);
+            return manifest;
         } else {
             return {};
         }

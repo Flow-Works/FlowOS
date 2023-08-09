@@ -3,6 +3,7 @@
 import WinBox from 'https://cdn.jsdelivr.net/npm/winbox@0.2.82/src/js/winbox.js';
 import apps from './constants/apps.js';
 import FlowSDK from './sdk/index.js';
+import { config } from './scripts/managers.js';
 
 export const windows = [];
 
@@ -117,6 +118,22 @@ class WindowInstance {
 	};
 }
 
+/**
+ * Loads CSS into the page
+ * @param {string} FILE_URL
+ * @param {HTMLDocument} doc
+ * @returns {void}
+ */
+const loadCSS = (FILE_URL, doc) => {
+	const styleEle = document.createElement('link');
+
+	styleEle.setAttribute('rel', 'stylesheet');
+	styleEle.setAttribute('type', 'text/css');
+	styleEle.setAttribute('href', FILE_URL);
+
+	doc.head.appendChild(styleEle);
+};
+
 export class AppInstance extends WindowInstance {
 	constructor(appOptions) {
 		super(appOptions);
@@ -130,7 +147,19 @@ export class AppInstance extends WindowInstance {
 		this.createWindow();
 
 		if (this.options.proxy == true) {
-			this.instance.window.querySelector('iframe').contentWindow.FlowSDK = new FlowSDK(this.instance, this.options.url);
+			let iframe = this.instance.window.querySelector('iframe');
+			
+			iframe.onload = () => {
+				const sdk = new FlowSDK(this.instance, this.options.url);
+				iframe.contentWindow.FlowSDK = sdk;
+				sdk.onmanifest = (manifest) => {
+					if (manifest.uses.includes('theming')) loadCSS(config.settings.get('theme').url, iframe.contentDocument);
+					if (manifest.uses.includes('styling')) {
+						loadCSS('/styles/style.css', iframe.contentDocument);
+						loadCSS('/styles/window.css', iframe.contentDocument);
+					}
+				};
+			};
 		}
 
 		return this.instance;
