@@ -30,4 +30,11 @@ body {
 	background-size: cover;
 	overflow: hidden;
 	margin: 0;
+	height: 100%;
+}
+
+.container {
+	height: 100%;
+	overflow: hidden;
+	margin-top: calc(-100vh + 52px)!important;
 }

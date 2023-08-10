@@ -214,7 +214,7 @@
 .max {
 	width: 100%!important;
 	height: calc(100vh - 118px)!important;
-	border: none!important;
+	border: 2px solid var(--primary)!important;
 }
 
 .wb-title {
@@ -322,15 +322,12 @@
 }
 
 .container {
-	width: 100vw;
 	height: 100vh;
 	position: relative;
-	top: calc(-100vh + 50px);
-	height: 100vh;
-	margin: 0 12.5px;
-	width: calc(100% - 26px);
-	overflow-y: hidden;
+	top: -12.5px;
+	width: 100%;
 	padding: 2px;
+	border: 12.5px solid transparent;
 }
 
 .wb-full {
