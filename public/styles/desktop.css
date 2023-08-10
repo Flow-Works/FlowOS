@@ -114,7 +114,7 @@
 	}
 }
 
-.bar {
+.statusbar {
 	padding: 10px;
 	width: 100%;
 	z-index: 500;
@@ -129,32 +129,32 @@
 	pointer-events: none;
 }
 
-.bar .left {
+.statusbar .left {
 	display: flex;
 	flex: 1;
 	gap: 5px;
 	justify-content: left;
 }
 
-.bar .middle {
+.statusbar .middle {
 	display: flex;
 	flex: 1;
 	gap: 5px;
 	justify-content: center;
 }
 
-.bar .right {
+.statusbar .right {
 	display: flex;
 	flex: 1;
 	gap: 5px;
 	justify-content: right;
 }
 
-.bar:hover {
+.statusbar:hover {
 	opacity: 1;
 }
 
-.bar-item {
+.statusbar-item {
 	pointer-events: all;
 	padding: 5px;
 	background: var(--bar-bg);
@@ -217,6 +217,10 @@
 	border: none!important;
 }
 
+.wb-title {
+	font-family: var(--font-family)!important;
+}
+
 .wb-body {
 	backdrop-filter: blur(var(--blur));
 	border-radius: 0 0 10px 10px;
@@ -253,7 +257,7 @@
 	display: flex;
 	align-items: center;
 	flex: 1;
-	background: rgba(0,0,0,0.3);
+	background: rgba(0,0,0,0.2);
 	gap: 10px;
 	height: 100%;
 	z-index: 1001;
@@ -304,7 +308,7 @@
 	color: var(--primary);
 }
 
-.bar-icons span {
+.statusbar-icons span {
 	position: relative;
 	font-family: 'Agave Nerd Font';
 	font-size: 15px;

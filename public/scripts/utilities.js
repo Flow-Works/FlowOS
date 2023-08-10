@@ -9,9 +9,15 @@ const logger = new Logger();
 
 export const registerSW = async () => {
 	if ('serviceWorker' in navigator) {
-		await navigator.serviceWorker.register('/uv/sw.js', {
-			scope: __uv$config.prefix,
-		}).catch(() => window.logger.error('Failed to register serviceWorker.'));
+		if (config.settings.get('search').proxy === 'Ultraviolet') {
+			await navigator.serviceWorker.register('/uv/sw.js', {
+				scope: __uv$config.prefix,
+			}).catch(() => window.logger.error('Failed to register UV serviceWorker.'));
+		} else if (config.settings.get('search').proxy === 'Dynamic') {
+			await navigator.serviceWorker.register('/dynamic/sw.js', {
+				scope: __dyn$config.prefix,
+			}).catch(() => window.logger.error('Failed to register Dynamic serviceWorker.'));
+		}
 		return true;
 	}
 };
@@ -46,7 +52,7 @@ export const registerSettings = () => {
 	new SettingsCategory('search', 'Browser', [
 		new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
 		new SettingsTextarea('urls', 'Extension URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', ''),
-		new SettingsDropdown('proxy', 'Proxy', 'Ultraviolet', ['Ultraviolet'])
+		new SettingsDropdown('proxy', 'Proxy', 'Ultraviolet', ['Ultraviolet', 'Dynamic'])
 	]);
 
 	new SettingsCategory('theme', 'Theme', [

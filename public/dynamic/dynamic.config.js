@@ -1,5 +1,34 @@
 /* eslint-env browser */
 
+self.__dynamic$config = {
+  prefix: '/service/',
+  encoding: 'xor',
+  mode: 'production', // development: zero caching, no minification, production: speed-oriented
+  logLevel: 0, // 0: none, 1: errors, 2: errors + warnings, 3: errors + warnings + info
+  bare: {
+    version: 2, // v3 is bad
+    path: '/bare/',
+  },
+  tab: {
+    title: 'Service',
+    icon: null,
+    ua: null,
+  },
+  assets: {
+    prefix: '/dynamic/',
+    files: {
+      handler: 'dynamic.handler.js',
+      client: 'dynamic.client.js',
+      worker: 'dynamic.worker.js',
+      config: 'dynamic.config.js',
+      inject: null,
+    }
+  },
+  block: [
+  
+  ]
+};
+
 self.xor = {
 	randomMax: 100,
     randomMin: -100,
@@ -31,15 +60,10 @@ self.xor = {
 	},
 };
 
-self.__uv$config = {
-	proxyName: 'uv',
-	prefix: '/uv/service/',
-	bare: '/bare/',
+self.__dyn$config = {
+	proxyName: 'dyn',
+	prefix: self.__dynamic$config.prefix,
 	encodeUrl: xor.encode,
 	decodeUrl: xor.decode,
-	handler: '/uv/uv.handler.js',
-	client: '/uv/uv.client.js',
-	bundle: '/uv/uv.bundle.js',
-	config: '/uv/uv.config.js',
-	sw: '/uv/uv.sw.js',
 };
+
