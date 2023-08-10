@@ -8,9 +8,10 @@ const apps = () => {
         'settings': new AppData('settings', 'Settings', '/builtin/apps/settings.html', '/assets/icons/settings.svg', false),
         'browser': new AppData('browser', 'Browser', '/builtin/apps/browser/index.html', '/assets/icons/browser.svg', false),
         'emulator': new AppData('emulator', 'Emulator', '/builtin/apps/emulator/index.html', '/assets/icons/gameboy.svg', false),
-        'app-store': new AppData('app-store', 'App Store', '/builtin/apps/apps.html', '/assets/icons/applications-apps.svg', false),
+        'marketplace': new AppData('marketplace', 'Marketplace', '/builtin/apps/apps.html', '/assets/icons/deepin-launcher.svg', false),
         'app-wizard': new AppData('app-wizard', 'Custom Application Wizard', '/builtin/apps/app-wizard.html', '/assets/icons/appeditor.svg', false),
         'flowgpt': new AppData('flowgpt', 'FlowGPT', '/builtin/apps/flowgpt.html', '/assets/icons/chat.svg', false),
+        'media': new AppData('media', 'Media Center', '/builtin/apps/media.html', '/assets/icons/playmyvideos.svg', false),
         ...config.apps.get(),
         ...config.customApps.get(),
     };
