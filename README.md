@@ -1,6 +1,6 @@
 <div align="center">
 	<a href="https://github.com/Flow-Works/FlowOS">
-		<img src="https://raw.githubusercontent.com/Flow-Works/FlowOS/main/FlowOS/public/assets/logo.svg" width="100px">
+		<img src="https://raw.githubusercontent.com/Flow-Works/FlowOS/main/public/assets/logo.svg" width="100px">
 	</a>
 	<h3 align="center">Flow OS</h3>
 	<p align="center">
