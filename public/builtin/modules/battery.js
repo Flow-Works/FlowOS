@@ -19,16 +19,16 @@ const icons = {
 
 if (navigator.getBattery) {
     navigator.getBattery().then((bt) => {
-        battery.setIcons([bt.charging ? '󰂄' : icons[bt.level * 100]]);
+        battery.setIcons([bt.charging ? '󰂄' : icons[Math.round(10*bt.level * 100)/10]]);
         battery.setText(`${Math.round(bt.level * 100)}%`);
 
         bt.addEventListener('levelchange', () => {
-            battery.setIcons([bt.charging ? '󰂄' : icons[bt.level * 100]]);
+            battery.setIcons([bt.charging ? '󰂄' : icons[Math.round(10*bt.level * 100)/10]]);
             battery.setText(`${Math.round(bt.level * 100)}%`);
         });
 
         bt.addEventListener('chargingchange', () => {
-            battery.setIcons([bt.charging ? '󰂄' : icons[bt.level * 100]]);
+            battery.setIcons([bt.charging ? '󰂄' : icons[Math.round(10*bt.level * 100)/10]]);
             battery.setText(`${Math.round(bt.level * 100)}%`);
         });
     });

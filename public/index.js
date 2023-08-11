@@ -1,5 +1,5 @@
 /* eslint-env browser */
-/* global __uv$config __dyn$config */
+/* global __uv$config __dyn$config, BrowserFS */
 
 import Logger from './scripts/logger.js';
 import { registerSettings, useCustomCSS, sleep } from './scripts/utilities.js';
@@ -47,4 +47,21 @@ searchBar.addEventListener('keyup', () => {
 	apps.forEach((item) => {
 		item.style.display = item.innerText.toLowerCase().includes(input) ? 'flex' : 'none';
 	});
+});
+
+BrowserFS.install(window);
+BrowserFS.configure({
+    fs: 'MountableFileSystem',
+  	options: {
+    	'/home': { fs: 'IndexedDB' }
+  	}
+}, (e) => {
+	if (e) self.logger.error(e);
+    
+  	let fs = require('fs');
+  	fs.writeFile('/home/test.txt', 'Cool, I can do this in the browser!', (err) => {
+		fs.readFile('/home/test.txt', (err, contents) => {
+	  		self.logger.debug(contents.toString());
+		});
+  	});
 });
