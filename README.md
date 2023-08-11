@@ -43,6 +43,7 @@ Here are some libraries used to create FlowOS.
 
 - [WinBox](https://github.com/nextapps-de/winbox)
 - [Ultraviolet](https://github.com/titaniumnetwork-dev/Ultraviolet)
+- - [Ultraviolet](https://github.com/NebulaServices/Dynamic)
 - [Eruda](https://github.com/liriliri/eruda)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
