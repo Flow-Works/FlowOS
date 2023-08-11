@@ -1,10 +1,14 @@
 /* eslint-env browser */
 /* global Terminal, FitAddon */
 
+import BrowserFS from 'https://cdn.jsdelivr.net/npm/browserfs@1.4.3/+esm';
 import 'https://cdn.jsdelivr.net/npm/xterm@5.2.1/lib/xterm.min.js';
 import 'https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js';
+import sh from 'https://cdn.jsdelivr.net/npm/shell-quote@1.8.1/+esm';
+import c from 'https://cdn.jsdelivr.net/npm/ansi-colors@4.1.3/+esm';
 
-import { config } from '../../../scripts/managers.js';
+import { _auth } from '../../../scripts/firebase.js';
+import * as auth from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
 
 let terminalContainer = document.getElementById('terminal');
 
@@ -21,54 +25,71 @@ term.open(terminalContainer);
 
 fitAddon.fit();
 
-let shellprompt = '\x1b[34m\x1b[0m\x1b[37;44m󰖟 thinl@thinliquid\x1b[0m\x1b[34;46m\x1b[0m\x1b[37;46m ~\x1b[0m\x1b[36m \x1b[0m';
+auth.onAuthStateChanged(_auth, (user) => {
+    if (user) {
+        let dir = { 
+            path: '/',
+            set: (str) => {
+                dir.path = str;
+            }
+        };
+
+        let username;
+        if (_auth.currentUser.displayName !== null) username = _auth.currentUser.displayName.toLowerCase().replaceAll(' ', '-');
+        else username = 'guest';
+        
+        const usr = { username };
+let promptMSG = () => `${c.blue('')}${c.bgBlue(` flow@${usr.username}`)}${c.bgCyan(c.blue('') + ` ${dir.path}`)}${c.cyan('')} `;
 
 term.prompt = () => {
-	term.write('\r\n' + shellprompt);
+	term.write('\r' + promptMSG());
 };
 
-term.writeln('Welcome to xterm.js');
-term.writeln(
-	'This is a local terminal emulation, without a real terminal in the back-end.'
-);
-term.writeln('Type some keys and commands to play around.');
+term.writeln('Welcome to FluSH!');
+term.writeln('');
 term.prompt();
 
 let current = '';
+// eslint-disable-next-line no-unused-vars
+let fs;
+
+BrowserFS.install(window);
+BrowserFS.configure({
+    fs: 'MountableFileSystem',
+  	options: {
+    	'/tmp': { fs: 'InMemory' },
+        '/home': { fs: 'LocalStorage', options: { storeName: 'home' } }
+  	}
+}, (e) => {
+	if (e) self.logger.error(e);
+    
+  	fs = require('fs');
+});
 
 term.onKey(({ key, domEvent: ev }) => {
 	let printable = !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
         && !ev.key.includes('Arrow');
 
 	if (ev.keyCode == 13) {
-        switch (current) {
-            case 'neofetch':
-                term.writeln('');
-                const text = [
-                    '7&#BBBBJ  G&:      7BBG#B~ 5#.~@J P#   \x1b[31mthinl\x1b[0m@\x1b[31mthinliquid\x1b[0m',
-                    '7@Y   .   B@^     :&#. ^@B ?@^JBP #G   ----------------',
-                    '7@B5555:  B@:     :@B  .&# ~@7P7B~@?   \x1b[32mOS\x1b[0m: FlowOS',
-                    `7@P^~~~.  B@:     :@B  .&# .&PB.GY@~   \x1b[32mHost\x1b[0m: ${navigator.userAgent}`,
-                    '7@Y       B@YJJJ?  G@Y75@Y  B@G Y@#.   \x1b[32mUptime\x1b[0m: 1 day, 18 hours, 12 mins',
-                    ':7^       ~77???!   ~?J7^   ^7^ :7!    \x1b[32mPackages\x1b[0m: 0',
-                    '   .^!7??7~:           :~7??7~^.       \x1b[32mShell\x1b[0m: bash 5.2.15',
-                    ' ^5#@@@@@@@&B?.     :Y#@@@@@@@@&P~     \x1b[32mDE\x1b[0m: FlowOS',
-                    '7@@@@#5YYG@@@@B.   ^&@@@&PYY5#@@@@J    \x1b[32mWM\x1b[0m: WinBox',
-                    `&@@@&:    J@@@@J   5@@@@!    :5PPP5    \x1b[32mWM Theme\x1b[0m: ${config.settings.get('theme').url}`,
-                    '@@@@B     !@@@@Y   J@@@@P^.',
-                    '@@@@B     !@@@@Y   .P@@@@@&#GPJ!:',
-                    '@@@@B     !@@@@Y     ~5#&@@@@@@@&5:',
-                    '@@@@B     !@@@@Y        :~!?YB@@@@B.',
-                    '@@@@B     !@@@@Y   ^~~~^      5@@@@7',
-                    'B@@@@?:..^G@@@@!   B@@@@?:..:~B@@@&^',
-                    ':P@@@@&&&@@@@&?    :G@@@@@&&&@@@@B!',
-                    '  ~YB&@@@&#G?:       ~YG#@@@@&B5!.'
-                ];
-                text.forEach(ln => term.writeln(ln));
-                break;
-        }
+        if (current.length == 0) return;
+        term.writeln('');
+        const args = sh.parse(current);
 
-        term.prompt();
+        // eslint-disable-next-line no-unused-vars
+        import('./terminal/' + args[0] + '.js').then((command) => {
+            const cmd = eval(`command.exec(fs, term, usr, dir, args)`);
+            if (cmd && !Array.isArray(cmd)) {
+                term.writeln(cmd);
+            } else if (Array.isArray(cmd)) {
+                cmd.forEach(ln => term.writeln(ln));
+            };
+            term.prompt();
+        }).catch((e) => {
+            console.error(e);
+            term.writeln(`${args[0]}: command not found`);
+            term.prompt();
+        });
+
         current = '';
 	} else if (ev.keyCode == 8) {
 		if (current.length > 0) {
@@ -79,6 +100,6 @@ term.onKey(({ key, domEvent: ev }) => {
         current += key;
 		term.write(key);
 	}
-
-    console.log(current);
+});
+    }
 });
