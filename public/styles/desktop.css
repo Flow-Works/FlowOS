@@ -236,20 +236,24 @@
 	height: 50px;
 	position: absolute;
 	bottom: 0;
-	left: 0;
 	background: var(--blur-bg);
 	backdrop-filter: blur(var(--blur));
-	width: 100%;
+	width: calc(100% - 20px);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	z-index: 1000;
-	border-radius: 0 10px 0 0;
+	border-radius: 10px;
+	right: 0;
+	margin: 10px;
+	margin-bottom: 12.5px;
+	gap: 10px;
 }
 
 .taskbar > div {
 	aspect-ratio: 1 / 1;
 	padding: 10px;
+	border-radius: 5px;
 	background: var(--primary);
 }
 
@@ -264,6 +268,7 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	border-radius: 5px;
 }
 
 .taskbar-item.focus {
