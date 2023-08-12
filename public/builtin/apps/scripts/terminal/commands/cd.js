@@ -4,20 +4,18 @@ export const metadata = {
 };
 
 export const exec = (fs, term, usr, dir, args) => {
-    if (fs.existsSync(args[1] || '/')) {
-        if (args[1]) {
-            if (!args[1].startsWith('/')) dir.set('/' + args[1]);
-            else dir.set(args[1] || '/');
-        } else {
-            dir.set(args[1] || '/');
-        }
-    } else if (fs.existsSync(dir.path + '/' + (args[1] || '/'))) {
-        if (args[1]) {
-            dir.set(dir.path + '/' + (args[1] || '/'));
-        } else {
-            dir.set(args[1] || '/');
-        }
-    } else {
-        return `-flush: cd: ${args[1] || '/'}: No such file or directory`;
-    }
+    let path;
+    if (!args[1]) {  path = '/'; };
+
+    if (path !== '/' && args[1].startsWith('/')) {
+        path = args[1];
+    } else if (path !== '/') {
+        if (fs.realpathSync(dir.path) == '/') { path = '/' + args[1]; }
+        else { path = fs.realpathSync(dir.path) + '/' + args[1]; }
+    };
+
+    fs.readdirSync(path);
+    dir.set(path);
+
+    return '';
 };

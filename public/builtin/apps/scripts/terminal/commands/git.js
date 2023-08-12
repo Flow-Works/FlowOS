@@ -9,17 +9,20 @@ export const metadata = {
 };
 
 export const exec = async (fs, term, usr, dir, args) => {
-    if (args[1] == 'clone') {
-        term.writeln(`Cloning into '${args[2].split(/(\\|\/)/g).pop()}'...`);
-        await git.clone({
-            fs,
-            http,
-            dir: dir.path + '/' + args[2].split(/(\\|\/)/g).pop(),
-            corsProxy: 'https://cors.isomorphic-git.org',
-            url: args[2],
-            singleBranch: true,
-            depth: 1
-        });
-        return 'Done!';
-    }
+    return new Promise(async (resolve) => {
+        if (args[1] == 'clone') {
+            term.writeln(`Cloning into '${args[2].split(/(\\|\/)/g).pop()}'...`);
+            await git.clone({
+                fs,
+                http,
+                dir: dir.path + '/' + args[2].split(/(\\|\/)/g).pop(),
+                corsProxy: 'https://cors.isomorphic-git.org',
+                url: args[2],
+                singleBranch: true,
+                depth: 1,
+                onMessage: (e) => term.writeln(e),
+            });
+            resolve('');
+        }
+    });
 };
