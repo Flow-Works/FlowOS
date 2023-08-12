@@ -13,6 +13,7 @@ body, html {
 	height: 100%;
 	background: var(--surface-bg);
 	height: 30px;
+	cursor: pointer;
 }
 
 .topnav a {
@@ -107,6 +108,7 @@ body > div > input {
 	column-gap: 10px;
 	padding: 0.8rem 1rem;
 	text-decoration: none;
+	cursor: pointer;
   }
   
   .dropdown a:hover {

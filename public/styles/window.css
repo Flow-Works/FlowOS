@@ -41,6 +41,7 @@ input::file-selector-button {
 	border-radius: 5px;
 	font-family: var(--font-family);
 	color: var(--text-color);
+	cursor: pointer;
 }
 
 textarea {
