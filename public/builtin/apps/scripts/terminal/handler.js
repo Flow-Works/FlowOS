@@ -7,7 +7,7 @@ import sh from 'https://cdn.jsdelivr.net/npm/shell-quote@1.8.1/+esm';
 export class CommandsAddon {
     _disposables = [];
 
-    promptMSG = () => `${c.blue('')}${c.bgBlue(` flow@${this.user.username}`)}${c.bgCyan(c.blue('') + ` ${this.dir.path}`)}${c.cyan('')} `;
+    promptMSG = async () => `${c.blue('')}${c.bgBlue(` flow@${this.user.username}`)}${c.bgCyan(c.blue('') + ` ${this.dir.path}`)}${c.cyan('')} `;
 
     constructor(options, usr, dir) {
         this.commandsMap = options.commands;
@@ -32,14 +32,15 @@ export class CommandsAddon {
 	        if (e) console.error(e);
     
   	        this.fs = require('fs');
+            this.promptMSG = async () => `${c.blue('')}${c.bgBlue(` flow@${this.user.username}`)}${c.bgCyan(c.blue('') + ` ${this.fs.realpathSync(this.dir.path)}`)}${c.cyan('')} `;
         });
     }
 
     activate(term) {
         this.terminal = term;
 
-        this.terminal.prompt = () => {
-            this.terminal.write('\r' + this.promptMSG());
+        this.terminal.prompt = async () => {
+            this.terminal.write('\r' + await this.promptMSG());
         };
         
         this.terminal.writeln('Welcome to FluSH!');
@@ -72,10 +73,9 @@ export class CommandsAddon {
                 if (this.current.length == 0) return;
                 term.writeln('');
                 const args = sh.parse(this.current);
-        
-                // eslint-disable-next-line no-unused-vars
-                import('./commands/' + args[0] + '.js').then((command) => {
-                    const cmd = eval(`command.exec(this.fs, this.terminal, this.user, this.dir, args)`);
+
+                import('./commands/' + args[0] + '.js').then(async (command) => {
+                    const cmd = await command.exec(this.fs, this.terminal, this.user, this.dir, args);
                     if (cmd && !Array.isArray(cmd)) {
                         term.writeln(cmd);
                     } else if (Array.isArray(cmd)) {
@@ -83,7 +83,8 @@ export class CommandsAddon {
                     };
                     term.prompt();
                 }).catch((e) => {
-                    term.writeln(c.red(e.name + ': ' + e.message));
+                    console.error(e);
+                    term.writeln(c.red(e.message));
                     term.prompt();
                 });
         
