@@ -22,7 +22,7 @@ export class CommandsAddon {
             fs: 'MountableFileSystem',
   	        options: {
     	        '/tmp': { fs: 'InMemory' },
-                '/home': { fs: 'LocalStorage', options: { storeName: 'home' } }
+                '/home': { fs: 'IndexedDB', options: { storeName: 'home' } }
   	        }
         }, async (e) => {
 	        if (e) console.error(e);
