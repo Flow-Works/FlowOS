@@ -65,6 +65,14 @@ export const exec = (fs, term, usr, dir, args) => {
         localStorage.setItem("custom-apps", "[]");
         return "Reseted LocalStorage";
     }
+    if(args[1]=="keys") {
+        var keys="";
+        for(var i in localStorage) {
+
+            keys+= ('"'+i + ' = ' + localStorage[i]+" "+'",');
+        }
+        return keys;
+    }
     return args[1];
 
 };
