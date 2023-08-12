@@ -7,7 +7,13 @@ import sh from 'https://cdn.jsdelivr.net/npm/shell-quote@1.8.1/+esm';
 export class CommandsAddon {
     _disposables = [];
 
-    promptMSG = async () => `${c.blue('')}${c.bgBlue(` flow@${this.user.username}`)}${c.bgCyan(c.blue('') + ` ${this.dir.path}`)}${c.cyan('')} `;
+    promptMSG = async () => {
+        if (await this.fs.readdirSync(this.dir.path).includes('.git')) {
+            return `${c.green('')}${c.bgGreen(` flow@${this.user.username}`)}${c.bgCyan(c.green('') + ` ${this.fs.realpathSync(this.dir.path)}`)}${c.bgBlue(c.cyan(' '))}${c.bgBlue(`󰓁 ${this.fs.readFileSync(this.dir.path + '/.git/HEAD').toString().replaceAll('\n', '').split('ref: refs/heads/')[1]}`)}${c.blue('')} `;
+        } else {
+            return `${c.green('')}${c.bgGreen(` flow@${this.user.username}`)}${c.bgCyan(c.green('') + ` ${this.fs.realpathSync(this.dir.path)}`)}${c.cyan('')} `;
+        }
+    };
 
     constructor(options, usr, dir) {
         this.commandsMap = options.commands;
@@ -18,6 +24,11 @@ export class CommandsAddon {
         this.current = '';
 
         BrowserFS.install(window);
+    }
+
+    activate(term) {
+        this.terminal = term;
+        
         BrowserFS.configure({
             fs: 'AsyncMirror',
             options: {
@@ -32,20 +43,15 @@ export class CommandsAddon {
 	        if (e) console.error(e);
     
   	        this.fs = require('fs');
-            this.promptMSG = async () => `${c.blue('')}${c.bgBlue(` flow@${this.user.username}`)}${c.bgCyan(c.blue('') + ` ${this.fs.realpathSync(this.dir.path)}`)}${c.cyan('')} `;
+            
+            this.terminal.prompt = async () => {
+                this.terminal.write('\r' + await this.promptMSG());
+            };
+            
+            this.terminal.writeln('Welcome to FluSH!');
+            this.terminal.writeln('');
+            this.terminal.prompt();
         });
-    }
-
-    activate(term) {
-        this.terminal = term;
-
-        this.terminal.prompt = async () => {
-            this.terminal.write('\r' + await this.promptMSG());
-        };
-        
-        this.terminal.writeln('Welcome to FluSH!');
-        this.terminal.writeln('');
-        this.terminal.prompt();
 
         this.terminal.attachCustomKeyEventHandler(async (key) => {
             if (key.code === 'KeyV' && key.ctrlKey && key.type === 'keydown') {
