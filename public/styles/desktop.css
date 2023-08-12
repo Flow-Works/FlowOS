@@ -55,6 +55,7 @@
 	align-items: center;
 	transition: outline .5s;
 	outline: 2px solid transparent;
+	cursor: pointer;
 }
 
 .spotlight li p {
@@ -255,6 +256,7 @@
 	padding: 10px;
 	border-radius: 5px;
 	background: var(--primary);
+	cursor: pointer;
 }
 
 .taskbar-item {
@@ -278,6 +280,7 @@
 .taskbar-item.new-item {
 	flex: 0;
 	animation: flexGrow .7s forwards cubic-bezier(0.29,1.55,0.45,1.09);
+	cursor: pointer;
 }
 
 .taskbar-item.remove-item {
