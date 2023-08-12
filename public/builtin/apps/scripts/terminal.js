@@ -25,7 +25,7 @@ const term = new Terminal({
 auth.onAuthStateChanged(_auth, (user) => {
     if (user) {
         let dir = { 
-            path: '/home',
+            path: '/',
             set: (str) => {
                 dir.path = str;
             }
