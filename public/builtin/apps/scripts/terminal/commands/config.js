@@ -6,6 +6,7 @@ export const metadata = {
 export const exec = (fs, term, usr, dir, args) => {
     var values=[];
     var secondArgPos = 0;
+    if(args.length==1) {return "Change Localstorage Keys"}
     if(args.length!=2) {
         if(!args[2].includes('"')) {
             values[0]=args[2];
