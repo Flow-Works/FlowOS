@@ -19,11 +19,15 @@ export class CommandsAddon {
 
         BrowserFS.install(window);
         BrowserFS.configure({
-            fs: 'MountableFileSystem',
-  	        options: {
-    	        '/tmp': { fs: 'InMemory' },
-                '/home': { fs: 'IndexedDB', options: { storeName: 'home' } }
-  	        }
+            fs: 'AsyncMirror',
+            options: {
+                sync: { fs: 'InMemory' },
+                async: { fs: 'IndexedDB',
+                    options: {
+                        storeName: 'root'
+                    }
+                }
+            }
         }, async (e) => {
 	        if (e) console.error(e);
     

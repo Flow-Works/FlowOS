@@ -4,6 +4,5 @@ export const metadata = {
 };
 
 export const exec = (fs, term, usr, dir) => {
-    console.log(fs.readdirSync(dir.path));
-    return JSON.stringify(fs.readdirSync(dir.path));
+    return fs.readdirSync(dir.path);
 };
