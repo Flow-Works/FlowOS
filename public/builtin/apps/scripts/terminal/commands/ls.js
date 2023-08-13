@@ -1,4 +1,5 @@
 import { table } from 'https://cdn.jsdelivr.net/npm/table@6.8.1/+esm';
+import c from 'https://cdn.jsdelivr.net/npm/ansi-colors@4.1.3/+esm';
 
 const modeToString = (mode) => {
 	if (mode.mode) mode = mode.mode; // handle fs.stat
@@ -32,7 +33,7 @@ export const exec = (fs, term, usr, dir, args) => {
         if (realPath == '/') { path = '/' + args[1]; }
         else { path = realPath + '/' + args[1]; }
     };
-    
+
 	const config = {
 		singleLine: true,
 		columns: [
@@ -51,7 +52,7 @@ export const exec = (fs, term, usr, dir, args) => {
     if (JSON.stringify(fs.readdirSync(path)) == '[]') return '';
 
 	fs.readdirSync(path).forEach((name) => {
-		const stat = fs.statSync(path + '/' + name);
+		const stat = fs.statSync(`${path}/${name}`);
 		const date = new Intl.DateTimeFormat('en-US', {
 			dateStyle: 'medium',
 			timeStyle: 'short',
@@ -59,14 +60,14 @@ export const exec = (fs, term, usr, dir, args) => {
 		})
 			.format(stat.mtime)
 			.replace(/\,/g, '')
-			.replace(new Date().getFullYear() + ' ', '');
+			.replace(`${new Date().getFullYear()} `, '');
 
 		if (stat.isFile()) {
             let icon;
 
             switch (name.split('.').pop()) {
                 default:
-                    icon = '󰈔  ';
+                    icon = name.startsWith('.') ? '󰘓  ' : '󰈔  ';
                     break;
                 case 'key':
                     icon = '󱆄  ';
@@ -110,6 +111,9 @@ export const exec = (fs, term, usr, dir, args) => {
                 case 'html':
                     icon = '󰌝  ';
                     break;
+                case 'lock':
+                    icon = '󰌾  ';
+                    break;
             }
 
 			data.push([
@@ -119,19 +123,21 @@ export const exec = (fs, term, usr, dir, args) => {
 				'user',
 				stat.size,
 				date,
-				icon + name,
+				name.startsWith('.') ? c.grey(icon + name) : icon + name,
 			]);
-		} else if (stat.isDirectory()) {
-			data.push([
-				modeToString(stat.mode),
-				stat.nlink,
-				usr.username,
-				'user',
-				stat.size,
-				date,
-				'  ' + name,
-			]);
+        return;
 		}
+    if (stat.isDirectory()) {
+    			data.push([
+        modeToString(stat.mode),
+        stat.nlink,
+        usr.username,
+        'user',
+        stat.size,
+        date,
+        name.startsWith('.') ? c.grey('󱞞  ' + name) : '󰉖  ' + name,
+    			]);
+    		}
 	});
 
 	return table(data, config).split('\n');

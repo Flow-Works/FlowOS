@@ -8,7 +8,6 @@ import WebLinksAddon from 'https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.
 import CanvasAddon from 'https://cdn.jsdelivr.net/npm/xterm-addon-canvas@0.4.0/+esm';
 import FontFaceObserver from 'https://cdn.jsdelivr.net/npm/fontfaceobserver@2.3.0/+esm';
 
-import { loadCSS } from '/scripts/utilities.js';
 import { config } from '/scripts/managers.js';
 
 import { CommandsAddon } from './terminal/handler.js';
@@ -30,61 +29,66 @@ window.loadCSS = (FILE_URL, callback) => {
 	document.head.appendChild(styleEle);
 
 	styleEle.addEventListener('load', () => {
-		if (typeof callback == 'function')
-			callback();
-
+		if (typeof callback == 'function') callback();
 	});
 };
 
 window.addEventListener('load', () => {
 	window.loadCSS(config.settings.get('theme').url, () => {
-        const term = new Terminal({
-            cursorBlink: true,
-            fontFamily: 'JetBrains Mono Nerd Font, monospace',
-            fontSize: '15',
-            lineHeight: '1.1',
-            letterSpacing: '1.4',
-            allowTransparency: true,
-            theme: {
-                background: getComputedStyle(document.querySelector(':root')).getPropertyValue('--desktop-bg'),
-                foreground: getComputedStyle(document.querySelector(':root')).getPropertyValue('--text-color'),
-            }
-        });
+		const term = new Terminal({
+			cursorBlink: true,
+			fontFamily: 'JetBrains Mono Nerd Font, monospace',
+			fontSize: '15',
+			lineHeight: '1.1',
+			letterSpacing: '1.4',
+			allowTransparency: true,
+			theme: {
+				background: getComputedStyle(
+					document.querySelector(':root')
+				).getPropertyValue('--desktop-bg'),
+				foreground: getComputedStyle(
+					document.querySelector(':root')
+				).getPropertyValue('--text-color'),
+			},
+		});
 
-        auth.onAuthStateChanged(_auth, (user) => {
-            if (user) {
-                let dir = {
-                    path: '/',
-                    set: (str) => {
-                        dir.path = str;
-                    },
-                };
-        
-                let username;
-                if (_auth.currentUser.displayName !== null)
-                    username = _auth.currentUser.displayName
-                        .toLowerCase()
-                        .replaceAll(' ', '-');
-                else username = 'guest';
-        
-                const usr = { username };
-        
-                const fitAddon = new FitAddon.FitAddon();
-        
-                term.loadAddon(fitAddon);
-                term.loadAddon(new WebLinksAddon.WebLinksAddon());
-                term.loadAddon(new CanvasAddon.CanvasAddon());
-                term.loadAddon(new CommandsAddon({ commands }, usr, dir));
-        
-                const font = new FontFaceObserver('JetBrains Mono Nerd Font');
-                font.load().then(() => {
-                    term.open(document.getElementById('terminal'));
-                }, () => {
-                    window.location.reload();
-                });
-        
-                fitAddon.fit();
-            }
-        });
-    });
+		auth.onAuthStateChanged(_auth, (user) => {
+			if (!user) {
+				return;
+			}
+			const dir = {
+				path: '/',
+				set: (str) => {
+					dir.path = str;
+				},
+			};
+
+			const username =
+				_auth.currentUser.displayName !== null
+					? _auth.currentUser.displayName.toLowerCase().replaceAll(' ', '-')
+					: 'guest';
+
+			const usr = { username };
+
+			const fitAddon = new FitAddon.FitAddon();
+
+			term.loadAddon(fitAddon);
+			term.loadAddon(new WebLinksAddon.WebLinksAddon());
+			term.loadAddon(new CanvasAddon.CanvasAddon());
+			term.loadAddon(new CommandsAddon({ commands }, usr, dir));
+
+			const font = new FontFaceObserver('JetBrains Mono Nerd Font');
+			font.load().then(
+				() => {
+					term.open(document.getElementById('terminal'));
+					fitAddon.fit();
+
+					window.onresize = (evt) => {
+                        fitAddon.fit();
+					};
+				},
+				() => {}
+			);
+		});
+	});
 });

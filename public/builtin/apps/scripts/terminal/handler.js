@@ -8,11 +8,7 @@ export class CommandsAddon {
     _disposables = [];
 
     promptMSG = async () => {
-        if (await this.fs.readdirSync(this.dir.path).includes('.git')) {
-            return `${c.green('')}${c.bgGreen(` flow@${this.user.username}`)}${c.bgCyan(c.green('') + ` ${this.fs.realpathSync(this.dir.path)}`)}${c.bgBlue(c.cyan(' '))}${c.bgBlue(`󰓁 ${this.fs.readFileSync(this.dir.path + '/.git/HEAD').toString().replaceAll('\n', '').split('ref: refs/heads/')[1]}`)}${c.blue('')} `;
-        } else {
-            return `${c.green('')}${c.bgGreen(` flow@${this.user.username}`)}${c.bgCyan(c.green('') + ` ${this.fs.realpathSync(this.dir.path)}`)}${c.cyan('')} `;
-        }
+        return await this.fs.readdirSync(this.dir.path).includes('.git') ? `${c.green('')}${c.bgGreen(` flow@${this.user.username}`)}${c.bgCyan(`${c.green('')} ${this.fs.realpathSync(this.dir.path)}`)}${c.bgBlue(c.cyan(' '))}${c.bgBlue(`󰓁 ${this.fs.readFileSync(`${this.dir.path}/.git/HEAD`).toString().replaceAll('\n', '').split('ref: refs/heads/')[1]}`)}${c.blue('')} ` : `${c.green('')}${c.bgGreen(` flow@${this.user.username}`)}${c.bgCyan(`${c.green('')} ${this.fs.realpathSync(this.dir.path)}`)}${c.cyan('')} `;
     };
 
     constructor(options, usr, dir) {
@@ -45,7 +41,7 @@ export class CommandsAddon {
   	        this.fs = require('fs');
             
             this.terminal.prompt = async () => {
-                this.terminal.write('\r' + await this.promptMSG());
+                this.terminal.write(`\r${await this.promptMSG()}`);
             };
             
             this.terminal.writeln('Welcome to FluSH!');
@@ -72,7 +68,7 @@ export class CommandsAddon {
         });
 
         this.terminal.onKey(({ key, domEvent: ev }) => {
-            let printable = !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
+            const printable = !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
                 && !ev.key.includes('Arrow');
         
             if (ev.keyCode == 13) {
@@ -80,7 +76,7 @@ export class CommandsAddon {
                 term.writeln('');
                 const args = sh.parse(this.current);
 
-                import('./commands/' + args[0] + '.js').then(async (command) => {
+                import(`./commands/${args[0]}.js`).then(async (command) => {
                     const cmd = await command.exec(this.fs, this.terminal, this.user, this.dir, args);
                     if (cmd && !Array.isArray(cmd)) {
                         term.writeln(cmd);
@@ -95,7 +91,9 @@ export class CommandsAddon {
                 });
         
                 this.current = '';
-            } else if (ev.keyCode == 8) {
+                return;
+            }
+            if (ev.keyCode == 8) {
                 if (this.current.length > 0) {
                     term.write('\b \b');
                     this.current = this.current.slice(0, -1);
