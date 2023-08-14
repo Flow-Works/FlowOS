@@ -114,6 +114,93 @@ export const exec = (fs, term, usr, dir, args) => {
                 case 'lock':
                     icon = '󰌾  ';
                     break;
+                case 'mp3':
+                case 'ogg':
+                case 'flac':
+                case 'wav':
+                    icon = '󰈣  ';
+                    break;
+                case 'mp4':
+                case 'mkv':
+                case 'webm':
+                case 'mov':
+                case 'avi':
+                    icon = '󰈫  ';
+                    break;
+                case 'jar':
+                    icon = '󰬷  ';
+                    break;
+                case 'exe':
+                    icon = '󰘔  ';
+                    break;
+                case 'swf':
+                case 'oops':
+                case 'srm':
+                    icon = '󰺵  ';
+                    break;
+                case 'zip':
+                    icon = '󰗄  ';
+                    break;
+                case 'gitignore':
+                    icon = '󰊢  ';
+                    break;
+                case 'cmd':
+                case 'bash':
+                case 'sh':
+                case 'ps1':
+                case 'bat':
+                case 'vbs':
+                case 'elf':
+                    icon = '󰲌  ';
+                    break;
+                case 'env':
+                case 'ini':
+                case 'cfg':
+                case 'conf':
+                    icon = '󱁻   ';
+                    break;
+                case 'iso':
+                case 'img':
+                    icon = '󰗮  ';
+                    break;
+                case 'doc':
+                case 'docx':
+                case 'dot':
+                case 'wbk':
+                case 'docm':
+                case 'dotx':
+                case 'dotm':
+                case 'docb':
+                    icon = '󰈬  ';
+                    break;
+                case 'ppt':
+                case 'pot':
+                case 'pps':
+                case 'ppa':
+                case 'ppam':
+                case 'pptm':
+                case 'pptx':
+                case 'potx':
+                case 'ppsx':
+                case 'ppsm':
+                case 'sldx':
+                case 'sldm':
+                case 'pa':
+                    icon = '󰈧  ';
+                    break;
+                case 'xls':
+                case 'xlt':
+                case 'xlm':
+                case 'xlsx':
+                case 'xlsm':
+                case 'xltx':
+                case 'xltm':
+                case 'xlsb':
+                case 'xla':
+                case 'xlam':
+                case 'xlw':
+                    icon = '󰈛  ';
+                    break;
             }
 
 			data.push([
