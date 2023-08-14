@@ -52,6 +52,12 @@ BrowserFS.configure(
 			}
 		};
 
+        document.body.onkeyup = (e) => {
+            if (e.code == 'Space') {
+                window.togglePlayback();
+            }
+        };
+
 		window.next = () => {
 			if (!document.querySelector('audio').src) return;
 			if (index !== songs.length - 1) window.playSong(songs[index + 1]);
@@ -107,7 +113,13 @@ BrowserFS.configure(
 			}
 		};
 
+        const sliderEl = document.querySelector('#seekbar');
+
 		document.querySelector('audio').ontimeupdate = () => {
+            const tempSliderValue = document.querySelector('#seekbar').value;
+            const progress = (tempSliderValue / sliderEl.max) * 100;
+            sliderEl.style.background = `linear-gradient(to right, var(--primary) ${progress}%, var(--window-bg) ${progress}%)`;
+
 			updateTrackTime(document.querySelector('audio'));
 			document.querySelector('#seekbar').value =
 				(document.querySelector('audio').currentTime /
@@ -115,7 +127,11 @@ BrowserFS.configure(
 				500;
 		};
 
-		document.querySelector('#seekbar').oninput = () => {
+		document.querySelector('#seekbar').oninput = (event) => {
+            const tempSliderValue = event.target.value;
+            const progress = (tempSliderValue / sliderEl.max) * 100;
+            sliderEl.style.background = `linear-gradient(to right, var(--primary) ${progress}%, var(--window-bg) ${progress}%)`;
+
 			if (!document.querySelector('audio').src) return;
 			document.querySelector('audio').currentTime =
 				(document.querySelector('#seekbar').value *
