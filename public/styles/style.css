@@ -38,3 +38,8 @@ body {
 	overflow: hidden;
 	margin-top: calc(-100vh + 52px)!important;
 }
+#exitBtn {
+	float:left;
+	position: absolute;
+  	bottom: 5px;
+}
