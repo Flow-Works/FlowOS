@@ -4,6 +4,6 @@ export const metadata = {
 };
 
 export const exec = (fs, term, usr, dir, args) => {
-    parent.window.location.href=window.location.origin();
+    parent.window.location.href=window.location.origin;
     return "Shutting Down..."
 };
