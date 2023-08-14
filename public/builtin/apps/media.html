@@ -8,14 +8,14 @@
 	</head>
 
 	<body>
-		<div class="media" style="display: flex;flex-direction: column;height: 100%;gap: 10px;">
-            <div>
+		<div class="media" style="display: flex;flex-direction: column;height: 100%;gap: 10px;min-width: 0;overflow:hidden;">
+            <div style="overflow: auto;height: 100%;">
                 <input type="file" id="song-input" accept=".mp3, .wav, .ogg, .flac">
 
-                <div class="songList"></div>
+                <div class="status" style="flex: 1;">Loading...</div>
+                <div class="songList" style="flex: 1;display: flex;flex-direction: column;"></div>
             </div>
-            <div style="flex: 1;"></div>
-            <span class="time"><span id="currentTime">00:00</span> / <span id="duration">00:00</span></span>
+            <span class="time" style="margin-top: 10px;"><span id="currentTime">00:00</span> / <span id="duration">00:00</span></span>
             <input type="range" id="seekbar" value="0" min="0" max="500" style="width:100%;margin-bottom: 10px;"></input>
             <div style="display: flex;gap: 10px;align-items: center;">
                 <img id="cover">
@@ -38,6 +38,9 @@
         <script type="module" src="./scripts/media.js" defer></script>
 
         <style>
+            html, body, .media {
+                height: 100%;
+            }
               #cover {
 	height: 3em;
   }
