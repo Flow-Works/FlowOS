@@ -28,10 +28,12 @@ BrowserFS.configure(
 		if (!fs.existsSync('media/music')) fs.mkdirSync('media/music');
 		if (!fs.existsSync('media/videos')) fs.mkdirSync('media/videos');
 
-		const songs = [];
+		let songs = [];
 		let index;
 
 		const checkFolder = async (fs, directoryPath) => {
+            songs = [];
+            index = undefined;
             document.querySelector(
                 '.songList'
             ).innerHTML = '';
@@ -65,6 +67,8 @@ BrowserFS.configure(
 			};
 
 			index = songs.findIndex((x) => x == filePath);
+
+            console.log(index, songs, filePath);
 
 			jsmediatags.read(song, {
 				onSuccess: (tag) => {
@@ -155,7 +159,7 @@ BrowserFS.configure(
 				await fs.writeFileSync(`/media/music/${event.target.files[0].name}`, new Buffer(await event.target.files[0].arrayBuffer()));
 
                 await checkFolder(fs, '/media/music');
-				window.playSong(event.target.files[0].name);
+				window.playSong('/' + event.target.files[0].name);
 			});
 	}
 );
