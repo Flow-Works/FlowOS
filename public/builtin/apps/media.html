@@ -8,9 +8,9 @@
 	</head>
 
 	<body>
-		<div class="media" style="display: flex;flex-direction: column;height: 100%;">
+		<div class="media" style="display: flex;flex-direction: column;height: 100%;gap: 10px;">
             <div>
-                <input type="file" id="song-input" accept=".mp3, .wav">
+                <input type="file" id="song-input" accept=".mp3, .wav, .ogg, .flac">
 
                 <div class="songList"></div>
             </div>
@@ -54,6 +54,51 @@
             .icon.e {
                 font-size: 30px;
             }
+
+            input[type="range"] {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none; 
+  /* creating a custom design */
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  /*  overflow: hidden;  remove this line*/
+  
+  /* New additions */
+  height: 6px;
+  background: var(--window-bg);
+  padding: 0px;
+}
+
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none; 
+  /* creating a custom design */
+  height: 15px;
+  width: 15px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: none;
+
+  /* box-shadow: -407px 0 0 400px #f50; emove this line */
+  transition: .2s ease-in-out;
+}
+
+/* Thumb: Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: none;
+  
+  /* box-shadow: -407px 0 0 400px #f50; emove this line */
+  transition: .2s ease-in-out;
+}
         </style>
 	</body>
 </html>
