@@ -24,6 +24,15 @@ const deleteFolderRecursive = (fs, directoryPath) => {
 export const exec = (fs, term, usr, dir, args) => {
 	const { options, values } = parser(args);
 
+	let path;
+    if (!values[0]) { return ''; };
+
+    if (path !== '/' && values[0].startsWith('/')) {
+        path = values[0];
+    } else if (path !== '/') {
+        path = fs.realpathSync(dir.path) == '/' ? `/${values[0]}` : `${fs.realpathSync(dir.path)}/${values[0]}`;
+    };
+
 	const cfg = {
 		verbose: false,
 		recursive: false,
@@ -33,7 +42,7 @@ export const exec = (fs, term, usr, dir, args) => {
 	if (options.includes('-r')) cfg.recursive = true;
 
 	if (cfg.recursive == true) {
-		try { fs.unlinkSync(values[0]); } catch (e) { deleteFolderRecursive(fs, values[0]); }
+		try { fs.unlinkSync(values[0]); } catch (e) { deleteFolderRecursive(fs, path); }
 	} else {
 		fs.unlinkSync(values[0]);
 	}

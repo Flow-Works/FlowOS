@@ -38,9 +38,10 @@ BrowserFS.configure(
 			if (fs.existsSync(directoryPath)) {
 				fs.readdirSync(directoryPath).forEach((file) => {
 					const curPath = `${directoryPath}/${file}`;
-					if (fs.statSync(curPath).isDirectory()) {
+					if (fs.statSync(curPath).isDirectory() && curPath !== '/media/music/.git') {
 						checkFolder(fs, curPath);
 					} else {
+                        if (curPath == '/media/music/.git') return;
 						songs.push(curPath.split('/media/music')[1]);
 						document.querySelector(
 							'.songList'
