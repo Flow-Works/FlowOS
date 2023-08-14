@@ -10,6 +10,10 @@ import { WindowManager, AppInstance } from './wm.js';
 import Logger from './scripts/logger.js';
 
 const logger = new Logger();
+
+if (location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+    location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
 export default class FlowInstance {
 	version; branch; url;
 	wm = new WindowManager();
