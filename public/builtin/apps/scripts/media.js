@@ -176,6 +176,14 @@ BrowserFS.configure(
 							],
 						});
 
+                        navigator.mediaSession.setActionHandler('play', () => {
+                            window.togglePlayback();
+                        });
+
+                        navigator.mediaSession.setActionHandler('pause', () => {
+                            window.togglePlayback();
+                        });
+
 						navigator.mediaSession.setActionHandler('nexttrack', () => {
 							window.next();
 						});
