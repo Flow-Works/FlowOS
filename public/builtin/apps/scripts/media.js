@@ -52,6 +52,12 @@ BrowserFS.configure(
 			}
 		};
 
+        document.body.onkeyup = (e) => {
+            if (e.code == 'Space') {
+                window.togglePlayback();
+            }
+        };
+
 		window.next = () => {
 			if (!document.querySelector('audio').src) return;
 			if (index !== songs.length - 1) window.playSong(songs[index + 1]);
