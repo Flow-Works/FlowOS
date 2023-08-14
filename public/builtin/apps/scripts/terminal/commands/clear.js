@@ -1,6 +1,6 @@
 export const metadata = {
-    cmd: 'echo',
-    description: 'Write arguments to the standard output.'
+    cmd: 'clear',
+    description: 'Clear the terminal'
 };
 
 export const exec = (fs, term) => {
