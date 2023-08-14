@@ -288,16 +288,16 @@ export const exec = async (fs, term, usr, dir, args) => {
                 ``,
                 `work on the current change`,
                 `   add       Add file contents to the index`,
-                `   rm        Remove files from the working tree and from the index`
+                `   rm        Remove files from the working tree and from the index`,
                 ``,
                 `examine the history and state`,
-                `   status    Show the working tree status`
+                `   status    Show the working tree status`,
                 ``,
                 `grow, mark and tweak your common history`,
                 `   commit    Record changes to the repository`,
                 ``,
                 `collaborate`,
-                `   fetch     Download objects and refs from another repository`
+                `   fetch     Download objects and refs from another repository`,
                 `   pull      Fetch from and integrate with another repository or a local branch`,
                 `   push      Update remote refs along with associated objects`
             ]);
