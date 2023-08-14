@@ -12,8 +12,6 @@ import fs from 'fs';
 import Module from 'node:module';
 const require = Module.createRequire(import.meta.url);
 
-import ai from './ai.js';
-
 const port = process.env.PORT || 3000;
 
 let server;
@@ -48,8 +46,6 @@ app.register(
 	fastifyCompress,
 	{ threshold: 1 }
 );
-
-app.register(ai, { prefix: '/ai/' });
 
 app.register(fastifyStatic, {
 	root: uvPath,

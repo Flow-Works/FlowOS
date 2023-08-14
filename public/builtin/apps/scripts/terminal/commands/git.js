@@ -2,6 +2,7 @@
 
 import git from 'https://cdn.jsdelivr.net/npm/isomorphic-git@1.24.5/+esm';
 import http from 'https://unpkg.com/isomorphic-git/http/web/index.js';
+import parser from '../parser.js';
 
 export const metadata = {
     cmd: 'git',
@@ -9,29 +10,13 @@ export const metadata = {
 };
 
 export const exec = async (fs, term, usr, dir, args) => {
-    const options = args.map(arg => {
-        if (arg.startsWith('--') && arg.includes('=') == false) return arg;
-        if (arg.startsWith('-') && arg.includes('=') == false) return arg;
-    }).filter((element) => element !== undefined);
-
-    const vars = {};
-    
-    args.forEach((arg) => {
-        if (arg.startsWith('--') && arg.includes('=')) { 
-            vars[arg.split('=')[0].replace('--', '')] = arg.split('=')[1];
-        };
-    });
-
-    args.shift();
-    const values = args.map(arg => {
-        if (!arg.startsWith('-')) return arg;
-    }).filter((element) => element !== undefined);
+    const { options, vars, values } = parser(args);
 
     console.log(options, values, vars);
 
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
         if (values[0] == 'clone') {
-            let cfg = {
+            const cfg = {
                 quiet: false,
                 depth: 1,
                 noCheckout: false,
@@ -45,7 +30,7 @@ export const exec = async (fs, term, usr, dir, args) => {
             if (options.includes('--single-branch')) cfg.singleBranch = true;
             if (options.includes('--no-single-branch')) cfg.singleBranch = false;
 
-            if (vars['depth']) cfg.depth = vars['depth'];
+            if (vars.depth) cfg.depth = vars.depth;
             if (vars['shallow-since']) cfg.since = new Date(vars['shallow-since']);
             if (vars['shallow-exclude']) cfg.exclude = vars['shallow-exclude'];
 
@@ -54,7 +39,7 @@ export const exec = async (fs, term, usr, dir, args) => {
             await git.clone({
                 fs,
                 http,
-                dir: values[2] ?? dir.path + '/' + values[1].split(/(\\|\/)/g).pop(),
+                dir: values[2] ?? `${dir.path}/${values[1].split(/(\\|\/)/g).pop()}`,
                 corsProxy: 'https://cors.isomorphic-git.org',
                 url: values[1],
                 noCheckout: cfg.noCheckout,
@@ -68,8 +53,10 @@ export const exec = async (fs, term, usr, dir, args) => {
                 },
             });
             resolve('');
-        } else if (values[0] == 'init') {
-            let cfg = {
+            return;
+        }
+        if (values[0] == 'init') {
+            const cfg = {
                 quiet: false,
                 bare: false,
                 defaultBranch: 'master',
@@ -93,20 +80,66 @@ export const exec = async (fs, term, usr, dir, args) => {
             if (cfg.quiet !== true) term.writeln(`Initialized empty Git repository in ${fs.realpathSync(values[1]) ?? dir.path}/.git/`);
 
             resolve('');
-        } else {
-            if (options[0] == '--version') {
-                resolve('git version ' + git.version());
-            } else if (options[0] == '--help') {
-                resolve([
-                    `usage: git [--version] [--help] <command> [<args>]`,
-                    ``,
-                    `These are common Git commands used in various situations:`,
-                    ``,
-                    `start a working area`,
-                    `   clone     Clone a repository into a new directory`,
-                    `   init      Create an empty Git repository or reinitialize an existing one`
-                ]);
-            }
+            return;
+        }
+        if (values[0] == 'checkout') {
+            const cfg = {
+                quiet: false,
+            };
+
+            if (options.includes('-q') || options.includes('--quiet')) cfg.quiet = true;
+
+            await git.checkout({
+                fs,
+                dir: dir.path,
+                ref: values[1]
+            }).then(async () => {
+                let branch = await git.currentBranch({
+                    fs,
+                    dir: dir.path,
+                    fullname: false
+                });
+    
+                if (cfg.quiet !== true) term.writeln(`Switched branch to '${branch}'`);
+            }).catch((e) => {
+                reject(e);
+                return e;
+            });
+
+            resolve('');
+            return;
+        }
+        if (values[0] == 'add') {
+            const cfg = {
+                quiet: false,
+            };
+
+            if (options.includes('-q') || options.includes('--quiet')) cfg.quiet = true;
+
+            await git.add({
+                fs,
+                dir: dir.path,
+                filepath: values[1]
+            });
+
+            resolve('');
+            return;
+        }
+        if (options[0] == '--version') {
+            resolve(`git version ${git.version()}`);
+        } else if (options[0] == '--help') {
+            resolve([
+                `usage: git [--version] [--help] <command> [<args>]`,
+                ``,
+                `These are common Git commands used in various situations:`,
+                ``,
+                `start a working area`,
+                `   clone     Clone a repository into a new directory`,
+                `   init      Create an empty Git repository or reinitialize an existing one`,
+                ``,
+                `work on the current change`,
+                `   add       Add file contents to the index`
+            ]);
         }
     });
 };

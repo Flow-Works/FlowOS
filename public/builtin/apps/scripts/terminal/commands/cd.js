@@ -1,3 +1,5 @@
+import parser from '../parser.js';
+
 export const metadata = {
     cmd: 'cd',
     description: 'Change the shell working directory.'
@@ -5,14 +7,16 @@ export const metadata = {
 
 export const exec = (fs, term, usr, dir, args) => {
     let path;
-    if (!args[1]) {  path = '/'; };
+    const { values } = parser(args);
+    if (!values[0]) {  path = '/'; };
 
-    if (path !== '/' && args[1].startsWith('/')) {
-        path = args[1];
-    } else if (path !== '/') {
-        if (fs.realpathSync(dir.path) == '/') { path = '/' + args[1]; }
-        else { path = fs.realpathSync(dir.path) + '/' + args[1]; }
-    };
+    if (!path) {
+        if (values[0].startsWith('/')) {
+            path = values[0];
+        } else {
+            path = fs.realpathSync(dir.path) == '/' ? `/${values[0]}` : `${dir.path}/${values[0]}`;
+        };
+    }
 
     fs.readdirSync(path);
     dir.set(path);

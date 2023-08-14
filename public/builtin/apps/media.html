@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+
+		<link rel="stylesheet" href="/styles/style.css" />
+		<link rel="stylesheet" href="/styles/window.css" />
+	</head>
+
+	<body>
+		<div class="media">
+            <input type="file" id="song-input" accept=".mp3, .wav">
+
+<img id="cover">
+<p id="title"></p>
+<p id="artist"></p>
+<p id="album"></p>
+<p id="genre"></p>
+
+<div class="songList"></div>
+        </div>
+
+        <audio controls></audio>
+
+		<script src="/scripts/app.js" defer type="module"></script>
+        <script type="module" src="./scripts/media.js" defer></script>
+	</body>
+</html>
