@@ -128,14 +128,16 @@ BrowserFS.configure(
 
                         const metadata = await getMetadata(curPath);
                         const a = document.createElement('a');
-                        a.onclick = () => {
-                            window.playSong(`${curPath}`);
-                        };
+
+                        a.classList.add('song-' + songs.findIndex((x) => x == curPath));
+
                         a.innerText = metadata.tag.tags.artist ? `${metadata.tag.tags.artist} - ${metadata.tag.tags.title}` : `${metadata.tag.tags.title}`;
 
                         document.querySelector(
                             '.songList'
                         ).append(a);
+
+                        a.setAttribute('onclick', 'window.playSong("' + curPath + '");');
 					}
 				});
 			}
@@ -228,16 +230,29 @@ BrowserFS.configure(
 				500;
 		};
 
+        let selected = [];
+
 		window.playSong = async (filePath) => {
 			const song = await fs.readFileSync(`${filePath}`);
-            index = songs.findIndex((x) => x == filePath);
+            index = await songs.findIndex((x) => x == filePath);
+
+            if (selected.length > 0) selected[selected.length - 1].style.color = '';
+
+            const select = `a.song-${index.toString()}`;
+
+            console.log();
+
+            selected.push(document.querySelector(select));
+
+            document.querySelector(select).style.color = 'var(--primary)';
 
 			const blob = new Blob([song.buffer], { type: 'audio/wav' });
 			const url = window.URL.createObjectURL(blob);
 			document.querySelector('audio').src = url;
 			window.togglePlayback();
 
-			document.querySelector('audio').onended = () => {
+			document.querySelector('audio').onended = async () => {
+                document.querySelector(select).style.color = '';
 				window.next();
 			};
 
@@ -263,7 +278,6 @@ BrowserFS.configure(
                 document.querySelector('.status').innerHTML = 'Loading...';
 				await checkFolder(fs, '/media/music');
                 document.querySelector('.status').innerHTML = '';
-				window.playSong('/' + event.target.files[0].name);
 			});
 	}
 );

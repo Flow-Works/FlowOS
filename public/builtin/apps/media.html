@@ -13,7 +13,7 @@
                 <input type="file" id="song-input" accept=".mp3, .wav, .ogg, .flac">
 
                 <div class="status" style="flex: 1;">Loading...</div>
-                <div class="songList" style="flex: 1;display: flex;flex-direction: column;"></div>
+                <div class="songList" style="flex: 1;display: grid;grid-template-columns: repeat(3, auto);gap: 0 20px;"></div>
             </div>
             <span class="time" style="margin-top: 10px;"><span id="currentTime">00:00</span> / <span id="duration">00:00</span></span>
             <input type="range" id="seekbar" value="0" min="0" max="500" style="width:100%;margin-bottom: 10px;"></input>
@@ -52,6 +52,7 @@
             .icon {
                 font-family: 'JetBrains Mono Nerd Font';
                 font-size: 24px;
+                cursor: pointer;
             }
 
             .icon.e {
@@ -101,6 +102,13 @@ input[type="range"]::-moz-range-thumb {
   
   /* box-shadow: -407px 0 0 400px #f50; emove this line */
   transition: .2s ease-in-out;
+}
+
+a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
 }
         </style>
 	</body>
