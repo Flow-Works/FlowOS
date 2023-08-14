@@ -45,6 +45,7 @@ Here are some libraries used to create FlowOS.
 - [Ultraviolet](https://github.com/titaniumnetwork-dev/Ultraviolet)
 - [Dynamic](https://github.com/NebulaServices/Dynamic)
 - [Eruda](https://github.com/liriliri/eruda)
+- [BrowserFS](https://github.com/jvilk/BrowserFS)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
