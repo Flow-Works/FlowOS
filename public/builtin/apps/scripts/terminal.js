@@ -83,7 +83,7 @@ window.addEventListener('load', () => {
 					term.open(document.getElementById('terminal'));
 					fitAddon.fit();
 
-					window.onresize = (evt) => {
+					window.onresize = () => {
                         fitAddon.fit();
 					};
 				},

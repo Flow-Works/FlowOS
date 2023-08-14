@@ -10,7 +10,6 @@ const apps = () => {
         'emulator': new AppData('emulator', 'Emulator', '/builtin/apps/emulator/index.html', '/assets/icons/gameboy.svg', false),
         'marketplace': new AppData('marketplace', 'Marketplace', '/builtin/apps/apps.html', '/assets/icons/deepin-launcher.svg', false),
         'app-wizard': new AppData('app-wizard', 'Custom Application Wizard', '/builtin/apps/app-wizard.html', '/assets/icons/appeditor.svg', false),
-        'flowgpt': new AppData('flowgpt', 'FlowGPT', '/builtin/apps/flowgpt.html', '/assets/icons/chat.svg', false),
         'media': new AppData('media', 'Media Center', '/builtin/apps/media.html', '/assets/icons/playmyvideos.svg', false),
         'terminal': new AppData('terminal', 'Terminal', '/builtin/apps/terminal.html', '/assets/icons/terminal.svg', false),
         ...config.apps.get(),

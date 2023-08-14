@@ -39,6 +39,8 @@ export class CommandsAddon {
 	        if (e) console.error(e);
     
   	        this.fs = require('fs');
+
+            if (!this.fs.existsSync('media')) this.fs.mkdirSync('media');
             
             this.terminal.prompt = async () => {
                 this.terminal.write(`\r${await this.promptMSG()}`);
