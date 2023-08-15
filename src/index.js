@@ -4,7 +4,7 @@ import fastifyCompress from '@fastify/compress';
 import { fileURLToPath } from 'url';
 const publicPath = fileURLToPath(new URL('../public/', import.meta.url));
 import { createBareServer } from '@tomphttp/bare-server-node';
-import { uvPath } from '@proudparrot2/uv';
+import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 
 import { createServer } from 'http';
 import fs from 'fs';
