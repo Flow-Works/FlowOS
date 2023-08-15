@@ -214,7 +214,7 @@
 
 .max {
 	width: 100%!important;
-	height: calc(100vh - 118px)!important;
+	height: calc(100vh - 128px)!important;
 	border: 2px solid var(--primary)!important;
 }
 
