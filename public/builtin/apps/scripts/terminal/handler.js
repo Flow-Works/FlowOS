@@ -4,6 +4,19 @@ import BrowserFS from 'https://cdn.jsdelivr.net/npm/browserfs@1.4.3/+esm';
 import c from 'https://cdn.jsdelivr.net/npm/ansi-colors@4.1.3/+esm';
 import sh from 'https://cdn.jsdelivr.net/npm/shell-quote@1.8.1/+esm';
 
+const doimport = (str) => {
+	if (URL.createObjectURL) {
+		const blob = new Blob([str], { type: 'text/javascript' });
+		const url = URL.createObjectURL(blob);
+		const module = import(url);
+		URL.revokeObjectURL(url); // GC objectURLs
+		return module;
+	}
+
+	const url = `data:text/javascript;base64,${btoa(str)}`;
+	return import(url);
+};
+
 export class CommandsAddon {
     _disposables = [];
 
@@ -24,7 +37,14 @@ export class CommandsAddon {
 
     activate(term) {
         this.terminal = term;
-        
+
+        this.#createFS();
+
+        this.#handleClipboard();
+        this.#handleInput();
+    }
+
+    #createFS = () => {
         BrowserFS.configure({
             fs: 'AsyncMirror',
             options: {
@@ -41,6 +61,7 @@ export class CommandsAddon {
   	        this.fs = require('fs');
 
             if (!this.fs.existsSync('media')) this.fs.mkdirSync('media');
+            if (!this.fs.existsSync('bin')) this.fs.mkdirSync('bin');
             
             this.terminal.prompt = async () => {
                 this.terminal.write(`\r${await this.promptMSG()}`);
@@ -50,16 +71,46 @@ export class CommandsAddon {
             this.terminal.writeln('');
             this.terminal.prompt();
         });
+    };
 
+    #handleInput = () => {
+        this.terminal.onKey(({ key, domEvent: ev }) => {
+            const printable = !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
+                && !ev.key.includes('Arrow');
+        
+            if (ev.keyCode == 13) {
+                if (this.current.length == 0) return;
+                this.terminal.writeln('');
+                const args = sh.parse(this.current);
+                const _args = [...args];           
+
+                this.#handleCommand(args, _args);
+        
+                this.current = '';
+                return;
+            }
+            if (ev.keyCode == 8) {
+                if (this.current.length > 0) {
+                    this.terminal.write('\b \b');
+                    this.current = this.current.slice(0, -1);
+                }
+            } else if (printable) {
+                this.current += key;
+                this.terminal.write(key);
+            }
+        });
+    };
+
+    #handleClipboard = () => {
         this.terminal.attachCustomKeyEventHandler(async (key) => {
             if (key.code === 'KeyV' && key.ctrlKey && key.type === 'keydown') {
-                term.write(await navigator.clipboard.readText());
+                this.terminal.write(await navigator.clipboard.readText());
                 this.current += await navigator.clipboard.readText();
                 return false;
             }
         
             if (key.code === 'KeyC' && key.ctrlKey && key.type === 'keydown') {
-                const selection = term.getSelection();
+                const selection = this.terminal.getSelection();
                 if (selection) {
                     await navigator.clipboard.writeText(selection);
                     return false;
@@ -68,46 +119,35 @@ export class CommandsAddon {
         
             return true;
         });
+    };
 
-        this.terminal.onKey(({ key, domEvent: ev }) => {
-            const printable = !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
-                && !ev.key.includes('Arrow');
-        
-            if (ev.keyCode == 13) {
-                if (this.current.length == 0) return;
-                term.writeln('');
-                const args = sh.parse(this.current);
-
-                import(`./commands/${args[0]}.js`).then(async (command) => {
-                    const cmd = await command.exec(this.fs, this.terminal, this.user, this.dir, args);
-                    if (cmd && !Array.isArray(cmd)) {
-                        term.writeln(cmd);
-                    } else if (Array.isArray(cmd)) {
-                        cmd.forEach(ln => term.writeln(ln));
-                    };
-                    term.prompt();
-                }).catch((e) => {
-                    console.error(e);
-                    term.writeln(c.red(e.message));
-                    term.prompt();
-                });
-        
-                this.current = '';
-                return;
-            }
-            if (ev.keyCode == 8) {
-                if (this.current.length > 0) {
-                    term.write('\b \b');
-                    this.current = this.current.slice(0, -1);
+    #handleCommand = (args, _args) => {
+        import(`./commands/${args[0]}.js`)
+            .then(async (command) => this.#runCommand(command, _args))
+            .catch((e) => {
+                try {
+                    doimport(this.fs.readFileSync(`/bin/${args[0]}.js`))
+                        .then(async (command) => this.#runCommand(command, _args))
+                        .catch(this.#handleError);
+                } catch {
+                    this.#handleError(e);
                 }
-            } else if (printable) {
-                this.current += key;
-                term.write(key);
-            }
-        });
-    }
+            });
+    };
 
-    dispose() {
+    #runCommand = async (command, _args) => {
+        const cmd = await command.exec(this.fs, this.terminal, this.user, this.dir, _args);
+        if (cmd && !Array.isArray(cmd)) {
+            this.terminal.writeln(cmd);
+        } else if (Array.isArray(cmd)) {
+            cmd.forEach(ln => this.terminal.writeln(ln));
+        };
+        this.terminal.prompt();
+    };
 
-    }
+    #handleError = async (e) => {
+        console.error(e);
+        this.terminal.writeln(c.red(e.message ?? e));
+        this.terminal.prompt();
+    };
 }

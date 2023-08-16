@@ -1,9 +1,11 @@
+/* eslint-env browser */
+
 export const metadata = {
     cmd: 'reboot',
     description: 'Reboot the OS'
 };
 
-export const exec = (fs, term, usr, dir, args) => {
+export const exec = () => {
     parent.window.location.reload();
-    return "Rebooting..."
+    return 'Rebooting...';
 };
