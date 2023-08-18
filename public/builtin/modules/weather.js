@@ -3,11 +3,12 @@
 import { config } from '../../scripts/managers.js';
 import { BarItem, SettingsCategory, SettingsInput, SettingsDropdown } from '../../scripts/classes.js';
 
-const weather = BarItem('weather', { position: 'left' });
-SettingsCategory('weather', 'Weather', [
-  SettingsInput('city', 'City Name', 'London', 'London'),
-  SettingsDropdown('measurement', 'Measurement System', 'Celsius', ['Celsius', 'Fahrenheit'])
+const weather = new BarItem('weather', { position: 'left' });
+const weatherSettings = new SettingsCategory('weather', 'Weather', [
+  new SettingsInput('city', 'City Name', 'London', 'London'),
+  new SettingsDropdown('measurement', 'Measurement System', 'Celsius', ['Celsius', 'Fahrenheit'])
 ]);
+window.weatherSettings = () => weatherSettings;
 
 const weatherMap = {
   1000: '', // Clear Sky

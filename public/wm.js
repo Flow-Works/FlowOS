@@ -16,7 +16,7 @@ export class WindowManager {
   open = (APP_ID) => {
     const app = apps()[APP_ID];
     window.logger.debug(JSON.stringify(app));
-    AppInstance({
+    return new AppInstance({
       title: app.title,
       icon: app.icon,
       url: app.url,

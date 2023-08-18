@@ -57,14 +57,15 @@ const clockfaces = [
 
 const time2emoji = (hours, mins) => {
   const minutes = parseInt(mins);
-  return clockfaces.find((element) => {
+  const clockFace = clockfaces.find((element) => {
     return element.time.find((time) => {
       const minute = parseInt(time.split(':')[1]);
       return (
-        ((minutes >= 15 && minutes <= 45) || (minute === 0 && (minutes < 15 || minutes > 45))) && hours === time.split(':')[0]
+        ((minutes >= 15 && minutes <= 45) || (minute === 0 && (minutes < 15 || minutes > 45))) && hours.toString() === time.split(':')[0]
       );
     });
-  }).face;
+  });
+  return clockFace.face;
 };
 
 const startTime = () => {
