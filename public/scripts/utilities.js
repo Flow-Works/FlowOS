@@ -49,21 +49,21 @@ export const sleep = (ms) => {
 };
 
 export const registerSettings = () => {
-  SettingsCategory('search', 'Browser', [
-    SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
-    SettingsTextarea('urls', 'Extension URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', ''),
-    SettingsDropdown('proxy', 'Proxy', 'Ultraviolet', ['Ultraviolet', 'Dynamic'])
+  const search = new SettingsCategory('search', 'Browser', [
+    new SettingsInput('url', 'Search Engine URL', 'https://duckduckgo.com', 'https://duckduckgo.com'),
+    new SettingsTextarea('urls', 'Extension URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', ''),
+    new SettingsDropdown('proxy', 'Proxy', 'Ultraviolet', ['Ultraviolet', 'Dynamic'])
   ]);
 
-  SettingsCategory('theme', 'Theme', [
-    SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin-macchiato.css')
+  const theme = new SettingsCategory('theme', 'Theme', [
+    new SettingsInput('url', 'Theme URL', 'https://mysite.to/theme.css', '/builtin/themes/catppuccin-macchiato.css')
   ]);
 
-  SettingsCategory('modules', 'Modules/Scripts', [
-    SettingsTextarea('urls', 'Module URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', '/builtin/modules/battery.js\n/builtin/modules/clock.js\n/builtin/modules/weather.js')
+  const modules = new SettingsCategory('modules', 'Modules/Scripts', [
+    new SettingsTextarea('urls', 'Module URLs', 'https://mysite.to/script1.js\nhttps://mysite.to/script2.js\nhttps://mysite.to/script3.js', '/builtin/modules/battery.js\n/builtin/modules/clock.js\n/builtin/modules/weather.js')
   ]);
 
-  return true;
+  return { search, theme, modules };
 };
 
 export const useCustomCSS = () => {
