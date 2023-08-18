@@ -5,10 +5,18 @@ import { fileURLToPath } from 'url';
 import { createBareServer } from '@tomphttp/bare-server-node';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 
+import request from 'request';
+import mime from 'mime-types';
+import cache from 'memory-cache';
+import handleCache from './cacheHandler.js';
+
+import UglifyJS from 'uglify-js';
+
 import { createServer } from 'http';
 import fs from 'fs';
 
 import Module from 'node:module';
+
 const publicPath = fileURLToPath(new URL('../public/', import.meta.url));
 const require = Module.createRequire(import.meta.url);
 
@@ -88,6 +96,46 @@ app.get('/ver', (req, res) => {
         res.type('application/json').send({ hash: hash.replace(/\n/g, ''), branch: branch.replace(/\n/g, ''), url: url.replace(/\n/g, '') });
       });
     });
+  });
+});
+
+app.get('/cdn/:username/:repository/:branch/*', (req, res) => {
+  const { username, repository, branch } = req.params;
+  const filePath = req.params['*'];
+
+  const fileURL = `https://raw.githubusercontent.com/${username}/${repository}/${branch}/${filePath}`;
+
+  const cachedResponse = cache.get(fileURL);
+  if (cachedResponse) {
+    return res.send(cachedResponse);
+  }
+
+  request.get(fileURL, async (err, response, body) => {
+    if (err) res.status(response.statusCode).send(err);
+    if (response.statusCode !== 200) {
+      return res.status(404).send('File not found');
+    }
+
+    const fileExtension = filePath.split('.').pop();
+    const contentType = mime.lookup(fileExtension);
+
+    res.header('Content-Type', contentType);
+    const data = await UglifyJS.minify(body, {
+      mangle: true,
+      compress: {
+        sequences: true,
+        dead_code: true,
+        conditionals: true,
+        booleans: true,
+        unused: true,
+        if_return: true,
+        join_vars: true
+      }
+    });
+
+    res.send(data.code);
+
+    handleCache(response, fileURL);
   });
 });
 

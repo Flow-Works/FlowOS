@@ -102,7 +102,7 @@ export class CommandsAddon {
         if (!this.fs.existsSync('etc/fpm/cdnlist')) {
           this.fs.writeFileSync(
             'etc/fpm/cdnlist',
-            'https://cdn.jsdelivr.net/gh/$repo/$file\nhttps://cdn.statically.io/gh/$repo/main/$file\nhttps://gitloaf.com/cdn/$repo/main/$file'
+            window.location.origin + '/cdn/$repo/main/$file\nhttps://cdn.statically.io/gh/$repo/main/$file\nhttps://gitloaf.com/cdn/$repo/main/$file'
           );
         }
 
