@@ -7,12 +7,12 @@ self.__dynamic$config = {
   logLevel: 0, // 0: none, 1: errors, 2: errors + warnings, 3: errors + warnings + info
   bare: {
     version: 2, // v3 is bad
-    path: '/bare/',
+    path: '/bare/'
   },
   tab: {
     title: null,
     icon: null,
-    ua: null,
+    ua: null
   },
   assets: {
     prefix: '/dynamic/',
@@ -21,49 +21,48 @@ self.__dynamic$config = {
       client: 'dynamic.client.js',
       worker: 'dynamic.worker.js',
       config: 'dynamic.config.js',
-      inject: null,
+      inject: null
     }
   },
   block: [
-  
+
   ]
 };
 
 self.xor = {
-	randomMax: 100,
-    randomMin: -100,
+  randomMax: 100,
+  randomMin: -100,
 
-	encode: (str) => {
-		if (!str) return str;
-        return encodeURIComponent(
-            str
-                .toString()
-                .split('')
-                .map((char, ind) =>
-                    ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char
-                )
-                .join('')
-        );
-	},
-	decode: (str) => {
-		if (!str) return str;
-        let [input, ...search] = str.split('?');
+  encode: (str) => {
+    if (!str) return str;
+    return encodeURIComponent(
+      str
+        .toString()
+        .split('')
+        .map((char, ind) =>
+          ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char
+        )
+        .join('')
+    );
+  },
+  decode: (str) => {
+    if (!str) return str;
+    const [input, ...search] = str.split('?');
 
-        return (
-            decodeURIComponent(input)
-                .split('')
-                .map((char, ind) =>
-                    ind % 2 ? String.fromCharCode(char.charCodeAt(0) ^ 2) : char
-                )
-                .join('') + (search.length ? '?' + search.join('?') : '')
-        );
-	},
+    return (
+      decodeURIComponent(input)
+        .split('')
+        .map((char, ind) =>
+          ind % 2 ? String.fromCharCode(char.charCodeAt(0) ^ 2) : char
+        )
+        .join('') + (search.length ? '?' + search.join('?') : '')
+    );
+  }
 };
 
 self.__dyn$config = {
-	proxyName: 'dyn',
-	prefix: self.__dynamic$config.prefix,
-	encodeUrl: xor.encode,
-	decodeUrl: xor.decode,
+  proxyName: 'dyn',
+  prefix: self.__dynamic$config.prefix,
+  encodeUrl: xor.encode,
+  decodeUrl: xor.decode
 };
-

@@ -1,9 +1,12 @@
+/* eslint-env browser */
+
 export const metadata = {
-    cmd: 'shutdown',
-    description: 'Shutdown the OS'
+  cmd: 'shutdown',
+  description: 'Shutdown the OS'
 };
 
-export const exec = (fs, term, usr, dir, args) => {
-    parent.window.location.href=window.location.origin;
-    return "Shutting Down..."
+export const exec = ({ stdout }) => {
+  parent.window.location.href = window.location.origin;
+  stdout.send('Shutting Down...');
+  stdout.close();
 };

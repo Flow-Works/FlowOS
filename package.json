@@ -13,7 +13,7 @@
 	"scripts": {
 		"start": "NODE_ENV=production node src/index.js",
 		"dev": "nodemon src/index.js",
-		"lint": "eslint --ext .js --ignore-path .gitignore .",
+		"test": "standard",
 		"commit": "cz"
 	},
 	"dependencies": {
@@ -34,10 +34,11 @@
 	"devDependencies": {
 		"commitizen": "^4.3.0",
 		"commitizen-emoji": "^1.0.5",
-		"eslint": "^8.44.0",
+		"eslint-config-standard": "^17.1.0",
 		"eslint-plugin-prefer-arrow": "^1.2.3",
 		"nodemon": "^3.0.1",
-		"prettier": "^2.8.4"
+		"prettier": "^2.8.4",
+		"semistandard": "^17.0.0"
 	},
 	"engines": {
 		"node": ">=16.0.0",
@@ -51,5 +52,12 @@
 			"conventionalFormat": true
 		}
 	},
-	"packageManager": "yarn@3.6.1"
+	"packageManager": "yarn@3.6.1",
+	"semistandard": {
+		"ignore": [
+			"public/dynamic",
+			"public/uv",
+			"public/builtin/apps/emulator"
+		]
+	}
 }
