@@ -1,8 +1,9 @@
 export const metadata = {
-    cmd: 'clear',
-    description: 'Clear the terminal'
+  cmd: 'clear',
+  description: 'Clear the terminal'
 };
 
-export const exec = (fs, term) => {
-    term.reset();
+export const exec = ({ term, stdout }) => {
+  term.reset();
+  stdout.close();
 };

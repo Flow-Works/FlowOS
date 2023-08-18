@@ -5,7 +5,7 @@ const spotlight = new BarItem('spotlight', { position: 'left' });
 
 spotlight.setIcons(['󰍉']);
 spotlight.element.onclick = () => {
-    Flow.spotlight.toggle();
+  Flow.spotlight.toggle();
 };
 
 export default spotlight;

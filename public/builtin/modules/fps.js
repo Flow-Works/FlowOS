@@ -5,33 +5,33 @@ const fps = new BarItem('fps', { position: 'right' });
 
 let lastCalledTime;
 let counter = 0;
-let fpsArray = [];
+const fpsArray = [];
 
 const update = () => {
-	let frps;
+  let frps;
 
-	if (!lastCalledTime) {
-		lastCalledTime = new Date().getTime();
-		frps = 0;
-	}
+  if (!lastCalledTime) {
+    lastCalledTime = new Date().getTime();
+    frps = 0;
+  }
 
-	let delta = (new Date().getTime() - lastCalledTime) / 1000;
-	lastCalledTime = new Date().getTime();
-	frps = Math.ceil(1 / delta);
+  const delta = (new Date().getTime() - lastCalledTime) / 1000;
+  lastCalledTime = new Date().getTime();
+  frps = Math.ceil(1 / delta);
 
-	if (counter >= 60) {
-		counter = 0;
-	} else {
-		if (frps !== Infinity) {
-			fpsArray.push(frps);
-		}
+  if (counter >= 60) {
+    counter = 0;
+  } else {
+    if (frps !== Infinity) {
+      fpsArray.push(frps);
+    }
 
-		counter++;
-	}
+    counter++;
+  }
 
-    fps.setText(`${frps} FPS`);
+  fps.setText(`${frps} FPS`);
 
-	window.requestAnimationFrame(update);
+  window.requestAnimationFrame(update);
 };
 
 window.requestAnimationFrame(update);

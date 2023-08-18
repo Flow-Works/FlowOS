@@ -24,46 +24,46 @@ window.newTab = () => new Tab();
 window.toggleDropdown = () => dropdownMenu.classList.toggle('show');
 
 document.querySelector('.hide').onclick = () => {
-	switch (inputShowing) {
-		case true:
-			document.querySelector('.hide').innerText = 'expand_more';
-			document.querySelector('.tb').style.display = 'none';
-			break;
-		case false:
-			document.querySelector('.hide').innerText = 'expand_less';
-			document.querySelector('.tb').style.display = 'flex';
-			break;
-	}
+  switch (inputShowing) {
+    case true:
+      document.querySelector('.hide').innerText = 'expand_more';
+      document.querySelector('.tb').style.display = 'none';
+      break;
+    case false:
+      document.querySelector('.hide').innerText = 'expand_less';
+      document.querySelector('.tb').style.display = 'flex';
+      break;
+  }
 
-	inputShowing = !inputShowing;
+  inputShowing = !inputShowing;
 };
 
 dropdownBtn.addEventListener('click', (e) => {
-	e.stopPropagation();
-	window.toggleDropdown();
+  e.stopPropagation();
+  window.toggleDropdown();
 });
 
 document.documentElement.addEventListener('click', () => {
-	if (dropdownMenu.classList.contains('show')) {
-		window.toggleDropdown();
-	}
+  if (dropdownMenu.classList.contains('show')) {
+    window.toggleDropdown();
+  }
 });
 
 input.onkeydown = (e) => {
-	if (e.key == 'Enter') {
-		if (input.value.startsWith('flow:')) {
-			window.clickList[0].src = '/builtin/browser/' + input.value.split('://')[1] + '.html';
-		} else {
-			let inputValue = input.value;
+  if (e.key === 'Enter') {
+    if (input.value.startsWith('flow:')) {
+      window.clickList[0].src = '/builtin/browser/' + input.value.split('://')[1] + '.html';
+    } else {
+      let inputValue = input.value;
 
-if (!inputValue.startsWith('http://') && !inputValue.startsWith('https://')) {
-    inputValue = 'http://' + inputValue;
-}
-			window.clickList[0].src = proxyConfig.prefix + proxyConfig.encodeUrl(inputValue);
-		}
-	}
+      if (!inputValue.startsWith('http://') && !inputValue.startsWith('https://')) {
+        inputValue = 'http://' + inputValue;
+      }
+      window.clickList[0].src = proxyConfig.prefix + proxyConfig.encodeUrl(inputValue);
+    }
+  }
 };
 
 window.onload = () => {
-	new Tab();
+  Tab();
 };
