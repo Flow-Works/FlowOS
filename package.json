@@ -11,6 +11,7 @@
 	"type": "module",
 	"scripts": {
 		"start": "NODE_ENV=production node src/index.js",
+		"win": "cmd /V /C \"set NODE_ENV=production&& node src/index.js\"",
 		"dev": "nodemon src/index.js",
 		"test": "semistandard",
 		"commit": "cz"
