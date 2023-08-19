@@ -15,6 +15,9 @@
     	·
     	<a href="https://github.com/Flow-Works/FlowOS/issues">Request Feature</a>
 	</p>
+ 	<a href="https://github.com/standard/semistandard">
+  	<img src="https://raw.githubusercontent.com/standard/semistandard/master/badge.svg">
+  	</a>
 </div>
 
 <details>
