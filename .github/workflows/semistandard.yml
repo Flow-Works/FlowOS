@@ -8,5 +8,5 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Semi-Standard test
-        run: yarn test
+        run: cd app && yarn test
       
