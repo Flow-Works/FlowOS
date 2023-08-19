@@ -1,5 +1,4 @@
 name: semistandard
-on: [push]
 jobs:
   Semi-Standard:
     runs-on: ubuntu-latest
