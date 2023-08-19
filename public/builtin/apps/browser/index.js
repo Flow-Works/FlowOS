@@ -65,5 +65,5 @@ input.onkeydown = (e) => {
 };
 
 window.onload = () => {
-  Tab();
+  window.newTab();
 };

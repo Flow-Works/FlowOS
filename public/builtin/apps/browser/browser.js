@@ -53,7 +53,7 @@ export class Tab {
       } else if (tabs.at(-1)) {
         tm.setActiveTab(tabs.at(-1));
       } else {
-        Tab();
+        return new Tab();
       }
     };
 
