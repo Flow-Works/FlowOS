@@ -75,7 +75,7 @@ export default class FlowInstance {
         this.init = true;
         return;
       }
-      AppInstance({
+      const app = new AppInstance({
         title: 'Setup Wizard',
         class: [
           'no-close',
@@ -91,6 +91,7 @@ export default class FlowInstance {
         url: '/builtin/apps/setup.html'
       });
       this.setup = true;
+      return app;
     });
   };
 
