@@ -1,12 +1,12 @@
 name: semistandard
-run-name: Semi-Standard Test
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Semi-Standard:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2.1.0
       - name: Install dependencies
         run: yarn install
       - name: Semi-Standard test
-        run: cd app && yarn test
+        run: yarn test
       
