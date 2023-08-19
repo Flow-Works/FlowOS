@@ -27,6 +27,7 @@ let server;
 const bare = createBareServer('/bare/');
 
 const app = fastify({
+  ignoreTrailingSlash: true,
   serverFactory: (handler) => {
     server = createServer((req, res) => {
       if (bare.shouldRoute(req)) {
