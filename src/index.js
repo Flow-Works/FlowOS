@@ -22,7 +22,7 @@ const require = Module.createRequire(import.meta.url);
 
 const port = process.env.PORT || 3000;
 
-let server;
+let server
 
 const bare = createBareServer('/bare/');
 
