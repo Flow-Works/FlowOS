@@ -3,7 +3,7 @@ import { config } from '../scripts/managers.js';
 
 const apps = () => {
   return {
-    help: new AppData('help', 'Help', 'https://docs.flow-works.me/', '/assets/icons/help.svg', false),
+    help: new AppData('help', 'Help', 'https://docs.flow-works.me/docs/intro', '/assets/icons/help.svg', false),
     info: new AppData('info', 'About', '/builtin/apps/about.html', '/assets/icons/info.svg', false, { width: '300px', height: '500px', class: ['no-resize', 'no-max', 'no-full'] }),
     settings: new AppData('settings', 'Settings', '/builtin/apps/settings.html', '/assets/icons/settings.svg', false),
     browser: new AppData('browser', 'Browser', '/builtin/apps/browser/index.html', '/assets/icons/browser.svg', false),
