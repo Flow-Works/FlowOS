@@ -57,6 +57,19 @@ export default class FlowInstance {
     if (!config.apps.get()) config.apps.set([]);
     if (!config.customApps.get()) config.customApps.set([]);
 
+    if (this.init) parent.window.location.reload();
+        this.apps.register();
+        this.hotkeys.register();
+
+        for (const url of config.settings.get('modules').urls) {
+          if (url !== '') {
+            try {
+              const module = await import(url);
+              await this.bar.add(module.default);
+            } catch (e) { logger.error(e); }
+    }
+
+    this.init = true;
     _auth.onAuthStateChanged(async (user) => {
       if (this.init || this.setup) parent.window.location.reload();
       if (user) {
@@ -75,7 +88,7 @@ export default class FlowInstance {
         this.init = true;
         return;
       }
-      const app = new AppInstance({
+      /*FOR DEVELOPER: removing setup wizard because of firebase issues const app = new AppInstance({
         title: 'Setup Wizard',
         class: [
           'no-close',
@@ -93,7 +106,7 @@ export default class FlowInstance {
       this.setup = true;
       return app;
     });
-  };
+  };*/
 
   spotlight = {
     /**
