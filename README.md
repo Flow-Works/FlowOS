@@ -1,7 +1,7 @@
 <div align="center">
 	
 ## ❗❗❗❗ THIS VERSION OF FLOWOS IS DISCONTINUED.❗❗❗❗
-## ❗❗❗❗ USE [THIS](https://github.com/Flow-Works/FlowOS-2.0) INSTEAD. ❗❗❗❗
+## ❗❗❗❗ USE [THIS](https://github.com/Flow-Works/FlowOS) INSTEAD. ❗❗❗❗
 
 </div>
 
