@@ -16,7 +16,7 @@ const doimport = (str) => {
     return module;
   }
 
-  const url = 'data:text/javascript;base64,' + btoa(str);
+  const url = `data:text/javascript;base64,${btoa(str)}`;
   return import(url);
 };
 
