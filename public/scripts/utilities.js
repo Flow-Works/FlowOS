@@ -8,18 +8,17 @@ import Logger from './logger.js';
 const logger = new Logger();
 
 export const registerSW = async () => {
-  if ('serviceWorker' in navigator) {
-    if (config.settings.get('search').proxy === 'Ultraviolet') {
-      await navigator.serviceWorker.register('/uv/sw.js', {
-        scope: __uv$config.prefix
-      }).catch(() => window.logger.error('Failed to register UV serviceWorker.'));
-    } else if (config.settings.get('search').proxy === 'Dynamic') {
-      await navigator.serviceWorker.register('/dynamic/sw.js', {
-        scope: __dyn$config.prefix
-      }).catch(() => window.logger.error('Failed to register Dynamic serviceWorker.'));
-    }
-    return true;
+  const connection = new BareMux.BareMuxConnection('/baremux/worker.js');
+  if (!('serviceWorker' in navigator)) return;
+
+  const wispUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/wisp/`;
+  if (await connection.getTransport() !== '/epoxy/index.mjs') {
+    await connection.setTransport('/epoxy/index.mjs', [{ wisp: wispUrl }]);
   }
+  await navigator.serviceWorker.register('/uv/sw.js', {
+    scope: __uv$config.prefix
+  }).catch(() => window.logger.error('Failed to register UV serviceWorker.'));
+  return true;
 };
 
 export const loadCSS = (FILE_URL) => {

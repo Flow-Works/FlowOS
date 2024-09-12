@@ -12,7 +12,6 @@ import { config } from '../../../../../../scripts/managers.js';
 
 import { CommandsAddon } from './terminal/handler.js';
 
-import { _auth } from '../../../scripts/firebase.js';
 import * as auth from 'https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js';
 
 const commands = {
@@ -33,6 +32,8 @@ window.loadCSS = (FILE_URL, callback) => {
   });
 };
 
+const username = 'user';
+
 window.addEventListener('load', () => {
   window.loadCSS(config.settings.get('theme').url, () => {
     const term = new Terminal({
@@ -52,42 +53,32 @@ window.addEventListener('load', () => {
       }
     });
 
-    auth.onAuthStateChanged(_auth, (user) => {
-      if (!user) {
-        return;
+    const dir = {
+      path: '/',
+      set: (str) => {
+        dir.path = str;
       }
-      const dir = {
-        path: '/',
-        set: (str) => {
-          dir.path = str;
-        }
-      };
+    };
 
-      const username =
-      _auth.currentUser.displayName !== null
-        ? _auth.currentUser.displayName.toLowerCase().replaceAll(' ', '-')
-        : 'guest';
+    const usr = { username };
 
-      const usr = { username };
+    const fitAddon = new FitAddon.FitAddon();
 
-      const fitAddon = new FitAddon.FitAddon();
+    term.loadAddon(fitAddon);
+    term.loadAddon(new WebLinksAddon.WebLinksAddon());
+    term.loadAddon(new CanvasAddon.CanvasAddon());
+    term.loadAddon(new CommandsAddon({ commands }, usr, dir));
 
-      term.loadAddon(fitAddon);
-      term.loadAddon(new WebLinksAddon.WebLinksAddon());
-      term.loadAddon(new CanvasAddon.CanvasAddon());
-      term.loadAddon(new CommandsAddon({ commands }, usr, dir));
+    const font = new FontFaceObserver('JetBrains Mono Nerd Font');
 
-      const font = new FontFaceObserver('JetBrains Mono Nerd Font');
+    font.load().then(() => {
+      document.getElementById('terminal').innerText = '';
+      term.open(document.getElementById('terminal'));
+      fitAddon.fit();
 
-      font.load().then(function () {
-        document.getElementById('terminal').innerText = '';
-        term.open(document.getElementById('terminal'));
+      window.onresize = () => {
         fitAddon.fit();
-
-        window.onresize = () => {
-          fitAddon.fit();
-        };
-      });
+      };
     });
   });
 });

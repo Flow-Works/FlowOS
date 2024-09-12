@@ -17,20 +17,18 @@
 		"commit": "cz"
 	},
 	"dependencies": {
-		"@fastify/caching": "^8.3.0",
-		"@fastify/compress": "^6.4.0",
-		"@fastify/express": "^2.3.0",
-		"@fastify/static": "^6.10.2",
-		"@titaniumnetwork-dev/ultraviolet": "^1.0.11",
+		"@mercuryworkshop/bare-mux": "^2.0.9",
+		"@mercuryworkshop/epoxy-transport": "^2.1.11",
+		"@titaniumnetwork-dev/ultraviolet": "^3.2.7",
 		"@tomphttp/bare-server-node": "^2.0.1",
 		"dotenv": "^16.3.1",
-		"express": "^4.18.2",
+		"express": "^5.0.0",
 		"fastify": "^4.21.0",
 		"memory-cache": "^0.2.0",
-		"mime-types": "^2.1.35",
-		"openai": "^3.3.0",
-		"request": "^2.88.2",
-		"uglify-js": "^3.17.4"
+		"mime-types": "^3.0.0",
+		"openai": "^4.59.0",
+		"uglify-js": "^3.17.4",
+		"wisp-server-node": "^1.1.4"
 	},
 	"overrides": {
 		"word-wrap": "^1.2.4"
@@ -41,12 +39,8 @@
 		"eslint-config-standard": "^17.1.0",
 		"eslint-plugin-prefer-arrow": "^1.2.3",
 		"nodemon": "^3.0.1",
-		"prettier": "^2.8.4",
+		"prettier": "^3.3.3",
 		"semistandard": "^17.0.0"
-	},
-	"engines": {
-		"node": ">=16.0.0",
-		"npm": ">=7.0.0"
 	},
 	"config": {
 		"commitizen": {

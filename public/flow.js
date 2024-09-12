@@ -2,11 +2,10 @@
 
 import hotkeys from 'https://cdn.jsdelivr.net/npm/hotkeys-js@3.11.2/+esm';
 
-import { _auth } from './scripts/firebase.js';
 import { registerSW, loadCSS, sleep } from './scripts/utilities.js';
 import { config } from './scripts/managers.js';
 import apps from './constants/apps.js';
-import { WindowManager, AppInstance } from './wm.js';
+import { WindowManager } from './wm.js';
 import Logger from './scripts/logger.js';
 
 const logger = new Logger();
@@ -58,55 +57,33 @@ export default class FlowInstance {
     if (!config.customApps.get()) config.customApps.set([]);
 
     if (this.init) parent.window.location.reload();
-        this.apps.register();
-        this.hotkeys.register();
+    this.apps.register();
+    this.hotkeys.register();
 
-        for (const url of config.settings.get('modules').urls) {
-          if (url !== '') {
-            try {
-              const module = await import(url);
-              await this.bar.add(module.default);
-            } catch (e) { logger.error(e); }
+    for (const url of config.settings.get('modules').urls) {
+      if (url !== '') {
+        try {
+          const module = await import(url);
+          await this.bar.add(module.default);
+        } catch (e) { logger.error(e); }
+      }
     }
 
     this.init = true;
-    _auth.onAuthStateChanged(async (user) => {
-      if (this.init || this.setup) parent.window.location.reload();
-      if (user) {
-        this.apps.register();
-        this.hotkeys.register();
+    this.apps.register();
+    this.hotkeys.register();
 
-        for (const url of config.settings.get('modules').urls) {
-          if (url !== '') {
-            try {
-              const module = await import(url);
-              await this.bar.add(module.default);
-            } catch (e) { logger.error(e); }
-          }
-        }
-
-        this.init = true;
-        return;
+    for (const url of config.settings.get('modules').urls) {
+      if (url !== '') {
+        try {
+          const module = await import(url);
+          await this.bar.add(module.default);
+        } catch (e) { logger.error(e); }
       }
-      /*FOR DEVELOPER: removing setup wizard because of firebase issues const app = new AppInstance({
-        title: 'Setup Wizard',
-        class: [
-          'no-close',
-          'no-move',
-          'no-close',
-          'no-min',
-          'no-full',
-          'no-resize'
-        ],
-        x: 'center',
-        y: 'center',
-        height: '650px',
-        url: '/builtin/apps/setup.html'
-      });
-      this.setup = true;
-      return app;
-    });
-  };*/
+    }
+
+    this.init = true;
+  };
 
   spotlight = {
     /**
@@ -210,6 +187,7 @@ export default class FlowInstance {
      * @returns {void}
      */
     register: () => {
+      document.querySelector('.spotlight .apps').innerHTML = '';
       for (const [APP_ID, value] of Object.entries(apps())) {
         const appListItem = document.createElement('li');
         appListItem.innerHTML = `<img src="${value.icon}" width="25px"/><p>${value.title}</p>`;

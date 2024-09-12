@@ -1,13 +1,8 @@
 /* eslint-env browser */
 
-import { _auth } from '../../../scripts/firebase.js';
 import { config } from '../../../scripts/managers.js';
 
 window.onload = () => {
-  document.querySelector('.signout').onclick = () => {
-    _auth.signOut();
-    parent.window.location.reload();
-  };
   Object.values(parent.Flow.settings.items).forEach((setting) => {
     const section = document.createElement('form');
     section.classList.add(`settings-${setting.SETTING_ID}`);
