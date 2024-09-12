@@ -65,13 +65,6 @@ Here are some libraries used to create FlowOS.
 
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
-
-- yarn
-  ```sh
-  npm install yarn@latest -g
-  ```
-
 ### Installation
 
 1. Clone the repo
@@ -80,15 +73,15 @@ To get a local copy up and running follow these simple example steps.
    ```
 2. Install packages
    ```sh
-   yarn install
+   npm install
    ```
 3. Run
    ```sh
-   yarn start
+   npm start
    ```
    or for Windows
    ```powershell
-   yarn win
+   npm run win
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
