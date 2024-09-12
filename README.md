@@ -1,11 +1,4 @@
 <div align="center">
-	
-## ❗❗❗❗ THIS VERSION OF FLOWOS IS DISCONTINUED.❗❗❗❗
-## ❗❗❗❗ USE [THIS](https://github.com/Flow-Works/FlowOS) INSTEAD. ❗❗❗❗
-
-</div>
-
-<div align="center">
 	<br/>
 	<a href="https://github.com/Flow-Works/FlowOS">
 		<img src="https://raw.githubusercontent.com/Flow-Works/FlowOS/main/public/assets/logo.svg" width="100px">
