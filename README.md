@@ -111,8 +111,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Twitter: [@\_heyflow](https://twitter.com/_heyflow)
+[Join the Discord Server!](https://discord.gg/smBJe99X5j)
 
-Email: flow.works-mail@proton.me
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
