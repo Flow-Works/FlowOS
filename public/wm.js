@@ -5,6 +5,8 @@ import apps from './constants/apps.js';
 import FlowSDK from './sdk/index.js';
 import { config } from './scripts/managers.js';
 
+window.WinBox = WinBox;
+
 export const windows = [];
 
 export class WindowManager {

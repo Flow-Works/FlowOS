@@ -69,6 +69,7 @@ window.onload = () => {
 };
 
 window.openCSS = () => {
+  console.log(parent);
   parent.WinBox({
     title: 'CSS Editor',
     icon: 'assets/icons/text-editor.svg',
