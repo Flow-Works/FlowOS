@@ -31,7 +31,7 @@ const apps = () => {
 		),
 		"app-wizard": new AppData(
 			"app-wizard",
-			"Custom Application Wizard",
+			"Custom App Manager",
 			"/builtin/apps/app-wizard.html",
 			"/assets/icons/appeditor.svg",
 			false,
