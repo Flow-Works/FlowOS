@@ -23,7 +23,7 @@
 		"@tomphttp/bare-server-node": "^2.0.1",
 		"dotenv": "^16.3.1",
 		"express": "^5.0.0",
-		"fastify": "^4.21.0",
+		"fastify": "^5.0.0",
 		"memory-cache": "^0.2.0",
 		"mime-types": "^3.0.0",
 		"openai": "^4.59.0",
