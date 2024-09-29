@@ -14,7 +14,7 @@ import Module from 'node:module';
 
 const publicPath = './public';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 const app = express();
 const server = createServer(app);
