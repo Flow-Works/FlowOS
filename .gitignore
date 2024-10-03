@@ -1,0 +1,10 @@
+node_modules
+src/emulator/data/minify/node_modules
+.env
+
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions

@@ -1,0 +1,7 @@
+{
+	"name": "FlowOS",
+	"description": "The customizable webOS.",
+	"repository": "https://github.com/Flow-Works/FlowOS",
+	"logo": "https://raw.githubusercontent.com/Flow-Works/FlowOS/main/FlowOS/public/assets/logo.png",
+	"keywords": ["tomp", "ultraviolet", "webos"]
+}

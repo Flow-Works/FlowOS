@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+
+:root {
+	--primary: #1e66f5;
+	--boot-bg: #dce0e8;
+	--bar-bg: #e6e9ef;
+	--window-bg: #eff1f5;
+	--surface-bg: #ccd0da;
+	--text-color: #4c4f69;
+	--desktop-bg: #dce0e8; /* or lightest color */
+	--font-family: "JetBrains Mono", monospace;
+}
+
+.winbox .wb-control,
+.logo {
+	filter: invert(1);
+}

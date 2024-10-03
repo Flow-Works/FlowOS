@@ -1,0 +1,11 @@
+name: semistandard
+jobs:
+  Semi-Standard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - name: Install dependencies
+        run: yarn install
+      - name: Semi-Standard test
+        run: yarn test
+      

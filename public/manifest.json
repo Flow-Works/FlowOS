@@ -1,0 +1,23 @@
+{
+    "name": "FlowOS",
+    "short_name": "FlowOS",
+    "start_url": "os.html",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "/assets/flow-logo.png",
+        "type": "image/png",
+        "sizes": "1024x1024",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/assets/flow-logo.png",
+        "type": "image/png",
+        "sizes": "1024x1024",
+        "purpose": "any"
+      }
+    ]
+}

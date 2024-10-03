@@ -1,0 +1,30 @@
+.sidenav {
+	width: 30%;
+	position: fixed;
+	z-index: 1;
+	top: 20px;
+	left: 10px;
+	background: var(--surface-bg);
+	overflow-x: hidden;
+	padding: 8px 0;
+	border-radius: 10px;
+}
+
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	color: var(--text-color);
+	text-decoration: none;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: block;
+	font-size: 75%;
+}
+
+.sidenav a:hover {
+	color: var(--primary);
+}
+
+main {
+	margin-left: calc(30% + 10px); /* Same width as the sidebar + left position in px */
+	padding: 0px 10px;
+}

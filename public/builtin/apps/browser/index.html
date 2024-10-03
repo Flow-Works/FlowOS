@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+
+		<link rel="stylesheet" href="/styles/style.css" />
+		<link rel="stylesheet" href="/styles/window.css" />
+
+		<link rel="stylesheet" href="./style.css" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	</head>
+	
+	<body>
+		<div class="topnav">
+			<div>
+				<a style="padding: 5px 10px" class="hide material-icons">expand_less</a>
+			</div>
+			<span class="tabs-container">
+				<span class="tabs"></span>
+			</span>
+			<div><a style="padding: 5px 10px" class="material-icons" onclick="window.newTab();">add</a></div>
+		</div>
+
+		<div class="topnav tb">
+			<div>
+				<a style="padding: 5px 0" class="prev material-icons" onclick="clickList[0].contentWindow.history.back();">arrow_back</a>
+			</div>
+			<div>
+				<a style="padding: 5px 0" class="forw material-icons" onclick="clickList[0].contentWindow.history.forward();">arrow_forward</a>
+			</div>
+			<div>
+				<a style="padding: 5px 0" class="forw material-icons" onclick="clickList[0].contentWindow.location.reload();">refresh</a>
+			</div>
+			<input />
+			<div>
+				<a style="padding: 5px 0" class="more material-icons">more_vert</a>
+			</div>
+		</div>
+
+		<div class="dropdown" id="dropdown">
+			<a class="eruda">
+			  	<i class="material-icons">code</i>
+			  	Toggle DevTools
+			</a>
+			<a class="block">
+				<i class="material-icons">block</i>
+			  	Block Element
+			</a>
+			<a onclick="clickList[0].src = '/builtin/browser/history.html'">
+			    <i class="material-icons">history</i>
+			  	History
+			</a>
+		</div>
+
+		<main></main>
+
+		<script src="/scripts/app.js" defer type="module"></script>
+		<script src="./index.js" defer type="module"></script>
+	</body>
+</html>

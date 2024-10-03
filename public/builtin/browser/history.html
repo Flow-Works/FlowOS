@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+
+		<link rel="stylesheet" href="/styles/style.css" />
+		<link rel="stylesheet" href="/styles/window.css" />
+
+        <link rel="stylesheet" href="/builtin/apps/styles/browser.css" />
+
+        <title>History</title>
+	</head>
+
+    <script>
+        const history = {
+            set: (data) => {
+                return window.localStorage.setItem('history', JSON.stringify(data));
+            },
+	        get: () => {
+		        return JSON.parse(window.localStorage.getItem('history'));
+	        }
+        };
+
+        window.onload = () => {
+            history.get().forEach((item) => {
+                const li = document.createElement('li');
+                const div = document.createElement('div');
+                const img = document.createElement('img');
+                const gotoBtn = document.createElement('a');
+                const removeBtn = document.createElement('a');
+
+                img.width = '18';
+                img.height = '18';
+                img.src = item.favicon;
+
+                gotoBtn.innerText = item.title + '\n⤷ ' + new Date(item.date).toUTCString();
+                gotoBtn.href = item.url;
+
+                removeBtn.innerText = '[🗑️]';
+                removeBtn.onclick = () => {
+                    history.set(removeObjectWithDate(history.get(), item.date));
+                    console.log(history.get())
+                    window.location.reload();
+                };
+
+                li.classList.add('topnav');
+
+                div.style.height = 'max-content';
+                div.style.gap = '15px';
+
+                div.appendChild(img);
+                div.appendChild(gotoBtn);
+                div.appendChild(removeBtn);
+                li.appendChild(div);
+                document.querySelector('.list').appendChild(li);
+            })
+        }
+
+        const removeObjectWithDate = (arr, date) => {
+            const arrCopy = Array.from(arr);
+
+            const objWithDateIndex = arrCopy.findIndex((obj) => obj.date === date);
+            arrCopy.splice(objWithDateIndex, 1);
+            return arrCopy;
+        };
+
+    </script>
+
+	<body>
+		<div class="history">
+            <h1>History</h1>
+            <ul style="padding: 0;" class="list">
+                
+            </ul>
+        </div>
+
+		<script src="/scripts/browser.js" defer type="module"></script>
+	</body>
+</html>

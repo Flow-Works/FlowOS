@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+
+		<link rel="stylesheet" href="/styles/style.css" />
+		<link rel="stylesheet" href="/styles/window.css" />
+
+        <link rel="stylesheet" href="/builtin/apps/styles/apps.css" />
+	</head>
+	
+	<body>
+		<h2>Custom Application Wizard</h2>
+		<div class="caw">
+            <h3>Load from URL</h3>
+            <form class="url">
+                <input>
+                <button>Import</button>
+            </form>
+            <h3>Load from JSON</h3>
+            <form class="json">
+                <textarea></textarea>
+                <button>Import</button>
+            </form>
+            <div class="apps"></div>
+        </div>
+
+		<script src="/scripts/app.js" defer type="module"></script>
+        <script src="/builtin/apps/scripts/app-wizard.js" defer type="module"></script>
+	</body>
+</html>

@@ -1,0 +1,61 @@
+{
+	"name": "flow-os",
+	"version": "beta",
+	"description": "The customizable webOS.",
+	"keywords": [
+		"tomp",
+		"webos"
+	],
+	"license": "MIT",
+	"author": "Flow Works",
+	"type": "module",
+	"scripts": {
+		"start": "NODE_ENV=production node src/index.js",
+		"win": "cmd /V /C \"set NODE_ENV=production&& node src/index.js\"",
+		"dev": "nodemon src/index.js",
+		"test": "semistandard",
+		"commit": "cz"
+	},
+	"dependencies": {
+		"@mercuryworkshop/bare-mux": "^2.0.9",
+		"@mercuryworkshop/epoxy-transport": "^2.1.11",
+		"@titaniumnetwork-dev/ultraviolet": "^3.2.7",
+		"@tomphttp/bare-server-node": "^2.0.1",
+		"dotenv": "^16.3.1",
+		"express": "^5.0.0",
+		"fastify": "^4.21.0",
+		"memory-cache": "^0.2.0",
+		"mime-types": "^3.0.0",
+		"openai": "^4.59.0",
+		"uglify-js": "^3.17.4",
+		"wisp-server-node": "^1.1.4"
+	},
+	"overrides": {
+		"word-wrap": "^1.2.4"
+	},
+	"devDependencies": {
+		"commitizen": "^4.3.0",
+		"commitizen-emoji": "^1.0.5",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-prefer-arrow": "^1.2.3",
+		"nodemon": "^3.0.1",
+		"prettier": "^3.3.3",
+		"semistandard": "^17.0.0"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/commitizen-emoji"
+		},
+		"commitizenEmoji": {
+			"conventionalFormat": true
+		}
+	},
+	"packageManager": "yarn@3.6.1",
+	"semistandard": {
+		"ignore": [
+			"public/dynamic",
+			"public/uv",
+			"public/builtin/apps/emulator"
+		]
+	}
+}

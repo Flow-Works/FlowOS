@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="manifest" href="manifest.json" />
+		<link rel="preconnect" href="https://www.gstatic.com" />
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="FlowOS" />
+		<link rel="apple-touch-icon" href="/assets/flow-logo.png" />
+		<meta name="apple-touch-startup-image" content="/assets/logo.svg" />
+
+		<meta name="theme-color" content="#000000" />
+		<meta name="description" content="FlowOS is a powerful web-based operating system that allows you to unblock websites at school or work, play online games, and browse freely. Access restricted content with ease and enjoy a seamless gaming experience, all within your browser." />
+
+		<link rel="icon" href="/assets/logo.svg" />
+		<link rel="favicon" href="/assets/logo.svg" />
+
+		<title>FlowOS</title>
+
+		<link rel="stylesheet" href="/styles/window.css" />
+		<link rel="stylesheet" href="/styles/style.css" />
+	</head>
+
+	<script
+		async
+		src="https://www.googletagmanager.com/gtag/js?id=G-MW2PXW0M0V"
+	></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag("js", new Date());
+
+		gtag("config", "G-MW2PXW0M0V");
+	</script>
+
+	<style>
+		:root {
+			--text-color: white;
+		}
+	</style>
+
+	<body>
+		<div
+			style="
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			"
+		>
+			<img
+				src="/assets/logo.svg"
+				width="100px"
+				height="100px"
+				class="logo"
+				alt="Flow Works Logo"
+			/>
+			<p></p>
+			<p></p>
+			<br />
+			<button style="width: 200px" onclick="window.location.href = '/os.html'">
+				Regular Boot
+			</button>
+			<p></p>
+			<button
+				style="width: 200px"
+				onclick="const win = window.open('', 'owo', 'owo');win.document.body.innerHTML = `<iframe src='${window.location.href + '/os.html'}'></iframe><style>body, html {margin:0;}iframe{width:100%;height:100%;border:none;}</style>`;"
+			>
+				Cloaked Boot
+			</button>
+			<p></p>
+			<br />
+			<button style="width: 200px" onclick="window.localStorage.clear()">
+				Clear Site Data</button
+			><br />
+			<sub>(Fixes Issues)</sub>
+		</div>
+		<button id="exitBtn" onclick="window.location.href='https://google.com'">
+			Exit
+		</button>
+
+		<style>
+			body,
+			html {
+				background: var(--boot-bg) !important;
+			}
+		</style>
+
+		<script>
+			function loadCSS(FILE_URL) {
+				const styleEle = document.createElement("link");
+
+				styleEle.setAttribute("rel", "stylesheet");
+				styleEle.setAttribute("type", "text/css");
+				styleEle.setAttribute("href", FILE_URL);
+
+				document.head.appendChild(styleEle);
+			}
+
+			if (!window.localStorage.getItem("theme")) {
+				loadCSS("/builtin/themes/catppuccin-macchiato.css");
+			} else {
+				loadCSS(JSON.parse(window.localStorage.getItem("theme")).url);
+			}
+		</script>
+	</body>
+</html>

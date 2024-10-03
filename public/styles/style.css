@@ -1,0 +1,45 @@
+@import url(https://cdn.jsdelivr.net/npm/winbox@0.2.82/dist/css/winbox.min.css);
+
+:root {
+	--boot-bg: black;
+	--blur: 30px;
+	--blur-bg: transparent;
+}
+
+*, *:before, *:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+  }
+
+*, .wb-title {
+	color: var(--text-color);
+	font-family: var(--font-family);
+}
+
+.wb-header {
+	background: var(--window-bg);
+}
+
+html,
+body {
+	background: var(--desktop-bg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+	overflow: hidden;
+	margin: 0;
+	height: 100%;
+}
+
+.container {
+	height: 100%;
+	overflow: hidden;
+	margin-top: calc(-100vh + 52px)!important;
+}
+#exitBtn {
+	float:left;
+	position: absolute;
+  	bottom: 5px;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+
+		<link rel="stylesheet" href="/styles/style.css" />
+		<link rel="stylesheet" href="/styles/window.css" />
+	</head>
+
+	<body>
+		<div class="media" style="display: flex;flex-direction: column;height: 100%;gap: 10px;min-width: 0;overflow:hidden;">
+            <div style="overflow: auto;height: 100%;">
+                <input type="file" id="song-input" accept=".mp3, .wav, .ogg, .flac">
+
+                <div class="status" style="flex: 1;">Loading...</div>
+                <div class="songList" style="flex: 1;display: grid;grid-template-columns: repeat(3, auto);gap: 0 20px;"></div>
+            </div>
+            <span class="time" style="margin-top: 10px;"><span id="currentTime">00:00</span> / <span id="duration">00:00</span></span>
+            <input type="range" id="seekbar" value="0" min="0" max="500" style="width:100%;margin-bottom: 10px;"></input>
+            <div style="display: flex;gap: 10px;align-items: center;">
+                <img id="cover">
+                <div>
+                    <b id="title">Not Playing</b><br/>
+                    <span id="artist"></span>
+                </div>
+                <div style="flex: 1;"></div>
+                <div style="display: flex;gap: 20px;margin-right: 20px;align-items: center;">
+                    <span class="icon" onclick="window.prev()">󰒮</span>
+                    <span class="icon e" onclick="window.togglePlayback()">󰐊</span>
+                    <span class="icon" onclick="window.next()">󰒭</span>
+                </div>
+            </div>
+        </div>
+
+        <audio></audio>
+
+		<script src="/scripts/app.js" defer type="module"></script>
+        <script type="module" src="./scripts/media.js" defer></script>
+
+        <style>
+            html, body, .media {
+                height: 100%;
+            }
+              #cover {
+	height: 3em;
+  }
+  @font-face {
+	            font-family: 'JetBrains Mono Nerd Font';
+	            src: url(/assets/fonts/JetBrainsMonoNerdFont-Regular.ttf);
+            }
+
+            .icon {
+                font-family: 'JetBrains Mono Nerd Font';
+                font-size: 24px;
+                cursor: pointer;
+            }
+
+            .icon.e {
+                font-size: 30px;
+            }
+
+            input[type="range"] {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none; 
+  /* creating a custom design */
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  /*  overflow: hidden;  remove this line*/
+  
+  /* New additions */
+  height: 6px;
+  background: var(--window-bg);
+  padding: 0px;
+}
+
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none; 
+  /* creating a custom design */
+  height: 15px;
+  width: 15px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: none;
+
+  /* box-shadow: -407px 0 0 400px #f50; emove this line */
+  transition: .2s ease-in-out;
+}
+
+/* Thumb: Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: none;
+  
+  /* box-shadow: -407px 0 0 400px #f50; emove this line */
+  transition: .2s ease-in-out;
+}
+
+a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+        </style>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+.apps {
+	gap: 10px;
+}
+
+.tooltip {
+	text-decoration: none;
+	position: relative;
+	background: var(--surface-bg);
+	border-radius: 10px;
+	margin: 10px 0;
+	padding: 10px;
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+
+h3 p {
+	font-size: 15px !important;
+}
+
+.tooltip span {
+	display: none;
+}
+
+.tooltip:hover span {
+	display: block;
+	position: fixed;
+	overflow: hidden;
+	z-index: 5000;
+	background: var(--surface-bg);
+	padding: 5px;
+	border-radius: 5px;
+}

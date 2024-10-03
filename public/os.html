@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="manifest" href="manifest.json" />
+		<link rel="preconnect" href="https://www.gstatic.com" />
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="FlowOS" />
+		<link rel="apple-touch-icon" href="/assets/flow-logo.png" />
+		<meta name="apple-touch-startup-image" content="/assets/logo.svg" />
+
+		<meta name="theme-color" content="#000000" />
+		<meta name="description" content="FlowOS is a powerful web-based operating system that allows you to unblock websites at school or work, play online games, and browse freely. Access restricted content with ease and enjoy a seamless gaming experience, all within your browser." />
+
+		<link rel="icon" href="/assets/logo.svg" />
+		<link rel="favicon" href="/assets/logo.svg" />
+
+		<title>FlowOS</title>
+
+		<link rel="stylesheet" href="/styles/style.css" />
+		<link rel="stylesheet" href="/styles/desktop.css" />
+
+		<link rel="modulepreload" href="index.js" />
+	</head>
+
+	<script src="https://www.googletagmanager.com/gtag/js?id=G-MW2PXW0M0V"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag("js", new Date());
+
+		gtag("config", "G-MW2PXW0M0V");
+	</script>
+
+	<body>
+		<div class="boot">
+			<main>
+				<img
+					src="/assets/logo.svg"
+					width="100px"
+					height="100px"
+					class="logo"
+					alt="Flow Works Logo"
+				/>
+
+				<div class="progress-bar" style="margin-top: 20px">
+					<div class="progress-bar-value"></div>
+				</div>
+			</main>
+		</div>
+
+		<div class="statusbar">
+			<div class="left"></div>
+			<div class="middle"></div>
+			<div class="right"></div>
+		</div>
+
+		<div class="spotlight">
+			<input class="searchbar" placeholder="Search apps..." />
+			<ul class="apps"></ul>
+		</div>
+
+		<div class="container"></div>
+
+		<div class="taskbar">
+			<div onclick="Flow.spotlight.toggle();" style="aspect-ratio: 1 / 1">
+				<div
+					style="
+						font-family: &quot;Agave Nerd Font&quot;;
+						margin: 5px 10px 5px 5px;
+						color: var(--desktop-bg);
+						font-size: 20px;
+					"
+				>
+					󱇚
+				</div>
+			</div>
+		</div>
+
+		<script>
+			(function () {
+				var src = "//cdn.jsdelivr.net/npm/eruda";
+				if (
+					!/eruda=true/.test(window.location) &&
+					localStorage.getItem("active-eruda") != "true"
+				)
+					return;
+				document.write("<scr" + 'ipt src="' + src + '"></scr' + "ipt>");
+				document.write("<scr" + "ipt>eruda.init();</scr" + "ipt>");
+			})();
+		</script>
+		<script src="baremux/index.js" defer></script>
+		<script src="epoxy/index.js" defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/browserfs@1.4.1/dist/browserfs.min.js"></script>
+		<script src="/index.js" type="module" defer></script>
+	</body>
+</html>
