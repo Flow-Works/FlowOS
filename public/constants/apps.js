@@ -36,6 +36,13 @@ const apps = () => {
 			"/assets/icons/appeditor.svg",
 			false,
 		),
+		games: new AppData(
+			"games",
+			"Games",
+			"/builtin/apps/games/3kh0-lite-main/index.html",
+			"/assets/icons/gamehub.svg",
+			false,
+		),
 		media: new AppData(
 			"media",
 			"Media Center",
