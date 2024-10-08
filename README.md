@@ -101,6 +101,14 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## 🛠️ Contributors
+* ThinLiquid (Original developer)
+* Proudparrot2 (Ex-developer)
+* Darkw4v3 (Current owner, maintainer)
+
+  
+## ❤️ Special Contributors
+* Mr. Moto-oreo (Bugtester)
 <!-- LICENSE -->
 ## License
 
