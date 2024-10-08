@@ -108,7 +108,7 @@ Don't forget to give the project a star! Thanks again!
 
   
 ## ❤️ Special Contributors
-* Mr. Moto-oreo (Bugtester)
+* [Name=Yug](https://github.com/YUG38) (Bugtester)
 <!-- LICENSE -->
 ## License
 
